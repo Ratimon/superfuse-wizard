@@ -1,8 +1,33 @@
 {
 	"name": "superfuse-wizard",
-	"private": true,
+	"description": "Interactive smart contract generator based on Superchain 's interoperability standard.",
 	"version": "0.0.1",
-	"type": "module",
+	"homepage": "https://http://superfuse.ninja/",
+	"keywords": [
+        "blockchain",
+        "ethereum",
+        "library",
+        "smart-contracts",
+        "solidity",
+        "code-generator",
+		"interoperability",
+		"superchain"
+    ],
+	"files": [
+        "src/",
+        "static/",
+        "LICENSE",
+        "README.md",
+        ".npmrc",
+        "LICENSE",
+        "postcss.config.cjs",
+        "svelte.config.js",
+        "tailwind.config.cjs",
+        "tsconfig.json",
+        "vite.config.ts"
+    ],
+	"license": "MIT",
+    "repository": "github:Ratimon/superfuse-wizard",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -22,9 +47,13 @@
 		"typescript": "^5.0.0",
 		"vite": "^6.0.0"
 	},
+	"type": "module",
 	"dependencies": {
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15"
 	},
+	"engines": {
+        "node": ">=20"
+    },
 	"packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35"
 }
