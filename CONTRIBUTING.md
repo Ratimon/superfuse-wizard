@@ -25,10 +25,10 @@ npx sv create superfuse-wizard
 
 ```bash
 git add .
-git commit -am "v0.0.2"
+git commit -am "v0.0.3"
 git push -u origin main
-git tag v0.0.2 main
-git push origin tag v0.0.2
+git tag v0.0.3 main
+git push origin tag v0.0.3
 ```
 >[!WARNING]
 > DONT forget to add secret env `NPM_AUTH_TOKEN` at [repo](https://github.com/Ratimon/superfuse-wizard/settings/secrets/actions)
