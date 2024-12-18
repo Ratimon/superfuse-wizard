@@ -1,6 +1,6 @@
 ## CONTRIBUTING
 
-Please make a pull request to [Dev Branch](https://github.com/Ratimon/redprint-wizard/tree/dev)
+Please make a pull request to [Dev Branch](https://github.com/Ratimon/superfuse-wizard/tree/dev)
 
 ### Developer's Quick Guide
 
@@ -13,6 +13,14 @@ Scaffolding:
 npx sv create superfuse-wizard
 ```
 
+
+>[!TIP]
+> We, when scaffolding, use following options :
+- SvelteKit minimal
+- Yes, using Typescript syntax
+- tailwindcss, mdsvex
+- typography, forms
+- pnpm
 
 ### Publishing
 

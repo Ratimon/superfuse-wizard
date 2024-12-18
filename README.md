@@ -18,3 +18,8 @@ We assume that you already setup your own working front-end environment and `cd`
 ```bash
 cd my-project;
 ``` 
+
+```bash
+nvm use v20.13.1
+pnpm dev
+``` 

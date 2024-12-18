@@ -4,30 +4,30 @@
 	"version": "0.0.4",
 	"homepage": "https://http://superfuse.ninja/",
 	"keywords": [
-        "blockchain",
-        "ethereum",
-        "library",
-        "smart-contracts",
-        "solidity",
-        "code-generator",
+		"blockchain",
+		"ethereum",
+		"library",
+		"smart-contracts",
+		"solidity",
+		"code-generator",
 		"interoperability",
 		"superchain"
-    ],
+	],
 	"files": [
-        "src/",
-        "static/",
-        "LICENSE",
-        "README.md",
-        ".npmrc",
-        "LICENSE",
-        "postcss.config.cjs",
-        "svelte.config.js",
-        "tailwind.config.cjs",
-        "tsconfig.json",
-        "vite.config.ts"
-    ],
+		"src/",
+		"static/",
+		"LICENSE",
+		"README.md",
+		".npmrc",
+		"LICENSE",
+		"postcss.config.cjs",
+		"svelte.config.js",
+		"tailwind.config.cjs",
+		"tsconfig.json",
+		"vite.config.ts"
+	],
 	"license": "MIT",
-    "repository": "github:Ratimon/superfuse-wizard",
+	"repository": "github:Ratimon/superfuse-wizard",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -40,6 +40,7 @@
 		"@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"autoprefixer": "^10.4.20",
+		"daisyui": "^4.12.22",
 		"mdsvex": "^0.11.2",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
@@ -53,6 +54,7 @@
 		"@tailwindcss/typography": "^0.5.15"
 	},
 	"engines": {
-        "node": ">=20"
-    }
+		"node": ">=20"
+	},
+	"packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35"
 }
