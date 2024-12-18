@@ -1,0 +1,15 @@
+{
+	"appName": "Superfuse Wizard",
+	"appTitle": "Interactive Playgound for Superchain Developers",
+	"appDescription": "a code generator/ interactive developer to modify and develop on Superchain",
+	"themeColor": "#FF1811",
+	"appleStatusBarStyle": "black-translucent",
+	"icon": "static/icon.svg",
+	"maskableIcons": [
+		{
+			"src": "../maskable_icon_512x512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
+}
