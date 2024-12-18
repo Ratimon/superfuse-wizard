@@ -13,7 +13,6 @@ Scaffolding:
 npx sv create superfuse-wizard
 ```
 
-
 >[!TIP]
 > We, when scaffolding, use following options :
 - SvelteKit minimal
@@ -21,6 +20,10 @@ npx sv create superfuse-wizard
 - tailwindcss, mdsvex
 - typography, forms
 - pnpm
+
+```bash
+pnpm add -D daisyui svelte-preprocess 
+```
 
 ### Publishing
 
