@@ -23,7 +23,13 @@ export default {
 			// 'corporate',
 			// 'synthwave',
 			// 'retro',
-			'cyberpunk',
+			// 'cyberpunk',
+			{
+				cyberpunk: {
+				  ...require("daisyui/src/theming/themes")["cyberpunk"],
+				  "base-100": "#E0A3B7",
+				},
+			},
 			// 'valentine',
 			// 'halloween',
 			// 'garden',
