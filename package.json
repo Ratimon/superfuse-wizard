@@ -31,18 +31,24 @@
 	"scripts": {
 		"---------------------- DEV WORKFLOW ----------------------": "",
 		"generate_icon": "pwag static/icon.svg src/web-config.json && cp static/pwa/favicon-512.png static/maskable_icon_512x512.png",
-		"dev": "vite dev",
-		"build": "vite build",
+		"dev": "dotenv -- vite dev",
+		"build": "pnpm run generate_icon && dotenv -- vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
+	"author": {
+        "name": "Rati Montreewat",
+        "url": "https://github.com/Ratimon/superfuse-wizard"
+    },
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.22",
+		"dotenv": "^16.4.7",
+		"dotenv-cli": "^7.4.4",
 		"mdsvex": "^0.11.2",
 		"pwag": "^0.3.0",
 		"svelte": "^5.0.0",
