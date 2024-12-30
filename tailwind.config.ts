@@ -1,5 +1,5 @@
-const daisyui = require('daisyui');
-const typography = require('@tailwindcss/typography');
+import daisyui from 'daisyui';
+import typography from '@tailwindcss/typography';
 const forms = require('@tailwindcss/forms')({ strategy: 'class' });
 
 const config = {

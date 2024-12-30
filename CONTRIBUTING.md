@@ -4,14 +4,17 @@ Please make a pull request to [Dev Branch](https://github.com/Ratimon/superfuse-
 
 ### Developer's Quick Guide
 
->[!NOTE]
-> For who want to scaffolding their own svelte project
+>[!WARNING]
+> For Repo Owner only!!
 
-Scaffolding:
+1. Scaffolding:
 
 ```bash
 npx sv create superfuse-wizard
 ```
+
+>[!NOTE]
+> For who want to scaffolding their own svelte project
 
 >[!TIP]
 > We, when scaffolding, use following options :
@@ -25,14 +28,31 @@ npx sv create superfuse-wizard
 pnpm add -D daisyui svelte-preprocess 
 ```
 
+2. Adding Icon:
+
+For reference only
+- (Create Logo)[https://shipfa.st/tools/logo-fast?]
+- (Convert to svg)[https://pixelied.com/convert/png-converter/png-to-svg]
+- (Crop png)[https://www.iloveimg.com/crop-image/crop-png]
+- (Make it PWA compatible)[https://github.com/wighawag/pwag]
+
+3. Adding first header:
+
+```bash
+pnpm add -D @iconify/svelte
+```
+
 ### Publishing
 
 #### For First Time
 
-#### For Second Time
+Config `package.json`:
 
->[!WARNING]
-> For Repo Owner only!!
+```bash
+npm publish
+```
+
+#### For Second Time
 
 ```bash
 git add .
