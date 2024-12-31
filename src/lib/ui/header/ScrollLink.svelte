@@ -1,12 +1,43 @@
 <script lang="ts">
-	import {page} from '$app/stores';
+	import type { Snippet } from 'svelte';
+
+	import {page} from '$app/state';
 	import {isParentRoute, isSameRoute} from '$lib/utils/path';
 
-	export let href: string;
-	let className = '';
-	export {className as class};
-	export let whenSelected: string = '';
-	export let whenUnselected: string = '';
+	type Props = {
+		children: Snippet;
+		href: string;
+		class?: string;
+		// className?: string;
+		whenSelected?: string;
+		whenUnselected?: string;
+	}
+
+	let {
+		children,
+		href = '',
+		class: className = '',
+		whenSelected = '',
+		whenUnselected = ''
+	} : Props = $props();
+
+	// function onclick(event: Event | undefined) {
+	// 	handleAnchorClick(event)
+	// }
+
+	function once(fn: any) {
+		return function (event: any) {
+			if (fn) fn.call(this, event);
+			fn = null;
+		};
+	}
+
+	function preventDefault(fn: any) {
+		return function (event: any) {
+			event.preventDefault();
+			fn.call(this, event);
+		};
+	}
 
     const handleAnchorClick =  (event: Event | undefined) => {
         if (!event) return;
@@ -21,12 +52,13 @@
 
 </script>
 
+<!-- to do : tes this refactored part when scrolled cpmponent is added -->
 <a
 	href={href}
-    on:click|preventDefault={ event => handleAnchorClick(event)}
+	onclick={once(preventDefault(handleAnchorClick))}
 	class={`${className} ${
-		(href === '/' ? isSameRoute($page.url.pathname, href) : isParentRoute($page.url.pathname, href))
+		(href === '/' ? isSameRoute(page.url.pathname, href) : isParentRoute(page.url.pathname, href))
 			? whenSelected
 			: whenUnselected
-	}`}><slot /></a
+	}`}>{@render children?.()}</a
 >

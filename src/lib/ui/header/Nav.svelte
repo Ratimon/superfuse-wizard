@@ -5,13 +5,21 @@
     import PageLink from '$lib/ui/header/PageLink.svelte';
 
 
-	let className = '';
-	export {className as class};
-	export let tabClass: string = '';
-	export let whenSelected: string = '';
-	export let whenUnselected: string = '';
+    type Props = {
+        class?: string;
+        tabClass?: string;
+        whenSelected?: string;
+        whenUnselected?: string;
+        pages: Link[];
+    };
 
-	export let pages: Link[];
+	let {
+        class: className = '',
+        tabClass = '',
+        whenSelected = '',
+        whenUnselected = '',
+        pages = []
+    }: Props = $props();
 
 
 </script>
@@ -20,15 +28,14 @@
 	{#each pages as page}
 
         {#if page.navType == 'scroll'}
-            <svelte:component this={ScrollLink} class={tabClass} {whenUnselected} {whenSelected} href={page.pathname}>
+            <ScrollLink class={tabClass} {whenUnselected} {whenSelected} href={page.pathname}>
                 {page.title}
-            </svelte:component>
+            </ScrollLink>
         {:else}
-            <svelte:component this={PageLink} class={tabClass} {whenUnselected} {whenSelected} href={page.pathname}>
+            <PageLink class={tabClass} {whenUnselected} {whenSelected} href={page.pathname}>
                 {page.title}
-            </svelte:component>
+            </PageLink>
         {/if}
-
 
 	{/each}
 </div>

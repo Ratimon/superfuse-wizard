@@ -1,19 +1,35 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { Popover as PopoverPrimitive } from "bits-ui"
   import { cn, flyAndScale } from '$lib/ui/utils/mics'
 
   type $$Props = PopoverPrimitive.ContentProps
-  let className: $$Props['class'] = undefined
-  export let transition: $$Props['transition'] = flyAndScale
-  export let transitionConfig: $$Props['transitionConfig'] = undefined
-  export { className as class }
+  // let className: $$Props['class'] = undefined
+  // export let transition: $$Props['transition'] = flyAndScale
+  // export let transitionConfig: $$Props['transitionConfig'] = undefined
+  // export { className as class }
+
+  type Props = {
+    children?: Snippet;
+    transition?: $$Props['transition'];
+    transitionConfig?: $$Props['transitionConfig'];
+    class?: $$Props['class'];
+  }
+
+  let {
+    children,
+    transition = flyAndScale,
+    transitionConfig = undefined,
+    class: className = undefined
+  }: Props = $props();
+
+
 </script>
 
 <PopoverPrimitive.Content
   {transition}
   {transitionConfig}
   class={cn('z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none', className)}
-  {...$$restProps}
 >
-  <slot />
+  {@render children?.()}
 </PopoverPrimitive.Content>

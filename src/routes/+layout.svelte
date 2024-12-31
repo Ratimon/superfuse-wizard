@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-
 	import type { PageData } from './$types';
-
 
     import type {Link } from '$lib/model/Link';
 
