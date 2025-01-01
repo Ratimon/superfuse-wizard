@@ -10,6 +10,7 @@
 
 	import Background from '$lib/ui/background/Background.svelte';
 	import Header from '$lib/ui/templates/Header.svelte';
+	import Footer from '$lib/ui/templates/Footer.svelte';
 
 	type Props = {
         children: Snippet;
@@ -29,6 +30,13 @@
     {pathname: '/blog/category/announcements', title: 'Announcements', navType: 'tab'},
     {pathname: '/blog/category/tutorials', title: 'Tutorials', navType: 'tab'},
     ];
+
+	// only 'tab'
+	const fallbackFootLinks : Link[] = [
+    {pathname: '/', title: 'Home', navType: 'tab'},
+    {pathname: '/blog/1-introduce-forge', title: 'Introduce Forge', navType: 'tab'},
+	{pathname: '/blog/2-introduce-wizard', title: 'Introduce Wizard', navType: 'tab'},
+    ];
 	
 </script>
 
@@ -41,3 +49,12 @@
 </Background>
 
 {@render children()}
+
+<Background color='bg-base-200'>
+	{#if data.footLinks}
+		<Footer links={data.footLinks}></Footer>
+	{:else}
+		<Footer links={fallbackFootLinks}></Footer>
+	{/if}
+</Background>
+

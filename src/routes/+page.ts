@@ -19,10 +19,19 @@ export function load() {
     
     const actionLink : Link = {pathname: '/blog', title: 'Read Our Blog', navType: 'tab' };
 
+    const footLinks : Link[] = [
+        {pathname: '#solution', title: 'Features', navType: 'scroll'},
+        {pathname: '#testimonial', title: 'Testimonial', navType: 'scroll'},
+        {pathname: '#resource', title: 'Resources', navType: 'scroll'},
+        {pathname: '#contact', title: 'Contact Us', navType: 'scroll'},
+        {pathname: '/', title: 'Home', navType: 'tab'},
+    ];
+
 	return {
 		headLinks: headLinks,
         menuTitle: "Try Our toolkit",
         dropDownLinks: dropDownLinks,
         actionLink: actionLink,
+        footLinks: footLinks,
 	};
 }
