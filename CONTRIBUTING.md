@@ -36,10 +36,16 @@ For reference only
 - (Crop png)[https://www.iloveimg.com/crop-image/crop-png]
 - (Make it PWA compatible)[https://github.com/wighawag/pwag]
 
-3. Adding first header:
+3. Adding first header and footer:
 
 ```bash
-pnpm add -D @iconify/svelte
+pnpm add -D @iconify/svelte tailwind-merge bits-ui clsx
+```
+
+4. Adding meta tags:
+
+```bash
+pnpm add -D just-extend svelte-meta-tags
 ```
 
 ### Publishing
