@@ -115,11 +115,11 @@
   
   <section class="controls-section">
     <h1>
-      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <!-- svelte-ignore a11y_label_has_associated_control -->
       <label class="flex items-center tooltip-container pr-2">
         <span>Votes</span>
         <span class="ml-1">
-          <ToggleRadio bind:value={opts.votes} defaultValue="blocknumber" />
+          <ToggleRadio bind:value={opts.votes} checked={opts.votes !== false} disabled={false} defaultValue="blocknumber"  />
         </span>
         <HelpTooltip placement="right" align="right" link="https://docs.openzeppelin.com/contracts/api/token/erc20#ERC20Votes">
           Keeps track of historical balances for voting in on-chain governance, with a way to delegate one's voting power to a trusted account.

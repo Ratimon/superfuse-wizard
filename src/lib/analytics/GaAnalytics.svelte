@@ -10,21 +10,9 @@
 
     let { MEASUREMENT_ID }: Props = $props();
 
-    // $: TRACKING_LINK = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
 	const TRACKING_LINK = $derived(`https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`);
 
 	console.log("page.url.pathname", page.url.pathname);
-
-	// $: {
-	// 	// @ts-ignore
-	// 	if (typeof gtag !== 'undefined') {
-	// 		// @ts-ignore
-	// 		gtag('config', MEASUREMENT_ID, {
-	// 			page_title: document.title,
-	// 			page_path: page.url.pathname
-	// 		});
-	// 	}
-	// }
 
 	$effect(() => {
 		// @ts-ignore

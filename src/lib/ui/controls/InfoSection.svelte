@@ -5,12 +5,20 @@
 
   import HelpTooltip from './HelpTooltip.svelte';
 
-  export let info: Info;
+  type Props = {
+    info: Info;
+  };
+
+	let {
+    info = $bindable()
+  }: Props = $props();
+
 </script>
 
 <section class="controls-section">
   <h1>
-    <!-- svelte-ignore a11y-label-has-associated-control -->
+    
+    <!-- svelte-ignore a11y_label_has_associated_control -->
     <label class="flex items-center tooltip-container pr-2">
       <span>Info</span>
     </label>
@@ -19,7 +27,7 @@
   <label class="labeled-input">
     <span class="flex justify-between pr-2">
       Reference
-      <HelpTooltip link="https://github.com/ethereum-lists/contracts/blob/main/README.md#tracking-new-deployments">
+      <HelpTooltip align="right" placement="right" link="https://github.com/ethereum-lists/contracts/blob/main/README.md#tracking-new-deployments">
          The link to original code
       </HelpTooltip>
     </span>

@@ -1,15 +1,24 @@
 <script lang="ts">
   type T = $$Generic;
 
-  export let value: false | T = false;
-  export let checked = value !== false;
-  export let defaultValue: T;
-  export let disabled: boolean | undefined = undefined;
+  type Props = {
+    value: false | T;
+    checked: boolean;
+    defaultValue: T;
+    disabled: boolean | undefined;
+  };
 
+  let {
+    value = $bindable(),
+    checked = value !== false,
+    defaultValue,
+    disabled = undefined,
+  }: Props = $props();
+  
   let wasChecked = checked;
   let wasValue = value || defaultValue;
 
-  $: {
+  $effect(() => {
     if (!wasChecked) {
       if (checked) {
         value = wasValue;
@@ -24,7 +33,7 @@
 
     wasChecked = checked;
     wasValue = value || wasValue;
-  }
+  });
 </script>
 
 <input type="checkbox" bind:checked {disabled}>

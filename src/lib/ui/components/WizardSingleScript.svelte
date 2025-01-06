@@ -1,6 +1,5 @@
 <script  lang="ts">
   import type { Snippet } from 'svelte';
-  // import { createEventDispatcher } from 'svelte';
 
   import fileSaver from 'file-saver';
   import { v4 as uuid } from 'uuid';
@@ -20,17 +19,12 @@
   import type {  DeployContract } from '$lib/wizard/deploy-scripts';
   import {  printDeployContract } from '$lib/wizard/deploy-scripts';
 
-  import MarkdownIt from "markdown-it";
-
   import type { GaEvent } from '$lib/analytics/analytics.Store';
   import { analyticsStore } from '$lib/analytics/analytics.Store';
 
-
   type Props = {
-    // caption: Snippet;
     menu: Snippet;
     control: Snippet;
-    // artifact: Snippet;
     deployContract: DeployContract;
     opts: any;
     isShowingCommand: boolean;
@@ -39,45 +33,23 @@
     contractTab: Kind;
   };
 
+  let {
+    menu,
+    control,
+    deployContract,
+    opts,
+    isShowingCommand = true,
+    conventionNumber,
+    initialContractTab,
+    contractTab = sanitizeKind(initialContractTab),
+  }: Props = $props();
 
-let {
-  // caption,
-  menu,
-  control,
-  // artifact,
-  deployContract,
-  opts,
-  isShowingCommand = true,
-  conventionNumber,
-  initialContractTab,
-  contractTab = sanitizeKind(initialContractTab),
-  // copied= ''
-}: Props = $props();
-
-
-  // export let deployContract: DeployContract;
-  // export let opts;
-
-  // export let isShowingCommand: boolean = true;
-
-  // export let conventionNumber: string;
   const codeCommand = $derived(`forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
   const optionCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
 
-  // const dispatch = createEventDispatcher();
-
-  // export let initialContractTab: string | undefined ;
-  // export let contractTab: Kind = sanitizeKind(initialContractTab);
-
-  // $: {
-  //     contractTab = sanitizeKind(contractTab);
-  //     dispatch('contractTab-change', contractTab);
-  // };
-
   $effect(() => {
-  contractTab = sanitizeKind(contractTab);
-      // dispatch('contractTab-change', contractTab);
-});
+    contractTab = sanitizeKind(contractTab);
+  });
 
   const deployCode = $derived(printDeployContract(deployContract));
   const highlightedDeployCode = $derived(injectHyperlinks(hljs.highlight(deployCode, {language: 'solidity'} ).value));
@@ -103,7 +75,6 @@ let {
       }, 1000);
   };
 
-
   const downloadScriptNpmHandler = async () => {
       const blob = new Blob([deployCode], { type: 'text/plain' });
       if (opts) {
@@ -118,23 +89,6 @@ let {
       }
   };
 
-
-  // to do : optimize bundler
-  const md = MarkdownIt({
-      html: true,
-      linkify: true,
-      highlight: function (str: string, lang: string) {
-      // to do : refactor : hljs to specify language
-      if (lang && hljs.getLanguage(lang)) {
-      try {
-          return hljs.highlight(str, { language: lang }).value;
-      } catch (err) {
-          // Handle error
-          }
-      }
-      return '';
-      }
-  });
 
 </script>
 
@@ -167,15 +121,8 @@ let {
       </div>
     {/if}
   
-    <!-- <div class="pt-3 pb-4 justify-center"> -->
-      <!-- <slot name="caption" /> -->
-      <!-- {@render caption()} -->
-    <!-- </div> -->
-  
-  
     <div class="pt-3 pb-4 header flex flex-row justify-between">
   
-      <!-- <slot name="menu" /> -->
       {@render menu()}
   
       <div class="action flex flex-row gap-2 shrink-0">
@@ -201,7 +148,6 @@ let {
   
     <div class="flex flex-row gap-4 grow">
   
-      <!-- <slot name="control" /> -->
       {@render control()}
   
       <div class="output flex flex-col grow overflow-auto h-[calc(120vh-40px)]">
@@ -221,9 +167,6 @@ let {
       </div>
       
     </div>
-  
-    <!-- <slot name="artifact" /> -->
-    <!-- {@render artifact()} -->
   
 </div>
       

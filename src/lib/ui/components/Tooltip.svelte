@@ -9,7 +9,6 @@
   type Props = {
     children: Snippet;
     caption: Snippet;
-    // trigger: Snippet | (node: Element) => void;
 		text: string;
 		disabled: boolean;
 
@@ -24,7 +23,6 @@
 	let {
     children,
     caption,
-    // trigger = (node: Element) => { target = node; },
 		text = '',
 		disabled = false,
 
@@ -36,24 +34,15 @@
     ...others 
   }: Props = $props();
 
-  // export let text = '';
-  // export let disabled = false;
-
   let target: Element | undefined;
   let content: HTMLElement | undefined = $state(undefined);
   let instance: TippyInstance | undefined;
 
   const trigger : Action = (node: Element) => { target = node; } ;
 
-  // function trigger(node: Element) {
-	// 	target = node;
-	// }
-
-
   onMount(() => {
     if (target) {
-      instance = tippy(target, {  interactive, placement,theme, maxWidth,  ...others, content });
-      // instance = tippy(target, { ...$$restProps, content });
+      instance = tippy(target, {  interactive, placement, theme, maxWidth,  ...others, content });
 
       content?.style.removeProperty('display');
     }
