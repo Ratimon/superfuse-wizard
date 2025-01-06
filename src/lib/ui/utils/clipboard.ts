@@ -5,7 +5,7 @@ import type {ActionReturn} from 'svelte/action';
 
 type Attributes = {
 	newprop?: string;
-	'on:copied': (e: CustomEvent<string>) => void;
+	'oncopied': (e: CustomEvent<string>) => void;
 };
 
 type Parameter = string | {element: string} | {input: string};

@@ -12,11 +12,11 @@
 
   type Props = {
     links: Link[];
-    };
+  };
 
 	let {
-        links = []
-    }: Props = $props();
+    links = []
+  }: Props = $props();
 
 </script>
 

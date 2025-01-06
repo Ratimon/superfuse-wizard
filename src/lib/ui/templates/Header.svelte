@@ -13,20 +13,39 @@
   import {appName} from 'web-config';
   import {url} from '$lib/utils/path';
 
-  let className = 'bg-base-200';
-	export {className as class};
+  type Props = {
+    class?: string;
+    links?: Link[];
+    menuTitle?: string;
+    dropDownLinks?: Link[];
+    actionLink?: Link;
+   
+  };
 
-  export let links : Link[];
-  export let menuTitle :string;
-  export let dropDownLinks : Link[];
+	let {
+    class: className = 'bg-base-200',
+    links = [],
+    menuTitle = '',
+    dropDownLinks = [],
+    actionLink = {pathname: '', title: '', navType: 'tab'}
+  }: Props = $props();
 
-  export let actionLink :Link;
+  let isOpen: boolean = $state(false);
 
+  function setOpen() {
+		isOpen = true;
+	}
 
-  let isOpen: boolean = false;
-  const setIsOpen = (open : boolean) :void => {
-      isOpen = open;
-  }
+  function setClose() {
+		isOpen = false;
+	}
+
+  function preventDefault(fn: any) {
+		return function (event: any) {
+			event.preventDefault();
+			fn.call(this, event);
+		};
+	}
 
 </script>
 
@@ -79,7 +98,7 @@
         <button
           type="button"
           class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
-          on:click|preventDefault={() => setIsOpen(true)}
+          onclick={preventDefault(setOpen)}
         >
           <span class="sr-only">Open main menu</span>
           <Icon icon="clarity:menu-line" />
@@ -106,7 +125,7 @@
             <button
               type="button"
               class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
-              on:click|preventDefault={() => setIsOpen(false)}
+              onclick={preventDefault(setClose)}
             >
               <span class="sr-only">Close menu</span>
               <Icon icon="clarity:menu-line" />
