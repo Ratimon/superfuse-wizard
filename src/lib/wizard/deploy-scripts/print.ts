@@ -30,6 +30,8 @@ export function printDeployContract(contract: DeployContract, opts?: Options): s
 
       printImports(contract.imports, helpers),
 
+      contract.outsideCode,
+
       [
         ...printNatspecTags(contract.natspecTags),
         [`contract ${contract.name}`, ...printInheritance(contract, helpers), '{'].join(' '),

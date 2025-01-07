@@ -44,13 +44,13 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
 
   const Vm = {
     name: 'Vm',
-    path: '@redprint-forge-std/Vm.sol',
+    path: '@forge-std-v1.9.1/Vm.sol',
   };
   c.addImportOnly(Vm);
 
   const DeployScript = {
     name: 'DeployScript',
-    path: '@redprint-deploy/deployer/DeployScript.sol',
+    path: '@superfuse-deploy/deployer/DeployScript.sol',
   };
   c.addParent(DeployScript, []);
 
@@ -128,7 +128,7 @@ function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<
 
 function getDeployFunction(allOpts: Required<SharedERC20VotesOptions>) {
   const fn = {
-    name: 'run',
+    name: 'deploy',
     args: [],
     returns: [`${allOpts.contractName}` ], 
     kind: 'external' as const,

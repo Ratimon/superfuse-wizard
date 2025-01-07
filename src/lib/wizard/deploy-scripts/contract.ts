@@ -16,6 +16,7 @@ export interface DeployContract {
   constructorCode: string[];
   constructorArgs: FunctionArgument[];
   variables: string[];
+  outsideCode: string[];
   
 }
 
