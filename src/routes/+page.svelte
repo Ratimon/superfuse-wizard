@@ -18,70 +18,24 @@
   let errors : { [k in Kind]?: OptionsErrorMessages } =  $state({});
   let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
 
-// let {
-//   initialContractTab = $state('ERC20Votes'),
-//   contractTab = sanitizeKind(initialContractTab),
-//   deployScriptOpts = {},
-//   deployScriptOptsERC20Votes = deployScriptOpts.ERC20Votes,
-//   optsDeploy = deployScriptOpts[contractTab],
-//   errors = {},
-//   deployContract = new DeployBuilder('DeployERC20VotesScript'),
-// }: Props = $props();
 
-const optsDeploy = $derived(deployScriptOpts[contractTab]);
+  const optsDeploy = $derived(deployScriptOpts[contractTab]);
 
-// $effect(() => {
-//   // console.log('optsDeploy', optsDeploy);
-//   optsDeploy = deployScriptOpts[contractTab]
-//   console.log('optsDeploy', optsDeploy);
-// });
+  $effect(() => {
+    if (optsDeploy) {
+          try {
+              deployContract = buildDeployGeneric(optsDeploy);
 
-// let deployScriptOptsERC20Votes = $derived(deployScriptOpts?.ERC20Votes);
-
-// $effect(() => {
-//   deployScriptOptsERC20Votes = deployScriptOpts?.ERC20Votes;
-// });
-
-
-$effect(() => {
-  // let optsDeploy = deployScriptOpts[contractTab]
-  if (optsDeploy) {
-        try {
-            // console.log('deployContract', optsDeploy);
-            // let deployContract = buildDeployGeneric(optsDeploy);
-            deployContract = buildDeployGeneric(optsDeploy);
-
-            errors[contractTab] = undefined;
-          } catch (e: unknown) {
-            if (e instanceof OptionsError) {
-                errors[contractTab] = e.messages;
-            } else {
-            throw e;
+              errors[contractTab] = undefined;
+            } catch (e: unknown) {
+              if (e instanceof OptionsError) {
+                  errors[contractTab] = e.messages;
+              } else {
+              throw e;
+              }
             }
-          }
-    }
-});
-
-// export let initialContractTab: string | undefined = 'ERC20Votes';
-// export let contractTab: Kind = sanitizeKind(initialContractTab);
-// let deployScriptOpts: { [k in Kind]?: Required<KindedOptions [k]> } = {};
-// let errors: { [k in Kind]?: OptionsErrorMessages } = {};
-// let deployContract: DeployContract = new DeployBuilder('DeployERC20VotesScript');
-// $: optsDeploy = deployScriptOpts[contractTab];
-// $: {
-// if (optsDeploy) {
-//         try {
-//             deployContract = buildDeployGeneric(optsDeploy);
-//             errors[contractTab] = undefined;
-//         } catch (e: unknown) {
-//             if (e instanceof OptionsError) {
-//                 errors[contractTab] = e.messages;
-//             } else {
-//             throw e;
-//             }
-//         }
-//     }
-// }
+      }
+  });
 
 
 </script>

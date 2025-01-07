@@ -3,12 +3,9 @@
   
     import HelpTooltip from '$lib/ui/controls/HelpTooltip.svelte';
     // import UpgradeabilitySection from '$lib/ui/controls/UpgradeabilitySection.svelte';
-    // import InfoSection from '$lib/ui/controls/InfoSection.svelte';
     import ToggleRadio from '$lib/ui/inputs/ToggleRadio.svelte';
 
-    // import type {Info } from '$lib/wizard/smart-contracts';
-    import { contractInfoDefaults } from '$lib/wizard/smart-contracts';
-  
+
     import type {  OptionsErrorMessages } from '$lib/wizard/shared';
     import type { KindedERC20Options } from '$lib/wizard/shared';
   
@@ -20,17 +17,7 @@
   
     const contractDefaults = erc20Votes.defaults;
     const deployDefaults = deployERC20Votes.defaults;
-  
-    // export let opts: Required<KindedERC20Options['ERC20Votes']> = {
-    //   kind: 'ERC20Votes',
-    //   ...contractDefaults,
-    // //   premint: '', // default to empty premint in UI instead of 0
-    //   ...deployDefaults,
-    //   contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-    //   deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/redprint-forge', license: 'MIT'  },
-    // };
 
-    // $: requireAccessControl = erc20Votes.isAccessControlRequired(opts);
 
     type Props = {
       opts: Required<KindedERC20Options['ERC20Votes']>;
@@ -59,19 +46,6 @@
             deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/redprint-forge', license: 'MIT'  },
       }
     });
-
-    // let {
-    //   contractName, tokenName, tokenSymbol,
-    //   contractInfo, deployInfo
-    // } = $state(opts);
-
-
-    // let contractName = $derived(opts?.contractName);
-    // let tokenName = $derived(opts?.tokenName);
-    // let tokenSymbol = $derived(opts?.tokenSymbol);
-
-    // let contractInfo = $derived(opts?.contractInfo);
-    // let deployInfo = $derived(opts?.deployInfo);
   
 </script>
   
