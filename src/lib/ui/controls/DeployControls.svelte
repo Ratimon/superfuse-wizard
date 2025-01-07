@@ -165,9 +165,6 @@
   
   <!-- <UpgradeabilitySection bind:upgradeable={opts.upgradeable} /> -->
   
-  <!-- <InfoSection bind:info={opts.contractInfo} />
-
-  <InfoSection bind:info={opts.deployInfo} /> -->
 
   <section class="controls-section">
     <h1>

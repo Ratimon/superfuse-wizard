@@ -32,7 +32,7 @@ export function buildDeployERC20Votes(opts: SharedERC20VotesOptions): DeployCont
     const c = new DeployBuilder(allOpts.deployName);
     addBase(c, allOpts);
 
-    const fn : BaseFunction = getDeployFunction();
+    const fn : BaseFunction = getDeployFunction(allOpts);
     // addVotes(c, fn);
     addDeployLogic(c, fn, allOpts);
     setInfo(c, allOpts.deployInfo);
@@ -68,14 +68,14 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
 
 
   const MyERC20Votes = {
-    name: 'MyERC20Votes',
-    path: '@main/ERC20Votes.sol',
+    name: `${allOpts.contractName}`,
+    path: `@main/ERC20Votes.sol`,
   };
   c.addImportOnly(MyERC20Votes);
   
   c.addOutsidecode(`string constant Artifact_MyERC20Token = "ERC20Votes.sol:${allOpts.contractName}";`)
 
-  c.addVariable('MyERC20Votes token;');
+  c.addVariable(`${allOpts.contractName} token;`);
   c.addVariable(`string name = "${allOpts.tokenName}";`);
   c.addVariable(`string symbol = "${allOpts.tokenSymbol}";`);
 }
@@ -126,11 +126,11 @@ function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<
 
 }
 
-function getDeployFunction() {
+function getDeployFunction(allOpts: Required<SharedERC20VotesOptions>) {
   const fn = {
     name: 'run',
     args: [],
-    returns: ['MyERC20Votes' ], 
+    returns: [`${allOpts.contractName}` ], 
     kind: 'external' as const,
   };
 

@@ -6,7 +6,6 @@
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
-
   import Background from '$lib/ui/background/Background.svelte';
   import WizardSingleScript from '$lib/ui/components/WizardSingleScript.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
@@ -14,12 +13,12 @@
 
   let initialContractTab: string | undefined = $state('ERC20Votes');
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
-  let deployScriptOpts: { [k in Kind]?: Required<KindedOptions [k]> } =  $state({});
+  let allOpts: { [k in Kind]?: Required<KindedOptions [k]> } =  $state({});
   let errors : { [k in Kind]?: OptionsErrorMessages } =  $state({});
   let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
 
 
-  const optsDeploy = $derived(deployScriptOpts[contractTab]);
+  const optsDeploy = $derived(allOpts[contractTab]);
 
   $effect(() => {
     if (optsDeploy) {
@@ -63,18 +62,13 @@
       </div>
     {/snippet}
 
-
-  
     {#snippet control()}
         <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
             <div class:hidden={contractTab !== 'ERC20Votes'}>
-                
-                <DeployControls bind:opts={deployScriptOpts.ERC20Votes!} />
+                <DeployControls bind:opts={allOpts.ERC20Votes!} />
             </div>
         </div>
     {/snippet}
-
-    <!-- svelte-ignore binding_property_non_reactive -->
 
     
 </WizardSingleScript>

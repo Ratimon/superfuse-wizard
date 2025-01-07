@@ -141,7 +141,6 @@
             <FileIcon /> Download As .sol
           </div>
         </button>
-  
       </div>
   
     </div>
