@@ -8,7 +8,7 @@
 
   import CopyBlock from '$lib/ui/components/CopyBlock.svelte';
   import Background from '$lib/ui/background/Background.svelte';
-  import WizardSingleScript from '$lib/ui/components/WizardSingleScript.svelte';
+  import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
   import DeployControls from '$lib/ui/controls/DeployControls.svelte';
 
@@ -52,7 +52,7 @@
 
 </div>
 
-<WizardSingleScript conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={optsDeploy} deployContract={deployContract}>
+<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={optsDeploy} deployContract={deployContract}>
 
     {#snippet guide()}
       <div class="pt-3 pb-4 justify-center">
@@ -102,7 +102,7 @@
     {/snippet}
 
     
-</WizardSingleScript>
+</WizardSingle>
 
 
 <style lang="postcss">
