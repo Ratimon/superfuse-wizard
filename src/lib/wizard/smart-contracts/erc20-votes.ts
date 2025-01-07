@@ -223,7 +223,7 @@ const functions = defineFunctions({
   crosschainBurn: {
     kind: 'external' as const,
     args: [
-      { name: '_to', type: 'address' },
+      { name: '_from', type: 'address' },
       { name: '_amount', type: 'uint256' },
     ],
   },
