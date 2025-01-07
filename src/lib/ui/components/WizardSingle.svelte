@@ -15,6 +15,9 @@
   import type {  Kind,  } from '$lib/wizard/shared';
   import {  sanitizeKind, } from '$lib/wizard/shared';
 
+  import type {  Contract } from '$lib/wizard/smart-contracts';
+  import {  printContract } from '$lib/wizard/smart-contracts';
+
   import type {  DeployContract } from '$lib/wizard/deploy-scripts';
   import {  printDeployContract } from '$lib/wizard/deploy-scripts';
 
@@ -25,7 +28,7 @@
     guide: Snippet;
     menu: Snippet;
     control: Snippet;
-    deployContract: DeployContract;
+    contractInstance: Contract | DeployContract;
     opts: any;
     conventionNumber: string;
     initialContractTab: string | undefined ;
@@ -36,57 +39,77 @@
     guide,
     menu,
     control,
-    deployContract,
+    contractInstance,
     opts,
     conventionNumber,
     initialContractTab,
     contractTab = sanitizeKind(initialContractTab),
   }: Props = $props();
 
+  // $effect.pre(() => {
+
+  // $effect(() => {
+  //   contractTab = sanitizeKind(contractTab);
+  // });
+
+  let code: string = $state("");
+  let highlightedCode: string | undefined = $state("");
+  // const highlightedCode: string = $derived(code);
+
   $effect(() => {
     contractTab = sanitizeKind(contractTab);
-  });
+    // @ts-ignore
+    if ( contractInstance.kind === "deploy") {
 
-  // $effect.pre(() => {
-  //     // if (opts === undefined) opts = 
-  //   });
+      code = printDeployContract(contractInstance as DeployContract);
+      highlightedCode = injectHyperlinks(hljs.highlight(code, {language: 'solidity'} ).value);
+    } else if (contractInstance.kind === "contract") {
+
+      code = printContract(contractInstance as Contract);
+      highlightedCode = injectHyperlinks(hljs.highlight(code, {language: 'solidity'} ).value);
+       
+    } else {
+      throw new Error("Invalid contract type");
+    }
+  });
   
 
-  const deployCode = $derived(printDeployContract(deployContract));
-  const highlightedDeployCode = $derived(injectHyperlinks(hljs.highlight(deployCode, {language: 'solidity'} ).value));
+  // const code = $derived(printDeployContract(contractInstance));
+  // const highlightedCode = $derived(injectHyperlinks(hljs.highlight(code, {language: 'solidity'} ).value));
   
   let isScriptCopied = $state(false);
 
-  const copyScriptHandler = async () => {
-      copyToClipboard(deployCode);
-      isScriptCopied = true;
+  const copyHandler = async () => {
+      copyToClipboard(code);
+        isScriptCopied = true;
 
-      if (opts) {
-      const new_event : GaEvent  = {
-          id:   uuid(),
-          data: {...opts},
-          event: `copy-script-${contractTab}`,
-          type: "event",
-      }
-      $analyticsStore = [...$analyticsStore, new_event]
+        if (opts) {
+          const new_event : GaEvent  = {
+              id:   uuid(),
+              data: {...opts},
+              event: `copy-${contractInstance.kind}-${contractTab}`,
+              type: "event",
+        }
+        $analyticsStore = [...$analyticsStore, new_event]
       }
 
       setTimeout(() => {
-      isScriptCopied = false;
+        isScriptCopied = false;
       }, 1000);
   };
 
-  const downloadScriptNpmHandler = async () => {
-      const blob = new Blob([deployCode], { type: 'text/plain' });
+  const downloadNpmHandler = async () => {
+      const blob = new Blob([code], { type: 'text/plain' });
       if (opts) {
-      fileSaver.saveAs(blob, opts.deployName + '.sol');
-      const new_event : GaEvent  = {
-          id:   uuid(),
-          data: {...opts},
-          event: `download-script-${contractTab}`,
-          type: "event",
-      }
-      $analyticsStore = [...$analyticsStore, new_event]
+        fileSaver.saveAs(blob, opts.deployName + '.sol');
+
+        const new_event : GaEvent  = {
+            id:   uuid(),
+            data: {...opts},
+            event: `download-${contractInstance.kind}-${contractTab}`,
+            type: "event",
+        }
+        $analyticsStore = [...$analyticsStore, new_event]
       }
   };
 
@@ -102,17 +125,17 @@
       {@render menu()}
   
       <div class="action flex flex-row gap-2 shrink-0">
-        <button class="action-button min-w-[165px]" onclick={copyScriptHandler}>
+        <button class="action-button min-w-[165px]" onclick={copyHandler}>
           <div class="flex justify-between">
             {#if isScriptCopied}
               <CheckIcon />Copied
             {:else}
-              <CopyIcon />Copy Script Code
+              <CopyIcon />Copy .sol Code
             {/if}
           </div>
         </button>
   
-        <button class="action-button min-w-[165px]" onclick={downloadScriptNpmHandler}>
+        <button class="action-button min-w-[165px]" onclick={downloadNpmHandler}>
           <div class="flex justify-between">
             <FileIcon /> Download As .sol
           </div>
@@ -127,15 +150,23 @@
   
       <div class="output flex flex-col grow overflow-auto h-[calc(120vh-40px)]">
         <div class="badge badge-primary badge-outline badge-lg">
-          Deploy Script:
+          {#if contractInstance.kind == 'contract'}
+            Contract Code:
+          {:else}
+            Deploy Script:
+          {/if}
         </div>
         <div class="badge badge-primary badge-outline badge-lg">
-          {conventionNumber}_{deployContract.name}.s.sol
+          {#if contractInstance.kind == 'contract'}
+            {contractInstance.name}.sol
+          {:else}
+            {conventionNumber}_{contractInstance.name}.s.sol
+          {/if}
         </div>
   
         <pre class="flex flex-col grow basis-0 overflow-auto">
           <code class="hljs grow overflow-auto p-4">
-            {@html highlightedDeployCode}
+            {@html highlightedCode}
           </code>
         </pre>
   

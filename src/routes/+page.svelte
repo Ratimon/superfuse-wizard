@@ -3,6 +3,9 @@
   import type {  DeployContract } from '$lib/wizard/deploy-scripts';
   import { DeployBuilder, buildDeployGeneric } from '$lib/wizard/deploy-scripts';
 
+  import type { Contract } from '$lib/wizard/smart-contracts';
+  import { ContractBuilder, buildContractGeneric } from '$lib/wizard/smart-contracts';
+
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
@@ -16,19 +19,23 @@
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
   let allOpts: { [k in Kind]?: Required<KindedOptions [k]> } =  $state({});
   let errors : { [k in Kind]?: OptionsErrorMessages } =  $state({});
+
+  let contract: Contract = $state(new ContractBuilder('ERC20Votes'));
   let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
 
 
-  const optsDeploy = $derived(allOpts[contractTab]);
+
+  const opts = $derived(allOpts[contractTab]);
 
   const conventionNumber = $state('000');
   const deployCommand = $derived(`forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
   const mnemonicCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
 
   $effect(() => {
-    if (optsDeploy) {
+    if (opts) {
           try {
-              deployContract = buildDeployGeneric(optsDeploy);
+              deployContract = buildDeployGeneric(opts);
+              contract = buildContractGeneric(opts);
 
               errors[contractTab] = undefined;
             } catch (e: unknown) {
@@ -52,11 +59,62 @@
 
 </div>
 
-<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={optsDeploy} deployContract={deployContract}>
+<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={contract}>
+
+  {#snippet guide()}
+    <div class="pt-3 pb-4 justify-center">
+      <h2 class="m-4 font-semibold">In your terminal, copy below code and run deployment scripts to your prefered network:</h2>
+      <CopyBlock
+        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+        class="mb-5"
+        background="bg-primary-content"
+        copiedBackground="bg-success"
+        copiedColor="text-success-content"
+        text={deployCommand}
+      />
+    </div>
+
+    <div class="pt-3 pb-4 justify-center">
+      <h2 class="m-4 font-semibold">(Optional), you can specify your derivation path:</h2>
+      <CopyBlock
+        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+        class="mb-5"
+        background="bg-primary-content"
+        copiedBackground="bg-success"
+        copiedColor="text-success-content"
+        text={mnemonicCommand}
+      />
+    </div>
+    
+  {/snippet}
+
+  {#snippet menu()}
+    <div class="tab overflow-hidden">
+      <Background color="bg-base-200">
+        <OverflowMenu>
+          <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
+            ERC20Votes
+          </button>      
+        </OverflowMenu>
+      </Background>
+    </div>
+  {/snippet}
+
+  {#snippet control()}
+      <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
+          <div class:hidden={contractTab !== 'ERC20Votes'}>
+              <DeployControls bind:opts={allOpts.ERC20Votes!} />
+          </div>
+      </div>
+  {/snippet}
+
+</WizardSingle>
+
+<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
 
     {#snippet guide()}
       <div class="pt-3 pb-4 justify-center">
-        <h2 class="m-4 font-semibold">In your terminal, copy below contracts' codes and run deployment scripts to your prefered network:</h2>
+        <h2 class="m-4 font-semibold">In your terminal, copy below code and run deployment scripts to your prefered network:</h2>
         <CopyBlock
           boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
           class="mb-5"
@@ -101,8 +159,58 @@
         </div>
     {/snippet}
 
-    
 </WizardSingle>
+<!-- 
+<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
+
+  {#snippet guide()}
+    <div class="pt-3 pb-4 justify-center">
+      <h2 class="m-4 font-semibold">In your terminal, copy below contracts' codes and run deployment scripts to your prefered network:</h2>
+      <CopyBlock
+        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+        class="mb-5"
+        background="bg-primary-content"
+        copiedBackground="bg-success"
+        copiedColor="text-success-content"
+        text={deployCommand}
+      />
+    </div>
+
+    <div class="pt-3 pb-4 justify-center">
+      <h2 class="m-4 font-semibold">(Optional), you can specify your derivation path:</h2>
+      <CopyBlock
+        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+        class="mb-5"
+        background="bg-primary-content"
+        copiedBackground="bg-success"
+        copiedColor="text-success-content"
+        text={mnemonicCommand}
+      />
+    </div>
+    
+  {/snippet}
+
+  {#snippet menu()}
+    <div class="tab overflow-hidden">
+      <Background color="bg-base-200">
+        <OverflowMenu>
+          <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
+            ERC20Votes
+          </button>      
+        </OverflowMenu>
+      </Background>
+    </div>
+  {/snippet}
+
+  {#snippet control()}
+      <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
+          <div class:hidden={contractTab !== 'ERC20Votes'}>
+              <DeployControls bind:opts={allOpts.ERC20Votes!} />
+          </div>
+      </div>
+  {/snippet}
+
+</WizardSingle> -->
 
 
 <style lang="postcss">

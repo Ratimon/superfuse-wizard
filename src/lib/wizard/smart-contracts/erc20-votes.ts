@@ -135,7 +135,7 @@ function addCrosschain(c: ContractBuilder) {
 
   const IERC165 = {
     name: 'IERC165',
-    path: '"@superfuse-core/interfaces/L2/IERC7802.sol',
+    path: '@superfuse-core/interfaces/L2/IERC7802.sol',
   };
   c.addImportOnly(IERC165);
 

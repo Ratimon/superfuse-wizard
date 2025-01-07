@@ -1,6 +1,8 @@
 import { toIdentifier } from '../utils/to-identifier';
 
 export interface Contract {
+  kind: 'deploy' | 'contract';
+
   name: string;
   license: string;
   parents: Parent[];
@@ -102,6 +104,8 @@ export interface NatspecTag {
 }
 
 export class ContractBuilder implements Contract {
+  kind: 'deploy' | 'contract' = 'contract';
+
   readonly name: string;
   license: string = 'MIT';
   upgradeable = false;
