@@ -17,7 +17,6 @@
 
 <section class="controls-section">
   <h1>
-    
     <!-- svelte-ignore a11y_label_has_associated_control -->
     <label class="flex items-center tooltip-container pr-2">
       <span>Info</span>

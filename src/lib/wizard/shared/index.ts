@@ -3,6 +3,8 @@ export type {
     KindedERC20Options, GenericERC20Options,
 } from './build-generic';
 
+// export type { SharedERC20VotesOptions } from './option-erc20-votes';
+
 export type { CommonOptions } from './common-options';
 
 export type { Info } from './set-info';

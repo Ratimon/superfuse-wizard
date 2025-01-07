@@ -1,53 +1,88 @@
 <script  lang="ts">
 
-import type {  DeployContract } from '$lib/wizard/deploy-scripts';
-import { DeployBuilder, buildDeployGeneric } from '$lib/wizard/deploy-scripts';
+  import type {  DeployContract } from '$lib/wizard/deploy-scripts';
+  import { DeployBuilder, buildDeployGeneric } from '$lib/wizard/deploy-scripts';
 
-import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
-import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
-
-import Background from '$lib/ui/background/Background.svelte';
-import WizardSingleScript from '$lib/ui/components/WizardSingleScript.svelte';
-import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
-import DeployControls from '$lib/ui/controls/DeployControls.svelte';
-
-type Props = {
-    initialContractTab: string | undefined ;
-    contractTab: Kind;
-    deployScriptOpts: { [k in Kind]?: Required<KindedOptions [k]> };
-    errors: { [k in Kind]?: OptionsErrorMessages };
-    deployContract: DeployContract;
-  };
+  import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
+  import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
 
-let {
-  initialContractTab = 'ERC20Votes',
-  contractTab = sanitizeKind(initialContractTab),
-  deployScriptOpts = {},
-  errors = {},
-  deployContract = new DeployBuilder('DeployERC20VotesScript'),
-}: Props = $props();
+  import Background from '$lib/ui/background/Background.svelte';
+  import WizardSingleScript from '$lib/ui/components/WizardSingleScript.svelte';
+  import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
+  import DeployControls from '$lib/ui/controls/DeployControls.svelte';
 
-let opts: KindedOptions | undefined = $state(undefined);
+  let initialContractTab: string | undefined = $state('ERC20Votes');
+  let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
+  let deployScriptOpts: { [k in Kind]?: Required<KindedOptions [k]> } =  $state({});
+  let errors : { [k in Kind]?: OptionsErrorMessages } =  $state({});
+  let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
+
+// let {
+//   initialContractTab = $state('ERC20Votes'),
+//   contractTab = sanitizeKind(initialContractTab),
+//   deployScriptOpts = {},
+//   deployScriptOptsERC20Votes = deployScriptOpts.ERC20Votes,
+//   optsDeploy = deployScriptOpts[contractTab],
+//   errors = {},
+//   deployContract = new DeployBuilder('DeployERC20VotesScript'),
+// }: Props = $props();
+
+const optsDeploy = $derived(deployScriptOpts[contractTab]);
+
+// $effect(() => {
+//   // console.log('optsDeploy', optsDeploy);
+//   optsDeploy = deployScriptOpts[contractTab]
+//   console.log('optsDeploy', optsDeploy);
+// });
+
+// let deployScriptOptsERC20Votes = $derived(deployScriptOpts?.ERC20Votes);
+
+// $effect(() => {
+//   deployScriptOptsERC20Votes = deployScriptOpts?.ERC20Votes;
+// });
+
 
 $effect(() => {
-  const opts = deployScriptOpts[contractTab];
-});
-
-$effect(() => {
-  if (opts) {
+  // let optsDeploy = deployScriptOpts[contractTab]
+  if (optsDeploy) {
         try {
-            deployContract = buildDeployGeneric(opts);
+            // console.log('deployContract', optsDeploy);
+            // let deployContract = buildDeployGeneric(optsDeploy);
+            deployContract = buildDeployGeneric(optsDeploy);
+
             errors[contractTab] = undefined;
-        } catch (e: unknown) {
+          } catch (e: unknown) {
             if (e instanceof OptionsError) {
                 errors[contractTab] = e.messages;
             } else {
             throw e;
             }
-        }
+          }
     }
 });
+
+// export let initialContractTab: string | undefined = 'ERC20Votes';
+// export let contractTab: Kind = sanitizeKind(initialContractTab);
+// let deployScriptOpts: { [k in Kind]?: Required<KindedOptions [k]> } = {};
+// let errors: { [k in Kind]?: OptionsErrorMessages } = {};
+// let deployContract: DeployContract = new DeployBuilder('DeployERC20VotesScript');
+// $: optsDeploy = deployScriptOpts[contractTab];
+// $: {
+// if (optsDeploy) {
+//         try {
+//             deployContract = buildDeployGeneric(optsDeploy);
+//             errors[contractTab] = undefined;
+//         } catch (e: unknown) {
+//             if (e instanceof OptionsError) {
+//                 errors[contractTab] = e.messages;
+//             } else {
+//             throw e;
+//             }
+//         }
+//     }
+// }
+
 
 </script>
 
@@ -60,27 +95,33 @@ $effect(() => {
 
 </div>
 
-<WizardSingleScript isShowingCommand={true} conventionNumber={'000'} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} deployContract={deployContract}>
+<WizardSingleScript isShowingCommand={true} conventionNumber={'000'} initialContractTab={initialContractTab} contractTab={contractTab} opts={optsDeploy} deployContract={deployContract}>
 
     {#snippet menu()}
       <div class="tab overflow-hidden">
         <Background color="bg-base-200">
           <OverflowMenu>
-            <button class:selected={contractTab === 'ERC20Votes'} onclick={() => contractTab = 'ERC20Votes'}>
+            <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
               ERC20Votes
             </button>      
           </OverflowMenu>
         </Background>
       </div>
     {/snippet}
+
+
   
     {#snippet control()}
         <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
             <div class:hidden={contractTab !== 'ERC20Votes'}>
-                <DeployControls bind:opts={deployScriptOpts.ERC20Votes} />
+                
+                <DeployControls bind:opts={deployScriptOpts.ERC20Votes!} />
             </div>
         </div>
     {/snippet}
+
+    <!-- svelte-ignore binding_property_non_reactive -->
+
     
 </WizardSingleScript>
 

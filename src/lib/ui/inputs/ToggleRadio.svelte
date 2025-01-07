@@ -9,7 +9,7 @@
   };
 
   let {
-    value = $bindable(),
+    value = $bindable(false),
     checked = value !== false,
     defaultValue,
     disabled = undefined,
