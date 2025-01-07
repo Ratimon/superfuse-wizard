@@ -4,7 +4,6 @@
   import fileSaver from 'file-saver';
   import { v4 as uuid } from 'uuid';
 
-  import CopyBlock from '$lib/ui/components/CopyBlock.svelte';
   import CopyIcon from '$lib/ui/icons/CopyIcon.svelte';
   import CheckIcon from '$lib/ui/icons/CheckIcon.svelte';
   import FileIcon from '$lib/ui/icons/FileIcon.svelte';
@@ -23,33 +22,35 @@
   import { analyticsStore } from '$lib/analytics/analytics.Store';
 
   type Props = {
+    guide: Snippet;
     menu: Snippet;
     control: Snippet;
     deployContract: DeployContract;
     opts: any;
-    isShowingCommand: boolean;
     conventionNumber: string;
     initialContractTab: string | undefined ;
     contractTab: Kind;
   };
 
   let {
+    guide,
     menu,
     control,
     deployContract,
     opts,
-    isShowingCommand = true,
     conventionNumber,
     initialContractTab,
     contractTab = sanitizeKind(initialContractTab),
   }: Props = $props();
 
-  const codeCommand = $derived(`forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
-  const optionCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
-
   $effect(() => {
     contractTab = sanitizeKind(contractTab);
   });
+
+  // $effect.pre(() => {
+  //     // if (opts === undefined) opts = 
+  //   });
+  
 
   const deployCode = $derived(printDeployContract(deployContract));
   const highlightedDeployCode = $derived(injectHyperlinks(hljs.highlight(deployCode, {language: 'solidity'} ).value));
@@ -94,32 +95,7 @@
 
 <div class="container flex flex-col gap-4 p-8 mx-8">
 
-    {#if isShowingCommand}
-  
-      <div class="pt-3 pb-4 justify-center">
-        <h2 class="m-4 font-semibold">In your terminal, copy below contracts' codes and run deployment scripts to your prefered network:</h2>
-        <CopyBlock
-          boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
-          class="mb-5"
-          background="bg-primary-content"
-          copiedBackground="bg-success"
-          copiedColor="text-success-content"
-          text={codeCommand}
-        />
-      </div>
-  
-      <div class="pt-3 pb-4 justify-center">
-        <h2 class="m-4 font-semibold">(Optional), you can specify your derivation path:</h2>
-        <CopyBlock
-          boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
-          class="mb-5"
-          background="bg-primary-content"
-          copiedBackground="bg-success"
-          copiedColor="text-success-content"
-          text={optionCommand}
-        />
-      </div>
-    {/if}
+    {@render guide()}
   
     <div class="pt-3 pb-4 header flex flex-row justify-between">
   

@@ -6,6 +6,7 @@
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
+  import CopyBlock from '$lib/ui/components/CopyBlock.svelte';
   import Background from '$lib/ui/background/Background.svelte';
   import WizardSingleScript from '$lib/ui/components/WizardSingleScript.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
@@ -19,6 +20,10 @@
 
 
   const optsDeploy = $derived(allOpts[contractTab]);
+
+  const conventionNumber = $state('000');
+  const deployCommand = $derived(`forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
+  const mnemonicCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
 
   $effect(() => {
     if (optsDeploy) {
@@ -36,7 +41,6 @@
       }
   });
 
-
 </script>
 
 
@@ -48,7 +52,34 @@
 
 </div>
 
-<WizardSingleScript isShowingCommand={true} conventionNumber={'000'} initialContractTab={initialContractTab} contractTab={contractTab} opts={optsDeploy} deployContract={deployContract}>
+<WizardSingleScript conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={optsDeploy} deployContract={deployContract}>
+
+    {#snippet guide()}
+      <div class="pt-3 pb-4 justify-center">
+        <h2 class="m-4 font-semibold">In your terminal, copy below contracts' codes and run deployment scripts to your prefered network:</h2>
+        <CopyBlock
+          boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+          class="mb-5"
+          background="bg-primary-content"
+          copiedBackground="bg-success"
+          copiedColor="text-success-content"
+          text={deployCommand}
+        />
+      </div>
+
+      <div class="pt-3 pb-4 justify-center">
+        <h2 class="m-4 font-semibold">(Optional), you can specify your derivation path:</h2>
+        <CopyBlock
+          boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+          class="mb-5"
+          background="bg-primary-content"
+          copiedBackground="bg-success"
+          copiedColor="text-success-content"
+          text={mnemonicCommand}
+        />
+      </div>
+      
+    {/snippet}
 
     {#snippet menu()}
       <div class="tab overflow-hidden">
