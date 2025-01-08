@@ -22,8 +22,8 @@ export function load() {
     ];
 
     const dropDownLinks : Link[] = [
-        {pathname: '/blog/1-introduce-forge', title: 'Modular Deployer', navType: 'tab' },
-        {pathname: '/blog/2-introduce-wizard', title: 'Wizard', navType: 'tab'},
+        {pathname: '#1-contract', title: 'Contract', navType: 'scroll' },
+        {pathname: '#2-deploy', title: 'Deploy', navType: 'scroll'},
     ];
     
     const actionLink : Link = {pathname: '/blog', title: 'Read Our Blog', navType: 'tab' };

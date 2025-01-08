@@ -1,4 +1,5 @@
 <script  lang="ts">
+  import type { PageData } from './$types';
 
   import type {  DeployContract } from '$lib/wizard/deploy-scripts';
   import { DeployBuilder, buildDeployGeneric } from '$lib/wizard/deploy-scripts';
@@ -9,11 +10,20 @@
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
+  import ScrollStep from '$lib/ui/templates/ScrollStep.svelte';
   import CopyBlock from '$lib/ui/components/CopyBlock.svelte';
   import Background from '$lib/ui/background/Background.svelte';
   import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
   import AllControls from '$lib/ui/controls/AllControls.svelte';
+
+  type Props = {
+	  data: PageData;
+  } & PageData;
+
+	let { data }: Props = $props();
+
+  const stepLinks  = data.dropDownLinks;
 
   let initialContractTab: string | undefined = $state('ERC20Votes');
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
@@ -22,7 +32,6 @@
 
   let contract: Contract = $state(new ContractBuilder('ERC20Votes'));
   let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
-
 
   const opts = $derived(allOpts[contractTab]);
 
@@ -54,7 +63,7 @@
 
   <div class="pt-3 pb-4 justify-center">
 
-    <h2 class="m-4 font-semibold">
+    <!-- <h2 class="m-4 font-semibold">
       Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a> toolkit:
     </h2>
 
@@ -81,11 +90,21 @@
       <a class="underline" href="https://github.com/foundry-rs/foundry" target="_blank" rel="noreferrer"
         >github</a
       >
-    </p>
+    </p> -->
 
   </div>
 
 </div>
+
+<Background color="bg-base-100 pt-3 pb-4">
+  <section id={stepLinks[0].pathname}>
+    <div class="divider divider-primary ">
+      <p class="btn btn-accent text-2xl">Step 1 : Contract Wizard</p>
+    </div>
+  </section>
+</Background>
+
+<ScrollStep links={stepLinks} titleHighlighted={stepLinks[0].title} />
 
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={contract}>
 
@@ -138,6 +157,16 @@
   {/snippet}
 
 </WizardSingle>
+
+<Background color="bg-base-100 pt-3 pb-4">
+  <section id={stepLinks[1].pathname}>
+    <div class="divider divider-primary ">
+      <p class="btn btn-accent text-2xl">Step 2 :Deploy Wizard</p>
+    </div>
+  </section>
+</Background>
+
+<ScrollStep links={stepLinks} titleHighlighted={stepLinks[1].title} />
 
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
 

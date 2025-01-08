@@ -8,7 +8,6 @@
 		children: Snippet;
 		href: string;
 		class?: string;
-		// className?: string;
 		whenSelected?: string;
 		whenUnselected?: string;
 	}
@@ -20,17 +19,6 @@
 		whenSelected = '',
 		whenUnselected = ''
 	} : Props = $props();
-
-	// function onclick(event: Event | undefined) {
-	// 	handleAnchorClick(event)
-	// }
-
-	function once(fn: any) {
-		return function (event: any) {
-			if (fn) fn.call(this, event);
-			fn = null;
-		};
-	}
 
 	function preventDefault(fn: any) {
 		return function (event: any) {
@@ -55,7 +43,7 @@
 <!-- to do : tes this refactored part when scrolled cpmponent is added -->
 <a
 	href={href}
-	onclick={once(preventDefault(handleAnchorClick))}
+	onclick={preventDefault(handleAnchorClick)}
 	class={`${className} ${
 		(href === '/' ? isSameRoute(page.url.pathname, href) : isParentRoute(page.url.pathname, href))
 			? whenSelected

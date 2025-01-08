@@ -12,7 +12,7 @@
     }
 
     let {
-        menuTitle = "Try Our toolkit!!",
+        menuTitle = "Try Our Wizard!!",
         dropDownLinks = []
     }: Props = $props();
 

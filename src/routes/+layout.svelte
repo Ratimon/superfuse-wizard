@@ -25,7 +25,6 @@
 		data: PageData;
     } & PageData;
 
-
 	let { children, data }: Props = $props();
 
 	const fallbackHeadLinks : Link[] = [
