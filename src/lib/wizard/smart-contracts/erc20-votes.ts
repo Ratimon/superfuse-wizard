@@ -50,7 +50,7 @@ export function buildERC20Votes(opts: SharedERC20VotesOptions): Contract {
 
     const { access, upgradeable } = allOpts;
 
-    addBase(c, allOpts.contractName,  allOpts.tokenSymbol);
+    addBase(c);
     addCrosschain(c);
 
 
@@ -72,7 +72,7 @@ export function buildERC20Votes(opts: SharedERC20VotesOptions): Contract {
 
     // Note: Votes requires Permit
     if (allOpts.permit || allOpts.votes) {
-      addPermit(c, allOpts.contractName);
+      addPermit(c);
     }
 
     if (allOpts.votes) {
@@ -92,7 +92,9 @@ export function buildERC20Votes(opts: SharedERC20VotesOptions): Contract {
     return c;
 }
 
-function addBase(c: ContractBuilder, name: string, symbol: string) {
+function addBase(c: ContractBuilder) {
+
+// function addBase(c: ContractBuilder, name: string, symbol: string) {
 
   const IERC20 = {
     name: 'IERC20',
@@ -106,8 +108,24 @@ function addBase(c: ContractBuilder, name: string, symbol: string) {
   };
   c.addParent(
     ERC20,
-    [name, symbol],
+    [{ lit: '_name' }, { lit: '_symbol' }],
   );
+
+  c.addConstructorArgument({
+    type: {
+      name: 'string memory',
+      transpiled: false,
+    },
+    name: '_name',
+  });
+
+  c.addConstructorArgument({
+    type: {
+      name: 'string memory',
+      transpiled: false,
+    },
+    name: '_symbol',
+  });
 
   c.addOverride(ERC20, functions._update);
 
@@ -168,12 +186,13 @@ function addCrosschain(c: ContractBuilder) {
 export const premintPattern = /^(\d*)(?:\.(\d+))?(?:e(\d+))?$/;
 
 
-function addPermit(c: ContractBuilder, name: string) {
+function addPermit(c: ContractBuilder) {
+// function addPermit(c: ContractBuilder, name: string) {
   const ERC20Permit = {
     name: 'ERC20Permit',
     path: '@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol',
   };
-  c.addParent(ERC20Permit, [name]);
+  c.addParent(ERC20Permit, [{ lit: '_name' }]);
   c.addOverride(ERC20Permit, functions.nonces);
 
 }

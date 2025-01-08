@@ -7,5 +7,5 @@ export const supportsInterface: BaseFunction = {
     { name: '_interfaceId', type: 'bytes4' },
   ],
   returns: ['bool'],
-  mutability: 'view',
+  mutability: 'pure',
 };
