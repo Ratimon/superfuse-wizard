@@ -43,7 +43,7 @@ export function buildERC20Votes(opts: SharedERC20VotesOptions): Contract {
 
     // const Ownable = {
     //     name: 'Ownable',
-    //     path: '@redprint-openzeppelin/access/Ownable.sol',
+    //     path: '@-openzeppelin/access/Ownable.sol',
     // };
     // c.addParent(Ownable, []);
     

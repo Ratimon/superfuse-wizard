@@ -44,7 +44,7 @@ export const defaults: Required<SharedERC20VotesOptions> = {
   premint: '0',
   mintable: false,
   permit: true,
-  votes: false,
+  votes: 'blocknumber', //true
   flashmint: false,
   access: commonDefaults.access,
   upgradeable: commonDefaults.upgradeable,
@@ -74,7 +74,7 @@ export interface SharedERC20VotesOptions extends CommonOptions {
    * Whether to keep track of historical balances for voting in on-chain governance, and optionally specify the clock mode.
    * Setting `true` is equivalent to 'blocknumber'. Setting a clock mode implies voting is enabled.
    */
-  votes?: boolean | ClockMode;
+  votes: boolean | ClockMode;
   flashmint?: boolean;
 
   deployName: string;
