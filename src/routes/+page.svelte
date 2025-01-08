@@ -52,38 +52,68 @@
 
 <div class="container flex flex-col gap-4 p-8 mx-8">
 
-  <h2 class="m-4 font-semibold">
-    Hello World!
-  </h2>
+  <div class="pt-3 pb-4 justify-center">
+
+    <h2 class="m-4 font-semibold">
+      Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a> toolkit:
+    </h2>
+
+    <CopyBlock
+      boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
+      class="mb-5"
+      background="bg-primary-content"
+      copiedBackground="bg-success"
+      copiedColor="text-success-content"
+      text={`forge init your_project`}
+    />
+
+    <CopyBlock
+      boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
+      class="mb-5"
+      background="bg-primary-content"
+      copiedBackground="bg-success"
+      copiedColor="text-success-content"
+      text={`cd your_project`}
+    />
+
+    <p class="mt-6 text-base-300">
+      Find out more on
+      <a class="underline" href="https://github.com/foundry-rs/foundry" target="_blank" rel="noreferrer"
+        >github</a
+      >
+    </p>
+
+  </div>
 
 </div>
 
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={contract}>
 
   {#snippet guide()}
-    <div class="pt-3 pb-4 justify-center">
-      <h2 class="m-4 font-semibold">In your terminal, copy below code and run deployment scripts to your prefered network:</h2>
-      <CopyBlock
-        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
-        class="mb-5"
-        background="bg-primary-content"
-        copiedBackground="bg-success"
-        copiedColor="text-success-content"
-        text={deployCommand}
-      />
-    </div>
 
-    <div class="pt-3 pb-4 justify-center">
-      <h2 class="m-4 font-semibold">(Optional), you can specify your derivation path:</h2>
+    <!-- <div class="pt-3 pb-4 justify-center"> -->
+
+      <h2 class="m-4 font-semibold">
+        Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a>. Then add new solidity files with following:
+      </h2>
+
       <CopyBlock
-        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
+        boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
         class="mb-5"
         background="bg-primary-content"
         copiedBackground="bg-success"
         copiedColor="text-success-content"
-        text={mnemonicCommand}
+        text={`touch src/${contract.name}.sol scripts/${conventionNumber}_${deployContract.name}.s.sol test/${contract.name}.t.sol`}
       />
-    </div>
+
+      <p class="mt-6 text-base-300">
+        Check out example at our
+        <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples" target="_blank" rel="noreferrer"
+          >repo</a
+        >
+      </p>
+
+    <!-- </div> -->
     
   {/snippet}
 
@@ -112,6 +142,22 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
 
     {#snippet guide()}
+
+
+      <div class="pt-3 pb-4 justify-center">
+        <h2 class="m-4 font-semibold">
+          Add the <a class="bg-primary underline" href="https://github.com/Ratimon/superfuse-forge" target="_blank" rel="noreferrer">superfuse-forge</a> using your favorite package manager, e.g., with pnpm:
+        </h2>
+        <CopyBlock
+          boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
+          class="mb-5"
+          background="bg-primary-content"
+          copiedBackground="bg-success"
+          copiedColor="text-success-content"
+          text={`pnpm add superfuse-forge`}
+        />
+      </div>
+
       <div class="pt-3 pb-4 justify-center">
         <h2 class="m-4 font-semibold">In your terminal, copy below code and run deployment scripts to your prefered network:</h2>
         <CopyBlock
@@ -159,57 +205,6 @@
     {/snippet}
 
 </WizardSingle>
-<!-- 
-<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
-
-  {#snippet guide()}
-    <div class="pt-3 pb-4 justify-center">
-      <h2 class="m-4 font-semibold">In your terminal, copy below contracts' codes and run deployment scripts to your prefered network:</h2>
-      <CopyBlock
-        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
-        class="mb-5"
-        background="bg-primary-content"
-        copiedBackground="bg-success"
-        copiedColor="text-success-content"
-        text={deployCommand}
-      />
-    </div>
-
-    <div class="pt-3 pb-4 justify-center">
-      <h2 class="m-4 font-semibold">(Optional), you can specify your derivation path:</h2>
-      <CopyBlock
-        boxClass="p-2 rounded-box font-black text-primary max-w-full mx-auto text-center"
-        class="mb-5"
-        background="bg-primary-content"
-        copiedBackground="bg-success"
-        copiedColor="text-success-content"
-        text={mnemonicCommand}
-      />
-    </div>
-    
-  {/snippet}
-
-  {#snippet menu()}
-    <div class="tab overflow-hidden">
-      <Background color="bg-base-200">
-        <OverflowMenu>
-          <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
-            ERC20Votes
-          </button>      
-        </OverflowMenu>
-      </Background>
-    </div>
-  {/snippet}
-
-  {#snippet control()}
-      <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
-          <div class:hidden={contractTab !== 'ERC20Votes'}>
-              <DeployControls bind:opts={allOpts.ERC20Votes!} />
-          </div>
-      </div>
-  {/snippet}
-
-</WizardSingle> -->
 
 
 <style lang="postcss">
