@@ -13,7 +13,7 @@
   import Background from '$lib/ui/background/Background.svelte';
   import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
-  import DeployControls from '$lib/ui/controls/DeployControls.svelte';
+  import AllControls from '$lib/ui/controls/AllControls.svelte';
 
   let initialContractTab: string | undefined = $state('ERC20Votes');
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
@@ -22,7 +22,6 @@
 
   let contract: Contract = $state(new ContractBuilder('ERC20Votes'));
   let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
-
 
 
   const opts = $derived(allOpts[contractTab]);
@@ -103,7 +102,7 @@
   {#snippet control()}
       <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
           <div class:hidden={contractTab !== 'ERC20Votes'}>
-              <DeployControls bind:opts={allOpts.ERC20Votes!} />
+              <AllControls bind:opts={allOpts.ERC20Votes!} />
           </div>
       </div>
   {/snippet}
@@ -154,7 +153,7 @@
     {#snippet control()}
         <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
             <div class:hidden={contractTab !== 'ERC20Votes'}>
-                <DeployControls bind:opts={allOpts.ERC20Votes!} />
+                <AllControls bind:opts={allOpts.ERC20Votes!} />
             </div>
         </div>
     {/snippet}
