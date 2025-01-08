@@ -69,7 +69,7 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
 
   const MyERC20Votes = {
     name: `${allOpts.contractName}`,
-    path: `@main/ERC20Votes.sol`,
+    path: `@main/${allOpts.contractName}.sol`,
   };
   c.addImportOnly(MyERC20Votes);
   

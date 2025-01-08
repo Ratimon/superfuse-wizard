@@ -15,7 +15,8 @@
   import Background from '$lib/ui/background/Background.svelte';
   import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
-  import AllControls from '$lib/ui/controls/AllControls.svelte';
+  import ERC20VotesContractControls from '$lib/ui/controls/ERC20VotesContractControls.svelte';
+  import ERC20VotesDeployControls from '$lib/ui/controls/ERC20VotesDeployControls.svelte';
 
   type Props = {
 	  data: PageData;
@@ -151,7 +152,7 @@
   {#snippet control()}
       <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
           <div class:hidden={contractTab !== 'ERC20Votes'}>
-              <AllControls bind:opts={allOpts.ERC20Votes!} />
+              <ERC20VotesContractControls bind:opts={allOpts.ERC20Votes!} />
           </div>
       </div>
   {/snippet}
@@ -228,7 +229,7 @@
     {#snippet control()}
         <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
             <div class:hidden={contractTab !== 'ERC20Votes'}>
-                <AllControls bind:opts={allOpts.ERC20Votes!} />
+                <ERC20VotesDeployControls bind:opts={allOpts.ERC20Votes!} />
             </div>
         </div>
     {/snippet}
