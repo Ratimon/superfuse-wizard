@@ -21,6 +21,9 @@
   import type {  DeployContract } from '$lib/wizard/deploy-scripts';
   import {  printDeployContract } from '$lib/wizard/deploy-scripts';
 
+  import type {  TestContract } from '$lib/wizard/test-suites';
+  import {  printTestContract } from '$lib/wizard/test-suites';
+
   import type { GaEvent } from '$lib/analytics/analytics.Store';
   import { analyticsStore } from '$lib/analytics/analytics.Store';
 
@@ -28,7 +31,7 @@
     guide: Snippet;
     menu: Snippet;
     control: Snippet;
-    contractInstance: Contract | DeployContract;
+    contractInstance: Contract | DeployContract | TestContract;
     opts: any;
     conventionNumber: string;
     initialContractTab: string | undefined ;
@@ -54,7 +57,7 @@
 
   let code: string = $state("");
   let highlightedCode: string | undefined = $state("");
-  // const highlightedCode: string = $derived(code);
+
 
   $effect(() => {
     contractTab = sanitizeKind(contractTab);
@@ -68,6 +71,11 @@
       code = printContract(contractInstance as Contract);
       highlightedCode = injectHyperlinks(hljs.highlight(code, {language: 'solidity'} ).value);
        
+    } else if (contractInstance.kind === "test") {
+
+      code = printTestContract(contractInstance as TestContract);
+      highlightedCode = injectHyperlinks(hljs.highlight(code, {language: 'solidity'} ).value);
+
     } else {
       throw new Error("Invalid contract type");
     }

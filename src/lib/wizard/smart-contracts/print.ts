@@ -1,4 +1,4 @@
-import type { Contract, ReferencedContract,  Parent, ContractFunction, FunctionArgument, Value, NatspecTag, ImportContract, ContractModifier } from './contract';
+import type { Contract,  Parent, ContractFunction, FunctionArgument, Value, NatspecTag, ImportContract, ContractModifier } from './contract';
 
 import type { Options, Helpers }from './options';
 import { withHelpers } from './options';

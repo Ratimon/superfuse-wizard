@@ -1,8 +1,10 @@
 import type { DeployContract, BaseFunction} from './contract';
 import { DeployBuilder } from "./contract";
 
-import type { SharedERC20VotesOptions} from '../shared/option-erc20-votes';
+import type { SharedERC20VotesOptions, OpSec} from '../shared/option-erc20-votes';
 import { withCommonDefaults, defaults as commonDefaults } from '../shared/option-erc20-votes';
+
+import { OptionsError } from "../shared/error";
 
 import { printDeployContract } from "./print";
 import { setInfo } from "./set-info";
@@ -30,7 +32,10 @@ export function buildDeployERC20Votes(opts: SharedERC20VotesOptions): DeployCont
     const allOpts = withDeloyDefaults(opts);
   
     const c = new DeployBuilder(allOpts.deployName);
+
+    validateAddress(allOpts.deployerAddress);
     addBase(c, allOpts);
+    // setOpsec(c, allOpts.opSec);
 
     const fn : BaseFunction = getDeployFunction(allOpts);
     // addVotes(c, fn);
@@ -38,6 +43,14 @@ export function buildDeployERC20Votes(opts: SharedERC20VotesOptions): DeployCont
     setInfo(c, allOpts.deployInfo);
   
     return c;
+}
+
+function validateAddress(address: string) {
+  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+    throw new OptionsError({
+      address: 'Not a valid address',
+    });
+  }
 }
 
 function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
@@ -66,19 +79,41 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
   };
   c.addImportOnly(DeployOptions);
 
-
   const MyERC20Votes = {
     name: `${allOpts.contractName}`,
     path: `@main/${allOpts.contractName}.sol`,
   };
   c.addImportOnly(MyERC20Votes);
   
-  c.addOutsidecode(`string constant Artifact_MyERC20Token = "ERC20Votes.sol:${allOpts.contractName}";`)
+  c.addOutsidecode(`string constant Artifact_MyERC20Token = "${allOpts.contractName}.sol:${allOpts.contractName}";`)
 
   c.addVariable(`${allOpts.contractName} token;`);
   c.addVariable(`string name = "${allOpts.tokenName}";`);
   c.addVariable(`string symbol = "${allOpts.tokenSymbol}";`);
 }
+
+// function setOpsec(c: DeployBuilder, opsec: OpSec) {
+//   switch (opsec) {
+//     case 'address': {
+//       c.addVariable(`address owner = vm.envAddress("DEPLOYER_ADDRESS");`);
+
+//       break;
+//     }
+//     case 'key': {
+//       c.addVariable(`uint256 ownerPrivateKey = vm.envUint("DEPLOYER_PRIVATE_KEY");`);
+//       c.addVariable(`address owner = vm.envOr("DEPLOYER_ADDRESS", vm.addr(ownerPrivateKey));`);
+
+//       break;
+//     }
+//     case 'mnemonic': {
+//       c.addVariable(`string mnemonic = vm.envString("MNEMONIC");`);
+//       c.addVariable(`uint256 ownerPrivateKey = vm.deriveKey(mnemonic, "m/44'/60'/0'/0/", 1);`);
+//       c.addVariable(`address owner = vm.envOr("DEPLOYER_ADDRESS", vm.addr(ownerPrivateKey));`);
+      
+//       break;
+//     }
+//   }
+// }
 
 // function addVotes(c: DeployBuilder, fn : BaseFunction) {
 
@@ -97,7 +132,6 @@ function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<
     };
     c.addImportOnly(Upgrades);
   }
-
 
   if (allOpts.upgradeable == 'transparent' ) {
     c.addFunctionCode(`vm.startBroadcast();

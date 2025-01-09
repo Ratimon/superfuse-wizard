@@ -3,14 +3,13 @@ import { defaults as infoDefaults } from "./set-info";
 
 import type { ClockMode} from '../smart-contracts/set-clock-mode';
 
-import { clockModeDefault, setClockMode } from '../smart-contracts/set-clock-mode';
-
 
 export const chainOptions = [false, 'optimism', 'base'] as const;
 export type Chain = typeof chainOptions[number];
 
-// export const opSecOptions = [false, 'address', 'key', 'mnemonic'] as const;
-// export type OpSec = typeof opSecOptions[number];
+// export const opSecOptions = [false, 'key', 'mnemonic'] as const;
+export const opSecOptions = [false, 'address', 'key', 'mnemonic'] as const;
+export type OpSec = typeof opSecOptions[number];
 
 export const commonDefaults: Required<CommonOptions> = {
   //contract
@@ -20,6 +19,9 @@ export const commonDefaults: Required<CommonOptions> = {
 
   //deploy
   deployInfo: infoDefaults,
+
+  //test
+  testInfo: infoDefaults,
 } as const;
 
 
@@ -30,6 +32,8 @@ export function withCommonDefaults(opts: CommonOptions): Required<CommonOptions>
     contractInfo: opts.contractInfo ?? {},
     
     deployInfo: opts.deployInfo ?? {},
+
+    testInfo: opts.testInfo ?? {},
   };
 }
 
@@ -51,11 +55,19 @@ export const defaults: Required<SharedERC20VotesOptions> = {
   contractInfo: commonDefaults.contractInfo,
 
   //deploy
-  deployName: 'DeployERC20VotesScript',
+  deployName: 'DeployMyERC20VotesScript',
+  conventionNumber: '001',
   chain: 'optimism',
   // opSec: 'mnemonic',
 
-  deployInfo: commonDefaults.deployInfo
+  deployInfo: commonDefaults.deployInfo,
+  opSec: 'mnemonic',
+  deployerAddress: '0x0000000000000000000000000000000000000000',
+
+  //test
+  testName: 'ERC20VotesTest',
+  testInfo: commonDefaults.testInfo,
+
 } as const;
 
 
@@ -78,6 +90,10 @@ export interface SharedERC20VotesOptions extends CommonOptions {
   flashmint?: boolean;
 
   deployName: string;
+  conventionNumber: string;
   chain: Chain;
-  // opSec: OpSec;
+  opSec: OpSec;
+  deployerAddress: string;
+
+  testName: string;
 }

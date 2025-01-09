@@ -1,7 +1,7 @@
 import { toIdentifier } from '../utils/to-identifier';
 
-export interface DeployContract {
-  kind: 'deploy';
+export interface TestContract {
+  kind: 'test';
 
   name: string;
   license: string;
@@ -81,8 +81,8 @@ export interface NatspecTag {
   value: string;
 }
 
-export class DeployBuilder implements DeployContract {
-  kind: 'deploy' = 'deploy';
+export class TestBuilder implements TestContract {
+  kind: 'test' = 'test';
 
   readonly name: string;
   license: string = 'MIT';

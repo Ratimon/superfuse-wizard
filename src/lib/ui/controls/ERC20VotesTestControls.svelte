@@ -8,11 +8,13 @@
   
     import { erc20Votes, premintPattern } from '$lib/wizard/smart-contracts';
     import { deployERC20Votes } from '$lib/wizard/deploy-scripts';
+    import { testERC20Votes } from '$lib/wizard/test-suites';
 
     import { error } from './error-tooltip';
   
     const contractDefaults = erc20Votes.defaults;
     const deployDefaults = deployERC20Votes.defaults;
+    const testDefaults = testERC20Votes.defaults;
 
 
     type Props = {
@@ -28,20 +30,22 @@
     if (opts === undefined) opts = {
             kind: 'ERC20Votes',
             ...contractDefaults,
-            //   premint: '', // default to empty premint in UI instead of 0
             ...deployDefaults,
+            ...testDefaults,
             contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
             deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+            testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
       };
 
     $effect.pre(() => {
       if (opts === undefined) opts = {
             kind: 'ERC20Votes',
             ...contractDefaults,
-            //   premint: '', // default to empty premint in UI instead of 0
             ...deployDefaults,
+            ...testDefaults,
             contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
             deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+            testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
       }
     });
   
@@ -49,25 +53,46 @@
 
 <section class="controls-section">
     <Background color="bg-neutral-content">
-        <h1>Deploy Settings</h1>
+        <h1>Test Settings</h1>
     </Background>
-    <h1>OpSec Management</h1>
+    <h1>
+        <!-- svelte-ignore a11y_label_has_associated_control -->
+        <label class="flex items-center tooltip-container pr-2">
+        <span>Test Info</span>
+        </label>
+    </h1>
 
     <label class="labeled-input">
         <span class="flex justify-between pr-2">
-            Deployer Address
-            <HelpTooltip align="right" placement="right" link="https://book.getfoundry.sh/reference/forge/forge-script?highlight=forge%20scr#forge-script">
-                The address must be match with either private key or mnemonic.
-            </HelpTooltip>
-            </span>
-        <input
-            bind:value={opts.deployerAddress}
-            use:error={errors?.address}
-            placeholder="Enter a valid address"
-        >
-     </label>
+        Reference
+        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-forge/tree/main">
+            The link to original code
+        </HelpTooltip>
+        </span>
+        <input bind:value={opts.testInfo.securityContact} placeholder={"security@example.com"} />
+    </label>
+
+    <label class="labeled-input">
+        <span>License</span>
+        <input bind:value={opts.testInfo.license} placeholder={opts.testInfo.license} />
+    </label>
+</section>
+
+
+<section class="controls-section">
+    <Background color="bg-neutral-content">
+        <h1>Deploy Settings</h1>
+    </Background>
+    <h1>OpSec Management</h1>
     
     <div class="checkbox-group justify-start">
+    <label class:checked={opts.opSec === 'address'}>
+        <input type="radio" bind:group={opts.opSec} value='address'>
+        Address
+        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples">
+            The address must be match with either private key or mnemonic setup in deploy script.
+        </HelpTooltip>
+    </label>
       <label class:checked={opts.opSec === 'key'}>
         <input type="radio" bind:group={opts.opSec} value='key'>
         Key
@@ -84,30 +109,6 @@
         </HelpTooltip>
       </label>
     </div>
-</section>
-
-<section class="controls-section">
-    <h1>
-        <!-- svelte-ignore a11y_label_has_associated_control -->
-        <label class="flex items-center tooltip-container pr-2">
-        <span>Deploy Info</span>
-        </label>
-    </h1>
-
-    <label class="labeled-input">
-        <span class="flex justify-between pr-2">
-        Reference
-        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-forge/tree/main">
-            The link to original code
-        </HelpTooltip>
-        </span>
-        <input bind:value={opts.deployInfo.securityContact} placeholder={"security@example.com"} />
-    </label>
-
-    <label class="labeled-input">
-        <span>License</span>
-        <input bind:value={opts.deployInfo.license} placeholder={opts.deployInfo.license} />
-    </label>
 </section>
   
 <section class="controls-section">

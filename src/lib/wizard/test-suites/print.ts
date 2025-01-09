@@ -1,6 +1,6 @@
 // import 'array.prototype.flatmap/auto';
 
-import type { ReferencedContract, DeployContract, ContractFunction, FunctionArgument, Value, NatspecTag, ImportContract } from './contract';
+import type { ReferencedContract, TestContract, ContractFunction, FunctionArgument, Value, NatspecTag, ImportContract } from './contract';
 import type { Options, Helpers }from './options';
 import { withHelpers } from './options';
 
@@ -9,7 +9,7 @@ import { formatLines, spaceBetween } from '../utils/format-lines';
 import { mapValues } from '../utils/map-values';
 import SOLIDITY_VERSION from './solidity-version.json' assert { type: "json" };
 
-export function printDeployContract(contract: DeployContract, opts?: Options): string {
+export function printTestContract(contract: TestContract, opts?: Options): string {
   const helpers = withHelpers(opts);
 
   const fns = mapValues(
@@ -51,7 +51,7 @@ export function printDeployContract(contract: DeployContract, opts?: Options): s
   );
 }
 
-function printInheritance(contract: DeployContract, { transformName }: Helpers): [] | [string] {
+function printInheritance(contract: TestContract, { transformName }: Helpers): [] | [string] {
   if (contract.parents.length > 0) {
     return ['is ' + contract.parents.map(p => transformName(p.contract)).join(', ')];
   } else {
@@ -81,7 +81,7 @@ function printImports(imports: ImportContract[], helpers: Helpers): string[] {
 type SortedFunctions = Record<'code' | 'modifiers' | 'override', ContractFunction[]>;
 
 // Functions with code first, then those with modifiers, then the rest
-function sortedFunctions(contract: DeployContract): SortedFunctions {
+function sortedFunctions(contract: TestContract): SortedFunctions {
   const fns: SortedFunctions = { code: [], modifiers: [], override: [] };
 
   for (const fn of contract.functions) {

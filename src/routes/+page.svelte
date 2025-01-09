@@ -7,6 +7,9 @@
   import type { Contract } from '$lib/wizard/smart-contracts';
   import { ContractBuilder, buildContractGeneric } from '$lib/wizard/smart-contracts';
 
+  import type { TestContract } from '$lib/wizard/test-suites';
+  import { TestBuilder, buildTestGeneric } from '$lib/wizard/test-suites';
+
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
@@ -17,6 +20,7 @@
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
   import ERC20VotesContractControls from '$lib/ui/controls/ERC20VotesContractControls.svelte';
   import ERC20VotesDeployControls from '$lib/ui/controls/ERC20VotesDeployControls.svelte';
+  import ERC20VotesTestControls from '$lib/ui/controls/ERC20VotesTestControls.svelte';
 
   type Props = {
 	  data: PageData;
@@ -32,19 +36,41 @@
   let errors : { [k in Kind]?: OptionsErrorMessages } =  $state({});
 
   let contract: Contract = $state(new ContractBuilder('ERC20Votes'));
-  let deployContract: DeployContract = $state(new DeployBuilder('DeployERC20VotesScript'));
+  let deployContract: DeployContract = $state(new DeployBuilder('DeployMyERC20VotesScript'));
+  let testContract: TestContract = $state(new TestBuilder('TestMyERC20VotesScript'));
 
   const opts = $derived(allOpts[contractTab]);
 
-  const conventionNumber = $state('000');
-  const deployCommand = $derived(`forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
-  const mnemonicCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
+  const conventionNumber = $state(`001`);
+  let deployCommand = $state(`forge script script/001_DeployMyERC20VotesScript.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
+  let walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
+  
+
+  $effect(() => {
+    if (opts) {
+          try {
+              deployCommand = `forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender ${opts.deployerAddress} --rpc-url <RPC_URL> --broadcast`;
+
+              if (opts.opSec === 'mnemonic') {
+                walletCommand = `--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`
+              } else {
+                walletCommand = `--private-key <DEPLOYER_PRIVATE_KEY>`
+              }
+
+            } catch (e: unknown) {
+              throw e;
+              }
+            }
+  });
+
+  // const walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
 
   $effect(() => {
     if (opts) {
           try {
               deployContract = buildDeployGeneric(opts);
               contract = buildContractGeneric(opts);
+              testContract = buildTestGeneric(opts);
 
               errors[contractTab] = undefined;
             } catch (e: unknown) {
@@ -110,7 +136,6 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={contract}>
 
   {#snippet guide()}
-
     <!-- <div class="pt-3 pb-4 justify-center"> -->
 
       <h2 class="m-4 font-semibold">
@@ -173,7 +198,6 @@
 
     {#snippet guide()}
 
-
       <div class="pt-3 pb-4 justify-center">
         <h2 class="m-4 font-semibold">
           Add the <a class="bg-primary underline" href="https://github.com/Ratimon/superfuse-forge" target="_blank" rel="noreferrer">superfuse-forge</a> using your favorite package manager, e.g., with pnpm:
@@ -208,7 +232,7 @@
           background="bg-primary-content"
           copiedBackground="bg-success"
           copiedColor="text-success-content"
-          text={mnemonicCommand}
+          text={walletCommand}
         />
       </div>
       
@@ -229,7 +253,67 @@
     {#snippet control()}
         <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
             <div class:hidden={contractTab !== 'ERC20Votes'}>
-                <ERC20VotesDeployControls bind:opts={allOpts.ERC20Votes!} />
+                <ERC20VotesDeployControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
+            </div>
+        </div>
+    {/snippet}
+
+</WizardSingle>
+
+<Background color="bg-base-100 pt-3 pb-4">
+  <section id={stepLinks[2].pathname}>
+    <div class="divider divider-primary ">
+      <p class="btn btn-accent text-2xl">Step 3 :Test Wizard</p>
+    </div>
+  </section>
+</Background>
+
+<ScrollStep links={stepLinks} titleHighlighted={stepLinks[2].title} />
+
+<WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={testContract}>
+
+    {#snippet guide()}
+
+      <div class="pt-3 pb-4 justify-center">
+        <h2 class="m-4 font-semibold">
+          Add the <a class="bg-primary underline" href="https://github.com/Ratimon/superfuse-forge" target="_blank" rel="noreferrer">superfuse-forge</a> using your favorite package manager, e.g., with pnpm:
+        </h2>
+        <CopyBlock
+          boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
+          class="mb-5"
+          background="bg-primary-content"
+          copiedBackground="bg-success"
+          copiedColor="text-success-content"
+          text={`forge test`}
+        />
+      </div>
+
+      <p class="mt-6 text-base-300">
+        It is noted that we only support testing for ERC7802. Other contracts are not supported yet. Check out the spec here:
+        <a class="underline" href="https://github.com/defi-wonderland/ERCs/tree/erc/crosschain-token-interface" target="_blank" rel="noreferrer"
+          >repo</a
+        >
+      </p>
+
+
+    {/snippet}
+
+    {#snippet menu()}
+      <div class="tab overflow-hidden">
+        <Background color="bg-base-200">
+          <OverflowMenu>
+            <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
+              ERC20Votes
+            </button>      
+          </OverflowMenu>
+        </Background>
+      </div>
+    {/snippet}
+
+    {#snippet control()}
+        <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
+            <div class:hidden={contractTab !== 'ERC20Votes'}>
+                <ERC20VotesTestControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
             </div>
         </div>
     {/snippet}

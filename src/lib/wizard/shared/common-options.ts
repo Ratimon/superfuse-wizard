@@ -11,6 +11,7 @@ export interface CommonOptions {
   contractInfo?: Info;
 
   deployInfo?: Info;
+  testInfo?: Info;
 }
 
 export const defaults: Required<CommonOptions> = {
@@ -19,6 +20,7 @@ export const defaults: Required<CommonOptions> = {
   contractInfo: infoDefaults,
 
   deployInfo: infoDefaults,
+  testInfo: infoDefaults,
 } as const;
 
 
@@ -28,7 +30,8 @@ export interface CommonOptions {
   contractInfo?: Info;
 
   deployInfo?: Info;
-
+  
+  testInfo?: Info;
 }
 
 export function withCommonDefaults(opts: CommonOptions): Required<CommonOptions> {
@@ -38,5 +41,6 @@ export function withCommonDefaults(opts: CommonOptions): Required<CommonOptions>
     contractInfo: opts.contractInfo ?? {},
 
     deployInfo: opts.deployInfo ?? {},
+    testInfo: opts.testInfo ?? {},
   };
 }
