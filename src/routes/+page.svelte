@@ -68,8 +68,6 @@
             }
   });
 
-  // const walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
-
   $effect(() => {
     if (opts) {
           try {
@@ -188,7 +186,7 @@
           <L2NativeSuperchainERC20ContractControls bind:opts={allOpts.L2NativeSuperchainERC20!} errors={errors.L2NativeSuperchainERC20} />
       </div>
       <div class:hidden={contractTab !== 'ERC20Votes'}>
-          <ERC20VotesContractControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
+          <ERC20VotesContractControls bind:opts={allOpts.ERC20Votes!} />
       </div>
     </div>
   {/snippet}

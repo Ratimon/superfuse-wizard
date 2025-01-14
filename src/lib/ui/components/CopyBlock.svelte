@@ -1,6 +1,5 @@
 <script lang="ts">
 	// based on https://github.com/skeletonlabs/skeleton/blob/58d9780dafd4a7ca04b1086a30aac8c0dc3ce416/src/lib/utilities/CodeBlock/CodeBlock.svelte
-
 	import {clipboard} from '$lib/ui/utils/clipboard';
 
 	type Props = {
@@ -10,9 +9,7 @@
 		boxClass: string;
         class?: string;
 		copiedColor: string;
-		// copied : any;
     };
-	
 
 	let {
 		text = '',
@@ -34,7 +31,6 @@
 		}, 1000);
 
 	}
-
 
 </script>
 

@@ -56,7 +56,7 @@ export const defaults: Required<SharedERC20VotesOptions> = {
 
   //deploy
   deployName: 'DeployMyERC20VotesScript',
-  conventionNumber: '001',
+  conventionNumber: '000',
   chain: 'optimism',
   // opSec: 'mnemonic',
 

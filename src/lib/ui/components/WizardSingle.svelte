@@ -49,12 +49,6 @@
     contractTab = sanitizeKind(initialContractTab),
   }: Props = $props();
 
-  // $effect.pre(() => {
-
-  // $effect(() => {
-  //   contractTab = sanitizeKind(contractTab);
-  // });
-
   let code: string = $state("");
   let highlightedCode: string | undefined = $state("");
 
@@ -80,10 +74,7 @@
       throw new Error("Invalid contract type");
     }
   });
-  
 
-  // const code = $derived(printDeployContract(contractInstance));
-  // const highlightedCode = $derived(injectHyperlinks(hljs.highlight(code, {language: 'solidity'} ).value));
   
   let isScriptCopied = $state(false);
 
@@ -120,7 +111,6 @@
         $analyticsStore = [...$analyticsStore, new_event]
       }
   };
-
 
 </script>
 

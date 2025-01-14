@@ -1,36 +1,47 @@
 <script lang="ts">
-import type { Access } from '$lib/wizard/smart-contracts';
+    import type { Access } from '$lib/wizard/smart-contracts';
 
-import ToggleRadio from '../inputs/ToggleRadio.svelte';
-import HelpTooltip from './HelpTooltip.svelte';
+    import ToggleRadio from '../inputs/ToggleRadio.svelte';
+    import HelpTooltip from './HelpTooltip.svelte';
 
-export let access: Access;
-export let required: boolean;
-let defaultValueWhenEnabled: false | "ownable" | "roles" = 'ownable';
+    type Props = {
+        access: Access;
+        required: boolean;
+    };
 
-let wasRequired = required;
-let wasAccess = access;
+    let {
+        access = $bindable(),
+        required = $bindable(),
+    }: Props = $props();
 
-$: {
-    if (wasRequired && !required) {
-    access = wasAccess;
-    } else {
-    wasAccess = access;
-    if (access === false && required) {
-        access = defaultValueWhenEnabled;
-    }
-    }
+    // export let access: Access;
+    // export let required: boolean;
+    let defaultValueWhenEnabled: false | "ownable" | "roles" = $state('ownable');
 
-    wasRequired = required;
-    if (access !== false) {
-    defaultValueWhenEnabled = access;
-    }
-}
+    let wasRequired = $state(required);
+    let wasAccess = $state(access);
+
+    $effect(() => {
+        if (wasRequired && !required) {
+        access = wasAccess;
+        } else {
+        wasAccess = access;
+        if (access === false && required) {
+            access = defaultValueWhenEnabled;
+        }
+        }
+
+        wasRequired = required;
+        if (access !== false) {
+        defaultValueWhenEnabled = access;
+        }
+    });
+
 </script>
 
 <section class="controls-section">
     <h1>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <!-- svelte-ignore a11y_label_has_associated_control -->
         <label class="flex items-center tooltip-container pr-2">
         <span>Access Control</span>
         <span class="ml-1">
@@ -57,12 +68,5 @@ $: {
                 Flexible mechanism with a separate role for each privileged action. A role can have many authorized accounts.
             </HelpTooltip>
         </label>
-        <!-- <label class:checked={access === 'managed'}>
-            <input type="radio" bind:group={access} value="managed">
-            Managed
-            <HelpTooltip placement="right" align="right" link="https://docs.openzeppelin.com/contracts/api/access#AccessManaged">
-                Enables a central contract to define a policy that allows certain callers to access certain functions.
-            </HelpTooltip>
-        </label> -->
     </div>
 </section>

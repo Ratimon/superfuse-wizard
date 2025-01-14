@@ -1,13 +1,18 @@
 <script lang="ts">
     
-  let titleName: string;
-  export {titleName as title};
+  type Props = {
+    title: string;
+  }
+
+  let {
+    title : titleName
+  }: Props = $props();
 
   const onClick = () => {};
 
 </script>
 
 
-<button class="btn btn-gradient animate-shimmer" on:click={() => onClick()}>
+<button class="btn btn-gradient animate-shimmer" onclick={() => onClick()}>
     {titleName}
 </button>

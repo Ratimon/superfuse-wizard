@@ -58,39 +58,13 @@
     }
 	});
   
-
-  // $: {
-  //   if (instance) {
-  //     if (disabled) {
-  //       instance.disable();
-  //     } else {
-  //       instance.enable();
-  //     }
-  //   }
-  // }
 </script>
 
-
-<!-- {#snippet trigger(children:any)}
-  {@render children?.()}
-{/snippet} -->
-
-
-
-<div  use:trigger>
+<div use:trigger>
   {@render children?.() }
 </div>
 
-<!-- <slot {trigger}></slot> -->
 
 <div style="display: none;" bind:this={content}>
-  <!-- <slot name="content">{text}</slot> -->
-  <!-- <slot name="caption">{text}</slot> -->
-
-  <!-- {#snippet caption(text:any)}
-    {text}
-	{/snippet} -->
-
-  <!-- {@render caption?.(text)} -->
   {@render caption?.()}
 </div>

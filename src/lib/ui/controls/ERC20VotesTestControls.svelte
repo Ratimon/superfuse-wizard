@@ -1,53 +1,52 @@
 <script lang="ts">
-    import Background from '$lib/ui/background/Background.svelte';
-  
-    import HelpTooltip from '$lib/ui/controls/HelpTooltip.svelte';
+  import Background from '$lib/ui/background/Background.svelte';
 
-    import type {  OptionsErrorMessages } from '$lib/wizard/shared';
-    import type { KindedERC20Options } from '$lib/wizard/shared';
-  
-    import { erc20Votes } from '$lib/wizard/smart-contracts';
-    import { deployERC20Votes } from '$lib/wizard/deploy-scripts';
-    import { testERC20Votes } from '$lib/wizard/test-suites';
+  import HelpTooltip from '$lib/ui/controls/HelpTooltip.svelte';
 
-    import { error } from './error-tooltip';
-  
-    const contractDefaults = erc20Votes.defaults;
-    const deployDefaults = deployERC20Votes.defaults;
-    const testDefaults = testERC20Votes.defaults;
+  import type {  OptionsErrorMessages } from '$lib/wizard/shared';
+  import type { KindedERC20Options } from '$lib/wizard/shared';
 
+  import { erc20Votes } from '$lib/wizard/smart-contracts';
+  import { deployERC20Votes } from '$lib/wizard/deploy-scripts';
+  import { testERC20Votes } from '$lib/wizard/test-suites';
 
-    type Props = {
-      opts: Required<KindedERC20Options['ERC20Votes']>;
-      errors: undefined | OptionsErrorMessages;
+  import { error } from './error-tooltip';
+
+  const contractDefaults = erc20Votes.defaults;
+  const deployDefaults = deployERC20Votes.defaults;
+  const testDefaults = testERC20Votes.defaults;
+
+  type Props = {
+    opts: Required<KindedERC20Options['ERC20Votes']>;
+    errors: undefined | OptionsErrorMessages;
+  };
+
+  let {
+    opts = $bindable(),
+    errors = $bindable()
+  }: Props = $props();
+
+  if (opts === undefined) opts = {
+          kind: 'ERC20Votes',
+          ...contractDefaults,
+          ...deployDefaults,
+          ...testDefaults,
+          contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+          deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+          testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     };
 
-    let {
-      opts = $bindable(),
-      errors = $bindable()
-    }: Props = $props();
-
+  $effect.pre(() => {
     if (opts === undefined) opts = {
-            kind: 'ERC20Votes',
-            ...contractDefaults,
-            ...deployDefaults,
-            ...testDefaults,
-            contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-            deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
-            testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
-      };
-
-    $effect.pre(() => {
-      if (opts === undefined) opts = {
-            kind: 'ERC20Votes',
-            ...contractDefaults,
-            ...deployDefaults,
-            ...testDefaults,
-            contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-            deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
-            testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
-      }
-    });
+          kind: 'ERC20Votes',
+          ...contractDefaults,
+          ...deployDefaults,
+          ...testDefaults,
+          contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+          deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+          testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+    }
+  });
   
 </script>
 
