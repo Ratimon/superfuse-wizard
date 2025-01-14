@@ -13,4 +13,5 @@ export { defaults as InfoDefaults } from './set-info';
 
 export {
     deployERC20Votes,
+    deployL2NativeSuperchainERC20,
 } from './api';

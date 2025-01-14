@@ -1,3 +1,7 @@
+import type { SharedL2NativeSuperchainERC20Options} from '../shared/option-l2-native-superchain-ERC20';
+import {  defaults as l2NativeSuperchainERC20Defaults } from '../shared/option-l2-native-superchain-ERC20';
+import { printL2NativeSuperchainERC20, isAccessControlRequired as l2NativeSuperchainERC20IsAccessControlRequired } from './l2-native-superchain-ERC20';
+
 import type { SharedERC20VotesOptions} from '../shared/option-erc20-votes';
 import {  defaults as erc20VotesDefaults } from '../shared/option-erc20-votes';
 import { printERC20Votes, isAccessControlRequired as erc20VotesIsAccessControlRequired } from './erc20-votes';
@@ -20,6 +24,12 @@ export interface WizardContractAPI<Options extends CommonOptions> {
     isAccessControlRequired?: (opts: Partial<Options>) => boolean,
 }
 
+export type L2NativeSuperchainERC20 = WizardContractAPI<SharedL2NativeSuperchainERC20Options>;
+export const l2NativeSuperchainERC20: L2NativeSuperchainERC20 = {
+  print: printL2NativeSuperchainERC20,
+  defaults: l2NativeSuperchainERC20Defaults,
+  isAccessControlRequired: l2NativeSuperchainERC20IsAccessControlRequired
+}
 
 export type ERC20Votes = WizardContractAPI<SharedERC20VotesOptions>;
 export const erc20Votes: ERC20Votes = {

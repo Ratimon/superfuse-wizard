@@ -40,18 +40,11 @@ export function buildERC20Votes(opts: SharedERC20VotesOptions): Contract {
 
     // to do add interface
     const c = new ContractBuilder(allOpts.contractName);
-
-    // const Ownable = {
-    //     name: 'Ownable',
-    //     path: '@-openzeppelin/access/Ownable.sol',
-    // };
-    // c.addParent(Ownable, []);
     
-
-    const { access, upgradeable } = allOpts;
+    const { access, upgradeable, contractInfo } = allOpts;
 
     addBase(c);
-    addCrosschain(c);
+    setCrosschain(c);
 
 
     // if (allOpts.burnable) {
@@ -88,7 +81,7 @@ export function buildERC20Votes(opts: SharedERC20VotesOptions): Contract {
     // setUpgradeable(c, upgradeable, access);
 
 
-    setInfo(c, allOpts.contractInfo);
+    setInfo(c, contractInfo);
     return c;
 }
 
@@ -131,7 +124,7 @@ function addBase(c: ContractBuilder) {
 
 }
 
-function addCrosschain(c: ContractBuilder) {
+function setCrosschain(c: ContractBuilder) {
 
   const Predeploys = {
     name: 'Predeploys',
@@ -183,7 +176,7 @@ function addCrosschain(c: ContractBuilder) {
 
 }
 
-export const premintPattern = /^(\d*)(?:\.(\d+))?(?:e(\d+))?$/;
+// export const premintPattern = /^(\d*)(?:\.(\d+))?(?:e(\d+))?$/;
 
 
 function addPermit(c: ContractBuilder) {
@@ -222,15 +215,7 @@ function addVotes(c: ContractBuilder, clockMode: ClockMode) {
 
 const functions = defineFunctions({
 
-  _update: {
-    kind: 'internal' as const,
-    args: [
-      { name: 'from', type: 'address' },
-      { name: 'to', type: 'address' },
-      { name: 'value', type: 'uint256' },
-    ],
-  },
-
+  
   crosschainMint: {
     kind: 'external' as const,
     args: [
@@ -254,5 +239,15 @@ const functions = defineFunctions({
     ],
     returns: ['uint256'],
     mutability: 'view' as const,
-  }
+  },
+
+  _update: {
+    kind: 'internal' as const,
+    args: [
+      { name: 'from', type: 'address' },
+      { name: 'to', type: 'address' },
+      { name: 'value', type: 'uint256' },
+    ],
+  },
+
 });

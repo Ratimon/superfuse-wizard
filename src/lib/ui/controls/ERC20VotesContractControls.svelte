@@ -2,13 +2,13 @@
     import Background from '$lib/ui/background/Background.svelte';
   
     import HelpTooltip from '$lib/ui/controls/HelpTooltip.svelte';
-    // import UpgradeabilitySection from '$lib/ui/controls/UpgradeabilitySection.svelte';
     import ToggleRadio from '$lib/ui/inputs/ToggleRadio.svelte';
+    // import UpgradeabilitySection from '$lib/ui/controls/UpgradeabilitySection.svelte';
 
     import type {  OptionsErrorMessages } from '$lib/wizard/shared';
     import type { KindedERC20Options } from '$lib/wizard/shared';
   
-    import { erc20Votes, premintPattern } from '$lib/wizard/smart-contracts';
+    import { erc20Votes } from '$lib/wizard/smart-contracts';
     import { deployERC20Votes } from '$lib/wizard/deploy-scripts';
   
     import { error } from './error-tooltip';
@@ -20,10 +20,12 @@
 
     type Props = {
       opts: Required<KindedERC20Options['ERC20Votes']>;
+      errors: undefined | OptionsErrorMessages;
     };
 
     let {
-      opts = $bindable()
+      opts = $bindable(),
+      errors = $bindable()
     }: Props = $props();
 
     if (opts === undefined) opts = {
@@ -60,16 +62,12 @@
         <span>Name</span>
         <input bind:value={opts.contractName}>
     </label>
-<!-- 
-    <label class="labeled-input">
-        <span>Token Name</span>
-        <input bind:value={opts.tokenName}>
-    </label>
 
     <label class="labeled-input">
         <span>Symbol</span>
         <input bind:value={opts.tokenSymbol}>
-    </label> -->
+    </label>
+
 
     <!-- <label class="labeled-input">
         <span class="flex justify-between pr-2">
@@ -82,7 +80,6 @@
 
 </section>
 
-<!-- to do add Opsec option  -->
 
 <section class="controls-section">
   <h1>Features</h1>

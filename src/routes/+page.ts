@@ -22,7 +22,7 @@ export function load() {
     ];
 
     const dropDownLinks : Link[] = [
-        {pathname: '#1-contract', title: 'Contract', navType: 'scroll' },
+        {pathname: '#1-contract', title: 'Build', navType: 'scroll' },
         {pathname: '#2-deploy', title: 'Deploy', navType: 'scroll'},
         {pathname: '#3-test', title: 'Test', navType: 'scroll'},
     ];

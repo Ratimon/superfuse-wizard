@@ -18,9 +18,14 @@
   import Background from '$lib/ui/background/Background.svelte';
   import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
+
   import ERC20VotesContractControls from '$lib/ui/controls/ERC20VotesContractControls.svelte';
   import ERC20VotesDeployControls from '$lib/ui/controls/ERC20VotesDeployControls.svelte';
   import ERC20VotesTestControls from '$lib/ui/controls/ERC20VotesTestControls.svelte';
+
+  import L2NativeSuperchainERC20ContractControls from '$lib/ui/controls/L2NativeSuperchainERC20ContractControls.svelte';
+  import L2NativeSuperchainERC20DeployControls from '$lib/ui/controls/L2NativeSuperchainERC20DeployControls.svelte';
+  import L2NativeSuperchainERC20TestControls from '$lib/ui/controls/L2NativeSuperchainERC20TestControls.svelte';
 
   type Props = {
 	  data: PageData;
@@ -30,19 +35,19 @@
 
   const stepLinks  = data.dropDownLinks;
 
-  let initialContractTab: string | undefined = $state('ERC20Votes');
+  let initialContractTab: string | undefined = $state('L2NativeSuperchainERC20');
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
   let allOpts: { [k in Kind]?: Required<KindedOptions [k]> } =  $state({});
   let errors : { [k in Kind]?: OptionsErrorMessages } =  $state({});
 
-  let contract: Contract = $state(new ContractBuilder('ERC20Votes'));
-  let deployContract: DeployContract = $state(new DeployBuilder('DeployMyERC20VotesScript'));
-  let testContract: TestContract = $state(new TestBuilder('TestMyERC20VotesScript'));
+  let contract: Contract = $state(new ContractBuilder('L2NativeSuperchainERC20'));
+  let deployContract: DeployContract = $state(new DeployBuilder('DeployL2NativeSuperchainERC20Script'));
+  let testContract: TestContract = $state(new TestBuilder('TestL2NativeSuperchainERC20Script'));
 
   const opts = $derived(allOpts[contractTab]);
 
-  const conventionNumber = $state(`001`);
-  let deployCommand = $state(`forge script script/001_DeployMyERC20VotesScript.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
+  const conventionNumber = $state(`000`);
+  let deployCommand = $state(`forge script script/000_DeployL2NativeSuperchainERC20Script.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
   let walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
   
 
@@ -68,8 +73,8 @@
   $effect(() => {
     if (opts) {
           try {
-              deployContract = buildDeployGeneric(opts);
               contract = buildContractGeneric(opts);
+              deployContract = buildDeployGeneric(opts);
               testContract = buildTestGeneric(opts);
 
               errors[contractTab] = undefined;
@@ -166,20 +171,26 @@
     <div class="tab overflow-hidden">
       <Background color="bg-base-200">
         <OverflowMenu>
+          <button class:selected={contractTab === 'L2NativeSuperchainERC20'} onclick={() => initialContractTab = 'L2NativeSuperchainERC20'}>
+            L2NativeSuperchainERC20
+          </button>    
           <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
             ERC20Votes
-          </button>      
+          </button> 
         </OverflowMenu>
       </Background>
     </div>
   {/snippet}
 
   {#snippet control()}
-      <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
-          <div class:hidden={contractTab !== 'ERC20Votes'}>
-              <ERC20VotesContractControls bind:opts={allOpts.ERC20Votes!} />
-          </div>
+    <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
+      <div class:hidden={contractTab !== 'L2NativeSuperchainERC20'}>
+          <L2NativeSuperchainERC20ContractControls bind:opts={allOpts.L2NativeSuperchainERC20!} errors={errors.L2NativeSuperchainERC20} />
       </div>
+      <div class:hidden={contractTab !== 'ERC20Votes'}>
+          <ERC20VotesContractControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
+      </div>
+    </div>
   {/snippet}
 
 </WizardSingle>
@@ -242,6 +253,9 @@
       <div class="tab overflow-hidden">
         <Background color="bg-base-200">
           <OverflowMenu>
+            <button class:selected={contractTab === 'L2NativeSuperchainERC20'} onclick={() => initialContractTab = 'L2NativeSuperchainERC20'}>
+              L2NativeSuperchainERC20
+            </button>      
             <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
               ERC20Votes
             </button>      
@@ -251,11 +265,14 @@
     {/snippet}
 
     {#snippet control()}
-        <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
-            <div class:hidden={contractTab !== 'ERC20Votes'}>
-                <ERC20VotesDeployControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
-            </div>
+      <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
+        <div class:hidden={contractTab !== 'L2NativeSuperchainERC20'}>
+          <L2NativeSuperchainERC20DeployControls bind:opts={allOpts.L2NativeSuperchainERC20!} errors={errors.L2NativeSuperchainERC20} />
         </div>
+        <div class:hidden={contractTab !== 'ERC20Votes'}>
+          <ERC20VotesDeployControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
+        </div>
+      </div>
     {/snippet}
 
 </WizardSingle>
@@ -302,6 +319,9 @@
       <div class="tab overflow-hidden">
         <Background color="bg-base-200">
           <OverflowMenu>
+            <button class:selected={contractTab === 'L2NativeSuperchainERC20'} onclick={() => initialContractTab = 'L2NativeSuperchainERC20'}>
+              L2NativeSuperchainERC20
+            </button>  
             <button class:selected={contractTab === 'ERC20Votes'} onclick={() => initialContractTab = 'ERC20Votes'}>
               ERC20Votes
             </button>      
@@ -311,11 +331,14 @@
     {/snippet}
 
     {#snippet control()}
-        <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
-            <div class:hidden={contractTab !== 'ERC20Votes'}>
-                <ERC20VotesTestControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
-            </div>
+      <div class="controls w-64 flex flex-col shrink-0 justify-between h-[calc(150vh-80px)] overflow-auto">
+        <div class:hidden={contractTab !== 'L2NativeSuperchainERC20'}>
+          <L2NativeSuperchainERC20TestControls bind:opts={allOpts.L2NativeSuperchainERC20!} errors={errors.L2NativeSuperchainERC20} />
         </div>
+        <div class:hidden={contractTab !== 'ERC20Votes'}>
+          <ERC20VotesTestControls bind:opts={allOpts.ERC20Votes!} errors={errors.ERC20Votes} />
+        </div>
+      </div>
     {/snippet}
 
 </WizardSingle>

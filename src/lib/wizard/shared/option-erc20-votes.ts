@@ -3,7 +3,6 @@ import { defaults as infoDefaults } from "./set-info";
 
 import type { ClockMode} from '../smart-contracts/set-clock-mode';
 
-
 export const chainOptions = [false, 'optimism', 'base'] as const;
 export type Chain = typeof chainOptions[number];
 
@@ -50,6 +49,7 @@ export const defaults: Required<SharedERC20VotesOptions> = {
   permit: true,
   votes: 'blocknumber', //true
   flashmint: false,
+  
   access: commonDefaults.access,
   upgradeable: commonDefaults.upgradeable,
   contractInfo: commonDefaults.contractInfo,
@@ -62,7 +62,7 @@ export const defaults: Required<SharedERC20VotesOptions> = {
 
   deployInfo: commonDefaults.deployInfo,
   opSec: 'mnemonic',
-  deployerAddress: '0x0000000000000000000000000000000000000000',
+  deployerAddress: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
 
   //test
   testName: 'ERC20VotesTest',

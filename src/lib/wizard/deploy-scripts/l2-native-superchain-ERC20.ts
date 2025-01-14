@@ -1,8 +1,11 @@
 import type { DeployContract, BaseFunction} from './contract';
 import { DeployBuilder } from "./contract";
 
-import type { SharedERC20VotesOptions} from '../shared/option-erc20-votes';
-import { withCommonDefaults, defaults as commonDefaults } from '../shared/option-erc20-votes';
+import type { Access } from './set-access-control';
+import {setAccessControl } from './set-access-control';
+
+import type { SharedL2NativeSuperchainERC20Options, OpSec} from '../shared/option-l2-native-superchain-ERC20';
+import { withCommonDefaults, defaults as commonDefaults } from '../shared/option-l2-native-superchain-ERC20';
 
 import { OptionsError } from "../shared/error";
 
@@ -10,31 +13,39 @@ import { printDeployContract } from "./print";
 import { setInfo } from "./set-info";
 
 
-function withDeloyDefaults(opts: SharedERC20VotesOptions): Required<SharedERC20VotesOptions> {
+function withDeloyDefaults(opts: SharedL2NativeSuperchainERC20Options): Required<SharedL2NativeSuperchainERC20Options> {
   return {
     ...opts,
     ...withCommonDefaults(opts),
+    ownerAddress: opts.ownerAddress || commonDefaults.ownerAddress,
     burnable: opts.burnable ?? commonDefaults.burnable,
     pausable: opts.pausable ?? commonDefaults.pausable,
     premint: opts.premint || commonDefaults.premint,
     mintable: opts.mintable ?? commonDefaults.mintable,
+    minterAddress: opts.minterAddress || commonDefaults.minterAddress,
     permit: opts.permit ?? commonDefaults.permit,
     votes: opts.votes ?? commonDefaults.votes,
     flashmint: opts.flashmint ?? commonDefaults.flashmint,
   };
 }
 
-export function printDeployERC20Votes(opts: SharedERC20VotesOptions = commonDefaults): string {
-  return printDeployContract(buildDeployERC20Votes(opts));
+export function printDeployL2NativeSuperchainERC20(opts: SharedL2NativeSuperchainERC20Options = commonDefaults): string {
+  return printDeployContract(buildDeployL2NativeSuperchainERC20(opts));
 }
   
-export function buildDeployERC20Votes(opts: SharedERC20VotesOptions): DeployContract {
+export function buildDeployL2NativeSuperchainERC20(opts: SharedL2NativeSuperchainERC20Options): DeployContract {
     const allOpts = withDeloyDefaults(opts);
   
     const c = new DeployBuilder(allOpts.deployName);
 
     validateAddress(allOpts.deployerAddress);
+    setOpsec(c, allOpts.opSec);
     addBase(c, allOpts);
+
+
+    // if (allOpts.mintable) {
+    //   addMintable(c, access);
+    // }
 
     const fn : BaseFunction = getDeployFunction(allOpts);
     // addVotes(c, fn);
@@ -52,7 +63,30 @@ function validateAddress(address: string) {
   }
 }
 
-function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
+function setOpsec(c: DeployBuilder, opsec: OpSec) {
+  switch (opsec) {
+    case 'address': {
+      c.addVariable(`address owner = vm.envAddress("DEPLOYER_ADDRESS");`);
+
+      break;
+    }
+    case 'key': {
+      c.addVariable(`uint256 ownerPrivateKey = vm.envUint("DEPLOYER_PRIVATE_KEY");`);
+      c.addVariable(`address owner = vm.envOr("DEPLOYER_ADDRESS", vm.addr(ownerPrivateKey));`);
+
+      break;
+    }
+    case 'mnemonic': {
+      c.addVariable(`string mnemonic = vm.envString("MNEMONIC");`);
+      c.addVariable(`uint256 ownerPrivateKey = vm.deriveKey(mnemonic, "m/44'/60'/0'/0/", 1);`);
+      c.addVariable(`address owner = vm.envOr("DEPLOYER_ADDRESS", vm.addr(ownerPrivateKey));`);
+      
+      break;
+    }
+  }
+}
+
+function addBase(c: DeployBuilder, allOpts: Required<SharedL2NativeSuperchainERC20Options>) {
 
   const Vm = {
     name: 'Vm',
@@ -78,18 +112,20 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
   };
   c.addImportOnly(DeployOptions);
 
-  const MyERC20Votes = {
+  const L2NativeSuperchainERC20 = {
     name: `${allOpts.contractName}`,
     path: `@main/${allOpts.contractName}.sol`,
   };
-  c.addImportOnly(MyERC20Votes);
+  c.addImportOnly(L2NativeSuperchainERC20);
   
   c.addOutsidecode(`string constant Artifact_${allOpts.contractName} = "${allOpts.contractName}.sol:${allOpts.contractName}";`)
 
   c.addVariable(`${allOpts.contractName} token;`);
   c.addVariable(`string name = "${allOpts.tokenName}";`);
   c.addVariable(`string symbol = "${allOpts.tokenSymbol}";`);
+  c.addVariable(`uint8 decimals = ${allOpts.decimals};`);
 }
+
 
 // function addVotes(c: DeployBuilder, fn : BaseFunction) {
 
@@ -97,9 +133,15 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedERC20VotesOptions>) {
 //   c.addFunctionCode(`IVotes _token = IVotes(token);`, fn);
 
 // }
-  
 
-function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<SharedERC20VotesOptions>) {
+// function addMintable(c: DeployBuilder, fn: BaseFunction, access: Access) {
+//   requireAccessControl(c, functions.mintTo, access, 'MINTER','1', 'minter_');
+//   c.addFunctionCode('_mint(to, amount);', functions.mintTo);
+
+// }
+
+
+function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<SharedL2NativeSuperchainERC20Options>) {
 
   if (allOpts.upgradeable) {
     const Upgrades = {
@@ -108,6 +150,7 @@ function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<
     };
     c.addImportOnly(Upgrades);
   }
+  // to do fix hardcoded upgradable
 
   if (allOpts.upgradeable == 'transparent' ) {
     c.addFunctionCode(`vm.startBroadcast();
@@ -117,6 +160,7 @@ function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<
       // DONT forget to save the address of the token
       deployerProcedue.save("${allOpts.contractName}", tokenAddress);
       return ${allOpts.contractName}(tokenAddress);`, fn);
+
   } else if (allOpts.upgradeable == 'uups') {
     c.addFunctionCode(`vm.startBroadcast();
       address tokenAddress = Upgrades.deployUUPSProxy("${allOpts.contractFile}", abi.encodeCall(${allOpts.contractName}.initialize, ( name, symbol)));
@@ -125,18 +169,23 @@ function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<
       // DONT forget to save the address of the token
       deployerProcedue.save("${allOpts.contractName}", tokenAddress);
       return ${allOpts.contractName}(tokenAddress);`, fn);
+
   } else {
-    c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
+    // c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
 
-        DeployOptions memory options = DeployOptions({salt:_salt});
+    //     DeployOptions memory options = DeployOptions({salt:_salt});
 
-        bytes memory args = abi.encode(name, symbol);
-        return ${allOpts.contractName}(DefaultDeployerFunction.deploy(deployer, "${allOpts.contractName}", Artifact_${allOpts.contractName}, args, options));`, fn);
+    //     bytes memory args = abi.encode(name, symbol);
+    //     return ${allOpts.contractName}(DefaultDeployerFunction.deploy(deployer, "${allOpts.contractName}", Artifact_${allOpts.contractName}, args, options));`, fn);
+
+    setAccessControl(c, fn, allOpts.access, allOpts.mintable, allOpts.contractName, allOpts.ownerAddress, allOpts.minterAddress);
+    
+
   }
 
 }
 
-function getDeployFunction(allOpts: Required<SharedERC20VotesOptions>) {
+function getDeployFunction(allOpts: Required<SharedL2NativeSuperchainERC20Options>) {
   const fn = {
     name: 'deploy',
     args: [],

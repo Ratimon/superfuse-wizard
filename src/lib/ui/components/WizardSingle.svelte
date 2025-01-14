@@ -160,15 +160,19 @@
         <div class="badge badge-primary badge-outline badge-lg">
           {#if contractInstance.kind == 'contract'}
             Contract Code:
-          {:else}
+          {:else if contractInstance.kind == 'deploy'}
             Deploy Script:
+          {:else if contractInstance.kind == 'test'}
+            Test Suites:
           {/if}
         </div>
         <div class="badge badge-primary badge-outline badge-lg">
           {#if contractInstance.kind == 'contract'}
             {contractInstance.name}.sol
-          {:else}
+          {:else if contractInstance.kind == 'deploy'}
             {conventionNumber}_{contractInstance.name}.s.sol
+          {:else if contractInstance.kind == 'test'}
+            {contractInstance.name}.t.sol
           {/if}
         </div>
   

@@ -13,4 +13,5 @@ export { defaults as InfoDefaults } from './set-info';
 
 export {
     testERC20Votes,
+    testL2NativeSuperchainERC20,
 } from './api';

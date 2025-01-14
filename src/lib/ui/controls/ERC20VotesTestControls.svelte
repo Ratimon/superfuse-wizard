@@ -6,7 +6,7 @@
     import type {  OptionsErrorMessages } from '$lib/wizard/shared';
     import type { KindedERC20Options } from '$lib/wizard/shared';
   
-    import { erc20Votes, premintPattern } from '$lib/wizard/smart-contracts';
+    import { erc20Votes } from '$lib/wizard/smart-contracts';
     import { deployERC20Votes } from '$lib/wizard/deploy-scripts';
     import { testERC20Votes } from '$lib/wizard/test-suites';
 
@@ -89,22 +89,22 @@
     <label class:checked={opts.opSec === 'address'}>
         <input type="radio" bind:group={opts.opSec} value='address'>
         Address
-        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples">
+        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/tree/main/script">
             The address must be match with either private key or mnemonic setup in deploy script.
         </HelpTooltip>
     </label>
       <label class:checked={opts.opSec === 'key'}>
         <input type="radio" bind:group={opts.opSec} value='key'>
         Key
-        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples">
-          It is not recommended to store your private key in the environment file.
+        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
+          The key must be match with the provided mnemonic.
         </HelpTooltip>
       </label>
   
       <label class:checked={opts.opSec === 'mnemonic'}>
         <input type="radio" bind:group={opts.opSec} value='mnemonic'>
         Mnemonic
-        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples">
+        <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
           It is not recommended to store your mnemonic in the environment file.
         </HelpTooltip>
       </label>
