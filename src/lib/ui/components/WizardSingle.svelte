@@ -100,7 +100,7 @@
   const downloadNpmHandler = async () => {
       const blob = new Blob([code], { type: 'text/plain' });
       if (opts) {
-        fileSaver.saveAs(blob, opts.deployName + '.sol');
+        fileSaver.saveAs(blob, contractInstance.name + '.sol');
 
         const new_event : GaEvent  = {
             id:   uuid(),
