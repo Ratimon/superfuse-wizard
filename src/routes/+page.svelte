@@ -46,44 +46,45 @@
 
   const opts = $derived(allOpts[contractTab]);
 
-  const conventionNumber = $state(`000`);
+  let conventionNumber = $state(`000`);
   let deployCommand = $state(`forge script script/000_DeployL2NativeSuperchainERC20Script.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
   let walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
   
 
   $effect(() => {
     if (opts) {
-          try {
-              deployCommand = `forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender ${opts.deployerAddress} --rpc-url <RPC_URL> --broadcast`;
+      try {
+        conventionNumber = opts.conventionNumber;
+        deployCommand = `forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender ${opts.deployerAddress} --rpc-url <RPC_URL> --broadcast`;
 
-              if (opts.opSec === 'mnemonic') {
-                walletCommand = `--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`
-              } else {
-                walletCommand = `--private-key <DEPLOYER_PRIVATE_KEY>`
-              }
+        if (opts.opSec === 'mnemonic') {
+          walletCommand = `--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`
+        } else {
+          walletCommand = `--private-key <DEPLOYER_PRIVATE_KEY>`
+        }
 
-            } catch (e: unknown) {
-              throw e;
-              }
-            }
+      } catch (e: unknown) {
+        throw e;
+        }
+      }
   });
 
   $effect(() => {
     if (opts) {
-          try {
-              contract = buildContractGeneric(opts);
-              deployContract = buildDeployGeneric(opts);
-              testContract = buildTestGeneric(opts);
+      try {
+          contract = buildContractGeneric(opts);
+          deployContract = buildDeployGeneric(opts);
+          testContract = buildTestGeneric(opts);
 
-              errors[contractTab] = undefined;
-            } catch (e: unknown) {
-              if (e instanceof OptionsError) {
-                  errors[contractTab] = e.messages;
-              } else {
-              throw e;
-              }
-            }
-      }
+          errors[contractTab] = undefined;
+        } catch (e: unknown) {
+          if (e instanceof OptionsError) {
+              errors[contractTab] = e.messages;
+          } else {
+          throw e;
+          }
+        }
+    }
   });
 
 </script>

@@ -36,12 +36,12 @@
 
     $effect.pre(() => {
       if (opts === undefined) opts = {
-            kind: 'ERC20Votes',
-            ...contractDefaults,
-            //   premint: '', // default to empty premint in UI instead of 0
-            ...deployDefaults,
-            contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-            deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+        kind: 'ERC20Votes',
+        ...contractDefaults,
+        //   premint: '', // default to empty premint in UI instead of 0
+        ...deployDefaults,
+        contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+        deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
       }
     });
   

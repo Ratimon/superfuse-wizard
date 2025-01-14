@@ -27,22 +27,22 @@
   }: Props = $props();
 
   if (opts === undefined) opts = {
-          kind: 'L2NativeSuperchainERC20',
-          ...contractDefaults,
-          //   premint: '', // default to empty premint in UI instead of 0
-          ...deployDefaults,
-          contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-          deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
-    };
+    kind: 'L2NativeSuperchainERC20',
+    ...contractDefaults,
+    //   premint: '', // default to empty premint in UI instead of 0
+    ...deployDefaults,
+    contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+    deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+  };
 
   $effect.pre(() => {
     if (opts === undefined) opts = {
-          kind: 'L2NativeSuperchainERC20',
-          ...contractDefaults,
-          //   premint: '', // default to empty premint in UI instead of 0
-          ...deployDefaults,
-          contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-          deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+      kind: 'L2NativeSuperchainERC20',
+      ...contractDefaults,
+      //   premint: '', // default to empty premint in UI instead of 0
+      ...deployDefaults,
+      contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+      deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     }
   });
 
@@ -56,23 +56,36 @@
 
 <section class="controls-section">
     <Background color="bg-neutral-content">
-        <h1>Deploy Settings</h1>
+      <h1>Deploy Settings</h1>
     </Background>
+
+    <h1>Parameters</h1>
+
+    <label class="labeled-input">
+      <span>Name</span>
+      <input bind:value={opts.deployName}>
+    </label>
+
+    <label class="labeled-input">
+      <span>Convention Number</span>
+      <input bind:value={opts.conventionNumber}>
+    </label>
+
     <h1>OpSec Management</h1>
 
     <label class="labeled-input">
-        <span class="flex justify-between pr-2">
-            Deployer Address
-            <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
-              The default address here is derived from the foundry local' s network private key for testing purpose. Please use your own from your own private key or mnemonic.
-            </HelpTooltip>
-            </span>
-        <input
-            bind:value={opts.deployerAddress}
-            use:error={errors?.address}
-            placeholder="Enter a valid address"
-        >
-     </label>
+      <span class="flex justify-between pr-2">
+          Deployer Address
+          <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
+            The default address here is derived from the foundry local' s network private key for testing purpose. Please use your own from your own private key or mnemonic.
+          </HelpTooltip>
+          </span>
+      <input
+          bind:value={opts.deployerAddress}
+          use:error={errors?.address}
+          placeholder="Enter a valid address"
+      >
+    </label>
     
     <div class="checkbox-group justify-start">
       <label class:checked={opts.opSec === 'key'}>

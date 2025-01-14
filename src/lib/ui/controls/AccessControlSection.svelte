@@ -14,8 +14,6 @@
         required = $bindable(),
     }: Props = $props();
 
-    // export let access: Access;
-    // export let required: boolean;
     let defaultValueWhenEnabled: false | "ownable" | "roles" = $state('ownable');
 
     let wasRequired = $state(required);
@@ -23,17 +21,18 @@
 
     $effect(() => {
         if (wasRequired && !required) {
-        access = wasAccess;
+            access = wasAccess;
         } else {
-        wasAccess = access;
+            wasAccess = access;
         if (access === false && required) {
             access = defaultValueWhenEnabled;
         }
         }
 
         wasRequired = required;
+        
         if (access !== false) {
-        defaultValueWhenEnabled = access;
+            defaultValueWhenEnabled = access;
         }
     });
 

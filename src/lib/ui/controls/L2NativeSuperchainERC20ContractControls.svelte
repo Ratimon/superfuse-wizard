@@ -30,22 +30,22 @@
   }: Props = $props();
 
   if (opts === undefined) opts = {
-          kind: 'L2NativeSuperchainERC20',
-          ...contractDefaults,
-          //   premint: '', // default to empty premint in UI instead of 0
-          ...deployDefaults,
-          contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-          deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
-    };
+    kind: 'L2NativeSuperchainERC20',
+    ...contractDefaults,
+    //   premint: '', // default to empty premint in UI instead of 0
+    ...deployDefaults,
+    contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+    deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+  };
 
   $effect.pre(() => {
     if (opts === undefined) opts = {
-          kind: 'L2NativeSuperchainERC20',
-          ...contractDefaults,
-          //   premint: '', // default to empty premint in UI instead of 0
-          ...deployDefaults,
-          contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
-          deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
+      kind: 'L2NativeSuperchainERC20',
+      ...contractDefaults,
+      //   premint: '', // default to empty premint in UI instead of 0
+      ...deployDefaults,
+      contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+      deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     }
   });
 
@@ -61,79 +61,79 @@
   
 <section class="controls-section">
 
-    <Background color="bg-neutral-content">
-        <h1>Contract Settings</h1>
-    </Background>
+  <Background color="bg-neutral-content">
+      <h1>Contract Settings</h1>
+  </Background>
 
-    <h1>Parameters</h1>
+  <h1>Parameters</h1>
+
+  <label class="labeled-input">
+      <span>Name</span>
+      <input bind:value={opts.contractName}>
+  </label>
+
+  <label class="labeled-input">
+      <span>Token Name</span>
+      <input bind:value={opts.tokenName}>
+  </label>
+
+  <label class="labeled-input">
+      <span>Symbol</span>
+      <input bind:value={opts.tokenSymbol}>
+  </label>
+
+  <label class="labeled-input">
+    <span>Decimals</span>
+    <input bind:value={opts.decimals} placeholder="18">
+  </label>
+
+  {#if opts.access}
 
     <label class="labeled-input">
-        <span>Name</span>
-        <input bind:value={opts.contractName}>
+      <span class="flex justify-between pr-2">
+        {#if opts.access === 'ownable'}
+          Owner Address
+        {:else if opts.access === 'roles'}
+          Admin Address
+        {/if}
+        <HelpTooltip align="right" placement="right" link="https://book.getfoundry.sh/reference/forge/forge-script?highlight=forge%20scr#forge-script">
+            The address is either the owner or the admin of the contract.
+        </HelpTooltip>
+      </span>
+
+      <input
+        bind:value={opts.ownerAddress}
+        use:error={errors?.address}
+        placeholder="Enter a valid address"
+      >
+
     </label>
 
-    <label class="labeled-input">
-        <span>Token Name</span>
-        <input bind:value={opts.tokenName}>
-    </label>
-
-    <label class="labeled-input">
-        <span>Symbol</span>
-        <input bind:value={opts.tokenSymbol}>
-    </label>
-
-    <label class="labeled-input">
-      <span>Decimals</span>
-      <input bind:value={opts.decimals} placeholder="18">
-    </label>
-
-    {#if opts.access}
-
+    {#if (opts.mintable && opts.access === 'roles')}
       <label class="labeled-input">
         <span class="flex justify-between pr-2">
-          {#if opts.access === 'ownable'}
-            Owner Address
-          {:else if opts.access === 'roles'}
-            Admin Address
-          {/if}
-          <HelpTooltip align="right" placement="right" link="https://book.getfoundry.sh/reference/forge/forge-script?highlight=forge%20scr#forge-script">
-              The address is either the owner or the admin of the contract.
+          Minter Address
+          <HelpTooltip align="right" placement="right" link="https://docs.openzeppelin.com/contracts/api/token/erc20#ERC20-_mint-address-uint256-">
+            The address is the minter of the contract.
           </HelpTooltip>
         </span>
-
         <input
-          bind:value={opts.ownerAddress}
-          use:error={errors?.address}
+          bind:value={opts.minterAddress}
           placeholder="Enter a valid address"
         >
-
       </label>
-
-      {#if (opts.mintable && opts.access === 'roles')}
-        <label class="labeled-input">
-          <span class="flex justify-between pr-2">
-            Minter Address
-            <HelpTooltip align="right" placement="right" link="https://docs.openzeppelin.com/contracts/api/token/erc20#ERC20-_mint-address-uint256-">
-              The address is the minter of the contract.
-            </HelpTooltip>
-          </span>
-          <input
-            bind:value={opts.minterAddress}
-            placeholder="Enter a valid address"
-          >
-        </label>
-      {/if}
-
     {/if}
 
-    <!-- <label class="labeled-input">
-        <span class="flex justify-between pr-2">
-            Premint
-            <HelpTooltip placement="right" align="right" link="https://docs.openzeppelin.com/contracts/api/token/erc20#ERC20-_mint-address-uint256-">
-            Create an initial amount of tokens for the deployer.</HelpTooltip>
-        </span>
-        <input bind:value={opts.premint} placeholder="0" pattern={premintPattern.source}>
-    </label> -->
+  {/if}
+
+  <!-- <label class="labeled-input">
+      <span class="flex justify-between pr-2">
+          Premint
+          <HelpTooltip placement="right" align="right" link="https://docs.openzeppelin.com/contracts/api/token/erc20#ERC20-_mint-address-uint256-">
+          Create an initial amount of tokens for the deployer.</HelpTooltip>
+      </span>
+      <input bind:value={opts.premint} placeholder="0" pattern={premintPattern.source}>
+  </label> -->
 
 </section>
 

@@ -50,13 +50,26 @@
   <Background color="bg-neutral-content">
     <h1>Deploy Settings</h1>
   </Background>
+
+  <h1>Parameters</h1>
+
+  <label class="labeled-input">
+    <span>Name</span>
+    <input bind:value={opts.deployName}>
+  </label>
+
+  <label class="labeled-input">
+    <span>Convention Number</span>
+    <input bind:value={opts.conventionNumber}>
+  </label>
+
   <h1>OpSec Management</h1>
 
   <label class="labeled-input">
     <span class="flex justify-between pr-2">
         Deployer Address
         <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
-            The default address here is derived from the foundry local' s network private key for testing purpose. Please use your own from your own private key or mnemonic.
+          The default address here is derived from the foundry local' s network private key for testing purpose. Please use your own from your own private key or mnemonic.
         </HelpTooltip>
         </span>
     <input
