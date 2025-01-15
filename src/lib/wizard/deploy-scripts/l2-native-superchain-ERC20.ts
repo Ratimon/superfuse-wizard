@@ -2,7 +2,7 @@ import type { DeployContract, BaseFunction} from './contract';
 import { DeployBuilder } from "./contract";
 
 import type { Access } from './set-access-control';
-import {setAccessControl } from './set-access-control';
+import {setAccessControl, setAccessControl2, requireAccessControl2 } from './set-access-control';
 
 import type { SharedL2NativeSuperchainERC20Options, OpSec} from '../shared/option-l2-native-superchain-ERC20';
 import { withCommonDefaults, defaults as commonDefaults } from '../shared/option-l2-native-superchain-ERC20';
@@ -43,13 +43,22 @@ export function buildDeployL2NativeSuperchainERC20(opts: SharedL2NativeSuperchai
     addBase(c, allOpts);
 
 
-    // if (allOpts.mintable) {
-    //   addMintable(c, access);
-    // }
-
     const fn : BaseFunction = getDeployFunction(allOpts);
+    // addDeployLogic(c, fn, allOpts);
+
+    // new implementation
+    addDeployOptions(c, fn);
+
+    let argCode : string | undefined = undefined;
+    if (allOpts.mintable) {
+      argCode = addMintable(c, allOpts.access, allOpts);
+    }
     // addVotes(c, fn);
-    addDeployLogic(c, fn, allOpts);
+
+
+    setAccessControl2(c, fn, allOpts.access, allOpts.contractName, argCode, allOpts.ownerAddress);
+    // setUpgradeable(c, allOpts.upgradeable, allOpts.access);
+
     setInfo(c, allOpts.deployInfo);
   
     return c;
@@ -126,6 +135,14 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedL2NativeSuperchainERC
   c.addVariable(`uint8 decimals = ${allOpts.decimals};`);
 }
 
+function addDeployOptions(c: DeployBuilder, fn: BaseFunction) {
+
+  c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
+
+        DeployOptions memory options = DeployOptions({salt:_salt});`, fn);
+
+}
+
 
 // function addVotes(c: DeployBuilder, fn : BaseFunction) {
 
@@ -134,11 +151,11 @@ function addBase(c: DeployBuilder, allOpts: Required<SharedL2NativeSuperchainERC
 
 // }
 
-// function addMintable(c: DeployBuilder, fn: BaseFunction, access: Access) {
-//   requireAccessControl(c, functions.mintTo, access, 'MINTER','1', 'minter_');
-//   c.addFunctionCode('_mint(to, amount);', functions.mintTo);
+function addMintable(c: DeployBuilder, access: Access, allOpts : Required<SharedL2NativeSuperchainERC20Options>) : string {
+  // let argCode : string = requireAccessControl2(c, access, allOpts.ownerAddress, 'minter', allOpts.minterAddress);
+  return requireAccessControl2(c, access, allOpts.ownerAddress, 'minter', allOpts.minterAddress);
+}
 
-// }
 
 
 function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<SharedL2NativeSuperchainERC20Options>) {

@@ -84,12 +84,38 @@ export function buildL2NativeSuperchainERC20(opts: SharedL2NativeSuperchainERC20
     setAccessControl(c, access);
     // setUpgradeable(c, upgradeable, access);
 
+    addBaseConstructors(c);
 
     setInfo(c, contractInfo);
     return c;
 }
 
 function addBase(c: ContractBuilder) {
+
+  //name
+  c.addModifier('virtual override', functions.name);
+  c.addFunctionCode(`return _name;`, functions.name);
+
+  //symbol
+  c.addModifier('virtual override', functions.symbol);
+  c.addFunctionCode(`return _symbol;`, functions.symbol);
+
+  //decimals
+  c.addModifier('override', functions.decimals);
+  c.addFunctionCode(`return _decimals;`, functions.decimals);
+
+
+}
+
+function addBaseConstructors(c: ContractBuilder) {
+
+  c.addVariable(`string private _name;`);
+  c.addVariable(`string private _symbol;`);
+  c.addVariable(`uint8 private immutable _decimals;`);
+
+  c.addConstructorCode(`_name = name_;
+        _symbol = symbol_;
+        _decimals = decimals_;`);
 
   c.addConstructorArgument({
     type: {
@@ -114,34 +140,6 @@ function addBase(c: ContractBuilder) {
     },
     name: 'decimals_',
   });
-
-  c.addVariable(`string private _name;`);
-  c.addVariable(`string private _symbol;`);
-  c.addVariable(`uint8 private immutable _decimals;`);
-
-//   c.addConstructorCode(`_name = name_;
-//         _symbol = symbol_;
-//         _decimals = decimals_;
-
-//         _initializeOwner(owner_);`);
-
-  c.addConstructorCode(`_name = name_;
-        _symbol = symbol_;
-        _decimals = decimals_;`);
-
-  //name
-  c.addModifier('virtual override', functions.name);
-  c.addFunctionCode(`return _name;`, functions.name);
-
-  //symbol
-  c.addModifier('virtual override', functions.symbol);
-  c.addFunctionCode(`return _symbol;`, functions.symbol);
-
-  //decimals
-  c.addModifier('override', functions.decimals);
-  c.addFunctionCode(`return _decimals;`, functions.decimals);
-
-
 }
 
 function setERC7802Logic(c: ContractBuilder) {
@@ -164,7 +162,6 @@ function setERC7802Logic(c: ContractBuilder) {
 
 //     c.addFunctionCode('_checkRole(ADMIN_ROLE);', functions._authorizeSetRole);
 // }
-
 
 
 function addMintable(c: ContractBuilder, access: Access) {

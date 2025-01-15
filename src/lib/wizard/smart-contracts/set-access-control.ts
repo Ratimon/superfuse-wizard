@@ -29,13 +29,6 @@ export function setAccessControl(c: ContractBuilder, access: Access) {
   switch (access) {
     case 'ownable': {
 
-      // if (c.addParent(parents.Ownable, [ {lit: 'initialOwner'} ])) {
-      //   c.addConstructorArgument({
-      //     type: 'address',
-      //     name: 'initialOwner'
-      //   });
-      // }
-
       if (c.addParent(parents.Ownable, [])) {
         c.addConstructorArgument({
           type: 'address',
@@ -83,6 +76,7 @@ export function setAccessControl(c: ContractBuilder, access: Access) {
  * Enables access control for the contract and restricts the given function with access control.
  */
 export function requireAccessControl(c: ContractBuilder, fn: BaseFunction, access: Access, roleIdPrefix: string, roleIdValue: string, roleOwner: string | undefined) {
+
   if (access === false) {
     access = 'ownable';
   }

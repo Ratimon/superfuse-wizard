@@ -42,13 +42,13 @@ export const defaults: Required<SharedL2NativeSuperchainERC20Options> = {
   tokenName: 'L2NativeToken',
   tokenSymbol: 'NS',
   decimals: '18',
-  ownerAddress: '0x0000000000000000000000000000000000000000',
+  ownerAddress: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
 
   burnable: false,
   pausable: false,
   premint: '0',
   mintable: false,
-  minterAddress: '0x0000000000000000000000000000000000000000',
+  minterAddress: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
   permit: false,
   votes: 'blocknumber', //true
   flashmint: false,

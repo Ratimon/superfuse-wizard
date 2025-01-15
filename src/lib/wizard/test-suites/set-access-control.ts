@@ -18,7 +18,6 @@ export function setAccessControl(c: TestBuilder, access: Access, contractName: s
   switch (access) {
     case 'ownable': {
 
-
       c.addImportOnly(parents.IOwnable);
 
       c.addFunctionCode(`vm.expectEmit(true, true, true, true);

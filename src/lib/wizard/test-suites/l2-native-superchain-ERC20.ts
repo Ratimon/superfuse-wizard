@@ -51,7 +51,7 @@ export function buildTestL2NativeSuperchainERC20(opts: SharedL2NativeSuperchainE
     const camelCaseContractName = transformToLowerCamelCase(allOpts.contractName);
 
     if (allOpts.mintable) {
-       addMintable(c, access, camelCaseContractName);
+       addMintable(c, access, camelCaseContractName, opts.minterAddress);
     }
 
     setInfo(c, allOpts.testInfo);
@@ -90,13 +90,11 @@ function addBase(c: TestBuilder, allOpts: Required<SharedL2NativeSuperchainERC20
   };
   c.addImportOnly(IERC20);
 
-
   const SuperchainERC20 = {
     name: 'SuperchainERC20',
     path: '@superfuse-core/L2/SuperchainERC20.sol',
   };
   c.addImportOnly(SuperchainERC20);
-
 
   const IERC7802 = {
     name: 'IERC7802',
@@ -311,14 +309,8 @@ function setERC7802TestLogic(c: TestBuilder, allOpts: Required<SharedL2NativeSup
 }
 
 
-function addMintable(c: TestBuilder, access: Access, targetContractName: string) {
+function addMintable(c: TestBuilder, access: Access, targetContractName: string, minterAddress: string | undefined) {
 
-  
-    const Ownable = {
-        name: 'Ownable',
-        path: '@solady-v0.0.292/auth/Ownable.sol',
-    };
-    c.addImportOnly(Ownable);
 
     const IERC20 = {
         name: 'IERC20',
@@ -344,14 +336,14 @@ function addMintable(c: TestBuilder, access: Access, targetContractName: string)
         assertEq(${targetContractName}.totalSupply(), _amount);
         assertEq(${targetContractName}.balanceOf(_to), _amount);`, get_2args_testFuzz_mintTo_succeeds());
 
-    // testFuzz_mintTo_succeeds(address _minter, address _to, uint256 _amount)
-    c.addFunctionCode(`vm.assume(_minter != owner);
+    // // testFuzz_mintTo_succeeds(address _minter, address _to, uint256 _amount)
+    // c.addFunctionCode(`vm.assume(_minter != owner);
 
-        // Expect the revert with 'Unauthorized' selector
-        vm.expectRevert(Ownable.Unauthorized.selector);
+    //     // Expect the revert with 'Unauthorized' selector
+    //     vm.expectRevert(Ownable.Unauthorized.selector);
 
-        vm.prank(_minter);
-        ${targetContractName}.mintTo(_to, _amount);`, get_3args_testFuzz_mintTo_succeeds());
+    //     vm.prank(_minter);
+    //     ${targetContractName}.mintTo(_to, _amount);`, get_3args_testFuzz_mintTo_succeeds());
 
     // testFuzz_transfer_succeeds(address _sender, uint256 _amount)
     c.addFunctionCode(`vm.assume(_sender != ZERO_ADDRESS);
@@ -412,6 +404,57 @@ function addMintable(c: TestBuilder, access: Access, targetContractName: string)
 
         vm.expectRevert(ERC20.InsufficientAllowance.selector);
         ${targetContractName}.transferFrom(_from, _to, _amount);`, functions.testFuzz_transferFromInsufficientAllowance_reverts);
+
+    switch (access) {
+      case 'ownable': {
+
+        const Ownable = {
+            name: 'Ownable',
+            path: '@solady-v0.0.292/auth/Ownable.sol',
+        };
+        c.addImportOnly(Ownable);
+
+        // testFuzz_mintTo_succeeds(address _minter, address _to, uint256 _amount)
+        c.addFunctionCode(`vm.assume(_minter != owner);
+
+        // Expect the revert with 'Unauthorized' selector
+        vm.expectRevert(Ownable.Unauthorized.selector);
+
+        vm.prank(_minter);
+        ${targetContractName}.mintTo(_to, _amount);`, get_3args_testFuzz_mintTo_succeeds());
+
+        break;
+      } 
+      case 'roles': {
+
+        const EnumerableRoles = {
+            name: 'EnumerableRoles',
+            path: '@solady-v0.0.292/auth/EnumerableRoles.sol',
+        };
+        c.addImportOnly(EnumerableRoles);
+
+        c.addVariable(`address minter = ${minterAddress};`);
+
+        // // testFuzz_mintTo_succeeds(address _minter, address _to, uint256 _amount)
+        // c.addFunctionCode(`vm.assume(_minter != minter);
+
+        //     // Expect the revert with 'Unauthorized' selector
+        //     vm.expectRevert(Ownable.Unauthorized.selector);
+
+        //     vm.prank(_minter);
+        //     ${targetContractName}.mintTo(_to, _amount);`, get_3args_testFuzz_mintTo_succeeds());
+
+        c.addFunctionCode(`vm.assume(_minter != minter);
+
+        // Expect the revert with 'EnumerableRolesUnauthorized' selector
+        vm.expectRevert(EnumerableRoles.EnumerableRolesUnauthorized.selector);
+
+        vm.prank(_minter);
+        ${targetContractName}.mintTo(_to, _amount);`, get_3args_testFuzz_mintTo_succeeds());
+
+        break;
+      }
+    }
 }
 
 

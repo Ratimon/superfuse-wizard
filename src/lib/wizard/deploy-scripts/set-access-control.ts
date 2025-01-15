@@ -5,7 +5,6 @@ export const accessOptions = [false, 'ownable', 'roles'] as const;
 export type Access = typeof accessOptions[number];
 
 import { transformToLowerCamelCase } from '../utils/transform-camel';
-
 import { defineFunctions } from '../utils/define-functions';
 
 /**
@@ -13,9 +12,7 @@ import { defineFunctions } from '../utils/define-functions';
  */
 export function setAccessControl(c: DeployBuilder, fn: BaseFunction, access: Access, mintable: boolean, contractName: string, ownerAddress: string, minterAddress: string) {
 
-
   switch (access) {
-
     case false: {
 
         c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
@@ -26,7 +23,6 @@ export function setAccessControl(c: DeployBuilder, fn: BaseFunction, access: Acc
 
       break;
     }
-
     case 'ownable': {
 
         c.addVariable(`address admin = ${ownerAddress};`);
@@ -54,6 +50,139 @@ export function setAccessControl(c: DeployBuilder, fn: BaseFunction, access: Acc
       break;
     }
   }
+}
+
+export function setAccessControl2(c: DeployBuilder, fn: BaseFunction, access: Access, contractName: string, argCode: string| undefined, ownerAddress: string) {
+
+    // let argCode = `bytes memory args = abi.encode(name, symbol, decimals`;
+    // argCode = `bytes memory args = abi.encode(name, symbol, decimals);`;
+    // if (argCode) {
+    //     argCode = argCode.concat(`, name, symbol, decimals`);
+    // }
+
+    if (argCode !== undefined) {
+        argCode = argCode.concat(`, name, symbol, decimals`);
+    } else {
+        // argCode = `bytes memory args = abi.encode(name, symbol, decimals);`;
+        argCode = `bytes memory args = abi.encode(`;
+
+        switch (access) {
+
+            case false: {
+                // argCode = `bytes memory args = abi.encode(name, symbol, decimals);`;
+                // c.addFunctionCode(argCode, fn);
+
+                argCode = argCode.concat(`name, symbol, decimals`);
+
+                // argCode.concat(`);`);
+                // c.addFunctionCode(argCode, fn);
+                // return argCode;
+                break;
+            }
+            case 'ownable': {
+                c.addVariable(`address admin = ${ownerAddress};`);
+                argCode = argCode.concat(`admin, name, symbol, decimals`);
+            //   argCode.concat(`);`);
+                // return argCode;
+                break;
+            }
+            case 'roles': {
+                c.addVariable(`address defaultAdmin = ${ownerAddress};`);
+                argCode = argCode.concat(`defaultAdmin, name, symbol, decimals`);
+                // return argCode;
+                break;
+            }
+        }
+    } 
+
+    argCode = argCode.concat(`);`);
+
+    c.addFunctionCode(argCode, fn);
+
+    c.addFunctionCode(`return ${contractName}(DefaultDeployerFunction.deploy(deployer, "${contractName}", Artifact_${contractName}, args, options));`, fn);
+
+    // return argCode;
+    // return argCode.concat(`);`);
+
+}
+
+// function concatAccessArgCode(c: DeployBuilder, fn: BaseFunction, access: Access, ownerAddress: string) : string {
+function concatAccessArgCode(c: DeployBuilder, access: Access, ownerAddress: string) : string {
+
+    // let argCode = `bytes memory args = abi.encode(name, symbol, decimals`;
+    let argCode = `bytes memory args = abi.encode(`;
+
+    console.log('argCode: before concatAccessArgCode', argCode);
+
+    switch (access) {
+        case false: {
+            // argCode = `bytes memory args = abi.encode(name, symbol, decimals);`;
+            // c.addFunctionCode(argCode, fn);
+
+            // argCode.concat(`);`);
+            // c.addFunctionCode(argCode, fn);
+            // return argCode;
+            break;
+        }
+        case 'ownable': {
+            c.addVariable(`address admin = ${ownerAddress};`);
+            // argCode.concat(`, admin`);
+            argCode = argCode.concat(`admin`);
+        //   argCode.concat(`);`);
+            // return argCode;
+            break;
+        }
+        case 'roles': {
+            c.addVariable(`address defaultAdmin = ${ownerAddress};`);
+            argCode = argCode.concat(`defaultAdmin`);
+            // return argCode;
+            break;
+        }
+    }
+
+    // argCode = argCode.concat(`);`);
+
+    console.log('argCode 2222: after concatAccessArgCode', argCode);
+
+    return argCode;
+    // return argCode.concat(`);`);
+
+}
+
+export function requireAccessControl2(c: DeployBuilder, access: Access, ownerAddress: string, roleOwner: string | undefined, roleAddress: string, ) : string {
+
+    // eg. roleOwner = 'minter'
+
+    // let argCode : string = `bytes memory args = abi.encode(name, symbol, decimals`;
+
+    if (access === false) {
+        // argCode.concat(`);`);
+        access = 'ownable';
+    }
+
+//    let argCode = concatAccessArgCode(c, fn, access, ownerAddress);
+   let argCode = concatAccessArgCode(c, access, ownerAddress);
+
+   console.log('argCode: after concatAccessArgCode', argCode);
+
+
+    switch (access) {
+        case 'ownable': {
+            // c.addVariable(`address ${roleOwner} = ${roleAddress};`);
+            // argCode = argCode.concat(`, ${roleOwner}`);
+            break;
+        }
+        case 'roles': {
+            c.addVariable(`address ${roleOwner} = ${roleAddress};`);
+            argCode = argCode.concat(`, ${roleOwner}`);
+            break;
+        }
+    }
+
+    // argCode = argCode.concat(`);`);
+    // argCode = argCode.concat(`);`);
+
+    return argCode;
 }
 
 // /**
@@ -99,20 +228,3 @@ export function setAccessControl(c: DeployBuilder, fn: BaseFunction, access: Acc
 //     }
 //   }
 // }
-
-// const functions = defineFunctions({
-
-//   testRenounceOwnership: {
-//     kind: 'public' as const,
-//     args: [
-//     ],
-//   },
-
-//   testFuzz_testTransferOwnership: {
-//     kind: 'public' as const,
-//     args: [
-//       { name: '_newOwner', type: 'address' },
-//     ],
-//   },
-
-// });
