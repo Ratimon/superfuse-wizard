@@ -2,7 +2,7 @@ import type { DeployContract, BaseFunction} from './contract';
 import { DeployBuilder } from "./contract";
 
 import type { Access } from './set-access-control';
-import {setAccessControl, setAccessControl2, requireAccessControl2 } from './set-access-control';
+import { setAccessControl, requireAccessControl } from './set-access-control';
 
 import type { SharedL2NativeSuperchainERC20Options, OpSec} from '../shared/option-l2-native-superchain-ERC20';
 import { withCommonDefaults, defaults as commonDefaults } from '../shared/option-l2-native-superchain-ERC20';
@@ -42,11 +42,8 @@ export function buildDeployL2NativeSuperchainERC20(opts: SharedL2NativeSuperchai
     setOpsec(c, allOpts.opSec);
     addBase(c, allOpts);
 
-
     const fn : BaseFunction = getDeployFunction(allOpts);
-    // addDeployLogic(c, fn, allOpts);
 
-    // new implementation
     addDeployOptions(c, fn);
 
     let argCode : string | undefined = undefined;
@@ -55,8 +52,7 @@ export function buildDeployL2NativeSuperchainERC20(opts: SharedL2NativeSuperchai
     }
     // addVotes(c, fn);
 
-
-    setAccessControl2(c, fn, allOpts.access, allOpts.contractName, argCode, allOpts.ownerAddress);
+    setAccessControl(c, fn, allOpts.access, allOpts.contractName, argCode, allOpts.ownerAddress);
     // setUpgradeable(c, allOpts.upgradeable, allOpts.access);
 
     setInfo(c, allOpts.deployInfo);
@@ -145,62 +141,59 @@ function addDeployOptions(c: DeployBuilder, fn: BaseFunction) {
 
 
 // function addVotes(c: DeployBuilder, fn : BaseFunction) {
-
 //   c.addVariable('address token;');
 //   c.addFunctionCode(`IVotes _token = IVotes(token);`, fn);
-
 // }
 
 function addMintable(c: DeployBuilder, access: Access, allOpts : Required<SharedL2NativeSuperchainERC20Options>) : string {
-  // let argCode : string = requireAccessControl2(c, access, allOpts.ownerAddress, 'minter', allOpts.minterAddress);
-  return requireAccessControl2(c, access, allOpts.ownerAddress, 'minter', allOpts.minterAddress);
+  return requireAccessControl(c, access, allOpts.ownerAddress, 'minter', allOpts.minterAddress);
 }
 
 
 
-function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<SharedL2NativeSuperchainERC20Options>) {
+// function addDeployLogic(c: DeployBuilder, fn: BaseFunction,  allOpts : Required<SharedL2NativeSuperchainERC20Options>) {
 
-  if (allOpts.upgradeable) {
-    const Upgrades = {
-      name: 'Upgrades',
-      path: '@openzeppelin-foundry-upgrades/Upgrades.sol',
-    };
-    c.addImportOnly(Upgrades);
-  }
-  // to do fix hardcoded upgradable
+//   if (allOpts.upgradeable) {
+//     const Upgrades = {
+//       name: 'Upgrades',
+//       path: '@openzeppelin-foundry-upgrades/Upgrades.sol',
+//     };
+//     c.addImportOnly(Upgrades);
+//   }
+//   // to do fix hardcoded upgradable
 
-  if (allOpts.upgradeable == 'transparent' ) {
-    c.addFunctionCode(`vm.startBroadcast();
-      address tokenAddress = Upgrades.deployTransparentProxy("${allOpts.contractFile}", abi.encodeCall(${allOpts.contractName}.initialize, ( name, symbol)));
+//   if (allOpts.upgradeable == 'transparent' ) {
+//     c.addFunctionCode(`vm.startBroadcast();
+//       address tokenAddress = Upgrades.deployTransparentProxy("${allOpts.contractFile}", abi.encodeCall(${allOpts.contractName}.initialize, ( name, symbol)));
      
-      vm.stopBroadcast();
-      // DONT forget to save the address of the token
-      deployerProcedue.save("${allOpts.contractName}", tokenAddress);
-      return ${allOpts.contractName}(tokenAddress);`, fn);
+//       vm.stopBroadcast();
+//       // DONT forget to save the address of the token
+//       deployerProcedue.save("${allOpts.contractName}", tokenAddress);
+//       return ${allOpts.contractName}(tokenAddress);`, fn);
 
-  } else if (allOpts.upgradeable == 'uups') {
-    c.addFunctionCode(`vm.startBroadcast();
-      address tokenAddress = Upgrades.deployUUPSProxy("${allOpts.contractFile}", abi.encodeCall(${allOpts.contractName}.initialize, ( name, symbol)));
+//   } else if (allOpts.upgradeable == 'uups') {
+//     c.addFunctionCode(`vm.startBroadcast();
+//       address tokenAddress = Upgrades.deployUUPSProxy("${allOpts.contractFile}", abi.encodeCall(${allOpts.contractName}.initialize, ( name, symbol)));
       
-      vm.stopBroadcast();
-      // DONT forget to save the address of the token
-      deployerProcedue.save("${allOpts.contractName}", tokenAddress);
-      return ${allOpts.contractName}(tokenAddress);`, fn);
+//       vm.stopBroadcast();
+//       // DONT forget to save the address of the token
+//       deployerProcedue.save("${allOpts.contractName}", tokenAddress);
+//       return ${allOpts.contractName}(tokenAddress);`, fn);
 
-  } else {
-    // c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
+//   } else {
+//     // c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
 
-    //     DeployOptions memory options = DeployOptions({salt:_salt});
+//     //     DeployOptions memory options = DeployOptions({salt:_salt});
 
-    //     bytes memory args = abi.encode(name, symbol);
-    //     return ${allOpts.contractName}(DefaultDeployerFunction.deploy(deployer, "${allOpts.contractName}", Artifact_${allOpts.contractName}, args, options));`, fn);
+//     //     bytes memory args = abi.encode(name, symbol);
+//     //     return ${allOpts.contractName}(DefaultDeployerFunction.deploy(deployer, "${allOpts.contractName}", Artifact_${allOpts.contractName}, args, options));`, fn);
 
-    setAccessControl(c, fn, allOpts.access, allOpts.mintable, allOpts.contractName, allOpts.ownerAddress, allOpts.minterAddress);
+//     setAccessControl(c, fn, allOpts.access, allOpts.mintable, allOpts.contractName, allOpts.ownerAddress, allOpts.minterAddress);
     
 
-  }
+//   }
 
-}
+// }
 
 function getDeployFunction(allOpts: Required<SharedL2NativeSuperchainERC20Options>) {
   const fn = {
