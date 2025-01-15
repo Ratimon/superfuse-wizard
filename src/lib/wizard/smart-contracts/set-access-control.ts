@@ -50,7 +50,7 @@ export function setAccessControl(c: ContractBuilder, access: Access) {
     case 'roles': {
 
       if (c.addParent(parents.EnumerableRoles)) {
-        c.addVariable(`bytes32 public constant ADMIN_ROLE = 0;`);
+        c.addVariable(`uint256 public constant ADMIN_ROLE = 0;`);
         c.addConstructorArgument({
           type: 'address',
           name: 'defaultAdmin_'
@@ -105,7 +105,7 @@ export function requireAccessControl(c: ContractBuilder, fn: BaseFunction, acces
       // break;
 
       const roleId = roleIdPrefix + '_ROLE';
-      const addedConstant = c.addVariable(`bytes32 public constant ${roleId} = ${roleIdValue};`);
+      const addedConstant = c.addVariable(`uint256 public constant ${roleId} = ${roleIdValue};`);
       if (roleOwner && addedConstant) {
         c.addConstructorArgument({
           type: 'address',
@@ -130,11 +130,11 @@ export function requireAccessControl(c: ContractBuilder, fn: BaseFunction, acces
 const parents = {
   Ownable: {
     name: 'Ownable',
-    path: '@solady-v0.0.158/auth/Ownable.sol',
+    path: '@solady-v0.0.292/auth/Ownable.sol',
   },
   EnumerableRoles: {
     name: 'EnumerableRoles',
-    path: '@solady-v0.0.158/auth/EnumerableRoles.sol',
+    path: '@solady-v0.0.292/auth/EnumerableRoles.sol',
   },
   // AccessManaged: {
   //   name: 'AccessManaged',

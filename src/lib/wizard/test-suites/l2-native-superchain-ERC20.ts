@@ -204,11 +204,23 @@ function setOpsec(c: TestBuilder, opsec: OpSec) {
 
 function setConstructorTestLogic(c: TestBuilder, allOpts: Required<SharedL2NativeSuperchainERC20Options>) {
 
+  
+  // const camelCaseContractName = transformToLowerCamelCase(allOpts.contractName);
+  // c.addFunctionCode(`assertEq(${camelCaseContractName}.name(), "${allOpts.tokenName}");
+  //       assertEq(${camelCaseContractName}.symbol(), "${allOpts.tokenSymbol}");
+  //       assertEq(${camelCaseContractName}.decimals(), ${allOpts.decimals});
+  //       assertEq(${camelCaseContractName}.owner(), owner);`, functions.test_constructor);
+        
   const camelCaseContractName = transformToLowerCamelCase(allOpts.contractName);
   c.addFunctionCode(`assertEq(${camelCaseContractName}.name(), "${allOpts.tokenName}");
         assertEq(${camelCaseContractName}.symbol(), "${allOpts.tokenSymbol}");
-        assertEq(${camelCaseContractName}.decimals(), ${allOpts.decimals});
-        assertEq(${camelCaseContractName}.owner(), owner);`, functions.test_constructor);
+        assertEq(${camelCaseContractName}.decimals(), ${allOpts.decimals});`, functions.test_constructor);
+
+  // to do : handle default admin case
+
+  // if (allOpts.access === 'roles') {
+  //   c.addFunctionCode(`assertEq(${camelCaseContractName}.hasRole(), 0);`, functions.test_constructor);
+  // }
 }
   
 
@@ -302,10 +314,9 @@ function setERC7802TestLogic(c: TestBuilder, allOpts: Required<SharedL2NativeSup
 function addMintable(c: TestBuilder, access: Access, targetContractName: string) {
 
   
-
     const Ownable = {
         name: 'Ownable',
-        path: '@solady-v0.0.245/auth/Ownable.sol',
+        path: '@solady-v0.0.292/auth/Ownable.sol',
     };
     c.addImportOnly(Ownable);
 
@@ -317,7 +328,7 @@ function addMintable(c: TestBuilder, access: Access, targetContractName: string)
 
     const ERC20 = {
         name: 'ERC20',
-        path: '@solady-v0.0.245/tokens/ERC20.sol',
+        path: '@solady-v0.0.292/tokens/ERC20.sol',
     };
     c.addImportOnly(ERC20);
 

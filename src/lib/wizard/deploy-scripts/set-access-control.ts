@@ -45,7 +45,6 @@ export function setAccessControl(c: DeployBuilder, fn: BaseFunction, access: Acc
         if (mintable) {
             c.addVariable(`address minter = ${minterAddress};`);
         }
-
         c.addFunctionCode(`bytes32 _salt = DeployScript.implSalt();
 
         DeployOptions memory options = DeployOptions({salt:_salt});
