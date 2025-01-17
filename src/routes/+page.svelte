@@ -13,11 +13,13 @@
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
-  import ScrollStep from '$lib/ui/templates/ScrollStep.svelte';
-  import CopyBlock from '$lib/ui/components/CopyBlock.svelte';
   import Background from '$lib/ui/background/Background.svelte';
-  import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
+  import TestimonialsAvatars from "$lib/ui/testinomials/TestimonialsAvatars.svelte";
+  import ScrollStep from '$lib/ui/templates/ScrollStep.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
+  import Hero from '$lib/ui/templates/Hero.svelte';
+  import CopyBlock from '$lib/ui/components/CopyBlock.svelte';
+  import WizardSingle from '$lib/ui/components/WizardSingle.svelte';
 
   import ERC20VotesContractControls from '$lib/ui/controls/ERC20VotesContractControls.svelte';
   import ERC20VotesDeployControls from '$lib/ui/controls/ERC20VotesDeployControls.svelte';
@@ -33,7 +35,8 @@
 
 	let { data }: Props = $props();
 
-  const stepLinks  = data.dropDownLinks;
+  const stepLinks = data.dropDownLinks;
+  const installLinks = '#0-install';
 
   let initialContractTab: string | undefined = $state('L2NativeSuperchainERC20');
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
@@ -89,41 +92,25 @@
 
 </script>
 
+<Hero />
 
 <div class="container flex flex-col gap-4 p-8 mx-8">
 
-  <div class="pt-3 pb-4 justify-center">
+    <div class="flex flex-col md:flex-row gap-x-6 justify-center items-center">
 
-    <!-- <h2 class="m-4 font-semibold">
-      Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a> toolkit:
-    </h2>
-
-    <CopyBlock
-      boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
-      class="mb-5"
-      background="bg-primary-content"
-      copiedBackground="bg-success"
-      copiedColor="text-success-content"
-      text={`forge init your_project`}
-    />
-
-    <CopyBlock
-      boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
-      class="mb-5"
-      background="bg-primary-content"
-      copiedBackground="bg-success"
-      copiedColor="text-success-content"
-      text={`cd your_project`}
-    />
-
-    <p class="mt-6 text-base-300">
-      Find out more on
-      <a class="underline" href="https://github.com/foundry-rs/foundry" target="_blank" rel="noreferrer"
-        >github</a
+      <h2 class="font-semibold text-xl lg:text-2xl text-base-300 tracking-tight md:-mb-4">
+        <div class="bg-gradient-to-r from-red-600 via-yellow-500 to-orange-400 text-transparent bg-clip-text" >Redprint Wizard</div>: an interactive code generator for OPStack Developers.
+      </h2>
+      
+      <a
+        class='btn btn-secondary btn-wide'
+        href="https://redprint.ninja/"
       >
-    </p> -->
+        Build your own OPStack contracts!!
+      </a>
 
-  </div>
+      <TestimonialsAvatars />
+    </div>
 
 </div>
 
@@ -140,29 +127,43 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={contract}>
 
   {#snippet guide()}
-    <!-- <div class="pt-3 pb-4 justify-center"> -->
 
-      <h2 class="m-4 font-semibold">
-        Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a>. Then add new solidity files with following:
+    <div class="pt-3 pb-4 justify-center">
+      <h2
+          id={installLinks}
+          class="m-4 font-semibold"
+        >
+          Add the <a class="bg-primary underline" href="https://github.com/Ratimon/superfuse-forge" target="_blank" rel="noreferrer">superfuse-forge</a> using your favorite package manager, e.g., with pnpm:
       </h2>
-
       <CopyBlock
         boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
         class="mb-5"
         background="bg-primary-content"
         copiedBackground="bg-success"
         copiedColor="text-success-content"
-        text={`touch src/${contract.name}.sol scripts/${conventionNumber}_${deployContract.name}.s.sol test/${contract.name}.t.sol`}
+        text={`pnpm add superfuse-forge`}
       />
+    </div>
 
-      <p class="mt-6 text-base-300">
-        Check out example at our
-        <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples" target="_blank" rel="noreferrer"
-          >repo</a
-        >
-      </p>
+    <h2 class="m-4 font-semibold">
+      Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a>. Then add new solidity files with following:
+    </h2>
 
-    <!-- </div> -->
+    <CopyBlock
+      boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
+      class="mb-5"
+      background="bg-primary-content"
+      copiedBackground="bg-success"
+      copiedColor="text-success-content"
+      text={`touch src/${contract.name}.sol scripts/${conventionNumber}_${deployContract.name}.s.sol test/${contract.name}.t.sol`}
+    />
+
+    <p class="mt-6 text-base-300">
+      Check out example at our
+      <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples" target="_blank" rel="noreferrer"
+        >repo</a
+      >
+    </p>
     
   {/snippet}
 
@@ -207,20 +208,6 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
 
     {#snippet guide()}
-
-      <div class="pt-3 pb-4 justify-center">
-        <h2 class="m-4 font-semibold">
-          Add the <a class="bg-primary underline" href="https://github.com/Ratimon/superfuse-forge" target="_blank" rel="noreferrer">superfuse-forge</a> using your favorite package manager, e.g., with pnpm:
-        </h2>
-        <CopyBlock
-          boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
-          class="mb-5"
-          background="bg-primary-content"
-          copiedBackground="bg-success"
-          copiedColor="text-success-content"
-          text={`pnpm add superfuse-forge`}
-        />
-      </div>
 
       <div class="pt-3 pb-4 justify-center">
         <h2 class="m-4 font-semibold">In your terminal, copy below code and run deployment scripts to your prefered network:</h2>
@@ -291,8 +278,10 @@
     {#snippet guide()}
 
       <div class="pt-3 pb-4 justify-center">
-        <h2 class="m-4 font-semibold">
-          Add the <a class="bg-primary underline" href="https://github.com/Ratimon/superfuse-forge" target="_blank" rel="noreferrer">superfuse-forge</a> using your favorite package manager, e.g., with pnpm:
+        <h2
+          class="m-4 font-semibold"
+        >
+          Running Test suites
         </h2>
         <CopyBlock
           boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"

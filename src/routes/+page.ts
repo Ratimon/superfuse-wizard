@@ -15,8 +15,7 @@ export function load() {
     }) satisfies MetaTagsProps;
 
     const headLinks : Link[] = [
-        {pathname: '#solution', title: 'Features', navType: 'scroll'},
-        {pathname: '#resource', title: 'Resources' , navType: 'scroll'},
+        {pathname: '#testimonial', title: 'Testimonials', navType: 'scroll'},
         {pathname: '/blog/3-metric-hub', title: 'Metric Hub', navType: 'tab'},
         {pathname: '#contact', title: 'Contact Us', navType: 'scroll'},
     ];
@@ -27,12 +26,10 @@ export function load() {
         {pathname: '#3-test', title: 'Test', navType: 'scroll'},
     ];
     
-    const actionLink : Link = {pathname: '/blog', title: 'Read Our Blog', navType: 'tab' };
+    const actionLink : Link = {pathname: '/blog', title: 'Resources/Blog', navType: 'tab' };
 
     const footLinks : Link[] = [
-        {pathname: '#solution', title: 'Features', navType: 'scroll'},
         {pathname: '#testimonial', title: 'Testimonial', navType: 'scroll'},
-        {pathname: '#resource', title: 'Resources', navType: 'scroll'},
         {pathname: '#contact', title: 'Contact Us', navType: 'scroll'},
         {pathname: '/', title: 'Home', navType: 'tab'},
     ];
@@ -40,7 +37,7 @@ export function load() {
 	return {
         pageMetaTags: pageMetaTags,
 		headLinks: headLinks,
-        menuTitle: "Try Our toolkit",
+        menuTitle: "Wizardoorr",
         dropDownLinks: dropDownLinks,
         actionLink: actionLink,
         footLinks: footLinks,

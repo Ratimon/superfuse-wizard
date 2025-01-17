@@ -4,7 +4,6 @@
 	import {page} from '$app/state';
 	import {route, isParentRoute, isSameRoute} from '$lib/utils/path';
 
-
 	type Props = {
 		children: Snippet;
 		href: string;

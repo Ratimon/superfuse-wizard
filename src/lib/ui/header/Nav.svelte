@@ -4,7 +4,6 @@
 	import ScrollLink from '$lib/ui/header/ScrollLink.svelte';
     import PageLink from '$lib/ui/header/PageLink.svelte';
 
-
     type Props = {
         class?: string;
         tabClass?: string;
