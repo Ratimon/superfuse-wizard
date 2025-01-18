@@ -132,25 +132,6 @@ function addBase(c: TestBuilder, allOpts: Required<SharedL2NativeSuperchainERC20
   };
   c.addImportOnly(DeployL2NativeSuperchainERC20Script);
 
-//   const IOwnable = {
-//     name: 'IOwnable',
-//     path: '@contracts-bedrock/universal/interfaces/IOwnable.sol',
-//   };
-//   c.addImportOnly(IOwnable);
-
-//   const Ownable = {
-//     name: 'Ownable',
-//     path: '@solady-v0.0.245/auth/Ownable.sol',
-//   };
-//   c.addImportOnly(Ownable);
-
-//   const ERC20 = {
-//     name: 'ERC20',
-//     path: '@solady-v0.0.245/tokens/ERC20.sol',
-//   };
-//   c.addImportOnly(ERC20);
-
-
   c.addVariable(`address alice;`);
   c.addVariable(`address bob;`);
 

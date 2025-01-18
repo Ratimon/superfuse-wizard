@@ -18,10 +18,10 @@ export function setAccessControl(c: TestBuilder, access: Access, contractName: s
   switch (access) {
     case 'ownable': {
 
-      c.addImportOnly(parents.IOwnable);
+      c.addImportOnly(parents.Ownable);
 
       c.addFunctionCode(`vm.expectEmit(true, true, true, true);
-        emit IOwnable.OwnershipTransferred(owner, address(0));
+        emit Ownable.OwnershipTransferred(owner, address(0));
 
         vm.prank(owner);
         ${targetContractName}.renounceOwnership();
@@ -31,7 +31,7 @@ export function setAccessControl(c: TestBuilder, access: Access, contractName: s
         vm.assume(_newOwner != ZERO_ADDRESS);
 
         vm.expectEmit(true, true, true, true);
-        emit IOwnable.OwnershipTransferred(owner, _newOwner);
+        emit Ownable.OwnershipTransferred(owner, _newOwner);
 
         vm.prank(owner);
         ${targetContractName}.transferOwnership(_newOwner);
@@ -109,9 +109,9 @@ const functions = defineFunctions({
 });
 
 const parents = {
-  IOwnable: {
-    name: 'IOwnable',
-    path: '@contracts-bedrock/universal/interfaces/IOwnable.sol',
+  Ownable: {
+    name: 'Ownable',
+    path: '@solady-v0.0.292/auth/Ownable.sol',
   },
   // Ownable: {
   //   name: 'Ownable',
