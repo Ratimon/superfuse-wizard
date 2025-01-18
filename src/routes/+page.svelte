@@ -1,5 +1,6 @@
 <script  lang="ts">
   import type { PageData } from './$types';
+  import type { GithubRepo } from '$lib/model/GithubRepo';
 
   import type {  DeployContract } from '$lib/wizard/deploy-scripts';
   import { DeployBuilder, buildDeployGeneric } from '$lib/wizard/deploy-scripts';
@@ -37,6 +38,14 @@
 
   const stepLinks = data.dropDownLinks;
   const installLinks = '#0-install';
+
+  let repositories: GithubRepo[] = [
+      {title: 'solady', owner : 'Vectorized', name: 'solady' },
+      {title: 'OZ contract', owner : 'OpenZeppelin', name: 'openzeppelin-contracts' },
+      {title: 'OZ Wizard', owner : 'OpenZeppelin', name: 'contracts-wizard' },
+      {title: 'Redprint Wizard', owner : 'Ratimon', name: 'redprint-wizard' },
+      {title: 'superfuse-forge', owner : 'Ratimon', name: 'redprint-forge' },
+  ]
 
   let initialContractTab: string | undefined = $state('L2NativeSuperchainERC20');
   let contractTab: Kind = $derived(sanitizeKind(initialContractTab));
@@ -92,7 +101,7 @@
 
 </script>
 
-<Hero />
+<Hero repositories={repositories} />
 
 <div class="container flex flex-col gap-4 p-8 mx-8">
 

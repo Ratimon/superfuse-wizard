@@ -8,14 +8,14 @@
   
     import Stargazers from '$lib/ui/components/Stargazers.svelte';
     import ScrollLink from '$lib/ui/header/ScrollLink.svelte';
-  
-    export let repositories: GithubRepo[]= [
-        {title: 'solady', owner : 'Vectorized', name: 'solady' },
-        {title: 'OZ contract', owner : 'OpenZeppelin', name: 'openzeppelin-contracts' },
-        {title: 'OZ Wizard', owner : 'OpenZeppelin', name: 'contracts-wizard' },
-        {title: 'Redprint Wizard', owner : 'Ratimon', name: 'redprint-wizard' },
-        {title: 'superfuse-forge', owner : 'Ratimon', name: 'redprint-forge' },
-    ];
+
+    type Props = {
+        repositories: GithubRepo[];
+    }
+
+    let {
+        repositories = []
+    }: Props = $props();
   
   </script>
   
