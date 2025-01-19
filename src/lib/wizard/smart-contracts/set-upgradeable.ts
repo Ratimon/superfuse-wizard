@@ -22,8 +22,12 @@ export function setUpgradeable(c: ContractBuilder, upgradeable: Upgradeable, acc
   switch (upgradeable) {
     case 'transparent': break;
 
+    // todo fix it
+
     case 'uups': {
-      requireAccessControl(c, functions._authorizeUpgrade, access, 'UPGRADER', 'upgrader');
+      // requireAccessControl(c, functions.mintTo, access, 'MINTER','1', 'minter_');
+      requireAccessControl(c, functions._authorizeUpgrade, access, 'UPGRADER','1','upgrader');
+      // requireAccessControl(c, functions._authorizeUpgrade, access, 'UPGRADER' 'upgrader');
       const UUPSUpgradeable = {
         name: 'UUPSUpgradeable',
         path: '@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol',

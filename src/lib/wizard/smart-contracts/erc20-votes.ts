@@ -183,7 +183,7 @@ function addPermit(c: ContractBuilder) {
 // function addPermit(c: ContractBuilder, name: string) {
   const ERC20Permit = {
     name: 'ERC20Permit',
-    path: '@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol',
+    path: '@openzeppelin-v0.5.0.2/token/ERC20/extensions/ERC20Permit.sol',
   };
   c.addParent(ERC20Permit, [{ lit: '_name' }]);
   c.addOverride(ERC20Permit, functions.nonces);
@@ -197,14 +197,14 @@ function addVotes(c: ContractBuilder, clockMode: ClockMode) {
 
   const ERC20Votes = {
     name: 'ERC20Votes',
-    path: '@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol',
+    path: '@openzeppelin-v0.5.0.2/token/ERC20/extensions/ERC20Votes.sol',
   };
   c.addParent(ERC20Votes);
   c.addOverride(ERC20Votes, functions._update);
 
   c.addImportOnly({
     name: 'Nonces',
-    path: '@openzeppelin/contracts/utils/Nonces.sol',
+    path: '@openzeppelin-v0.5.0.2/utils/Nonces.sol',
   });
   c.addOverride({
     name: 'Nonces',
