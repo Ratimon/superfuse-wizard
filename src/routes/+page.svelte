@@ -152,27 +152,35 @@
         copiedColor="text-success-content"
         text={`pnpm add superfuse-forge`}
       />
+
+      <p class="mt-6 text-base-300">
+       Quick start your project by following the demo at our
+        <a class="underline" href="https://github.com/Ratimon/superfuse-forge?tab=readme-ov-file#quickstart" target="_blank" rel="noreferrer"
+          >Guilde</a
+        >
+      </p>
     </div>
 
-    <h2 class="m-4 font-semibold">
-      Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a>. Then add new solidity files with following:
-    </h2>
-
-    <CopyBlock
-      boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
-      class="mb-5"
-      background="bg-primary-content"
-      copiedBackground="bg-success"
-      copiedColor="text-success-content"
-      text={`touch src/${contract.name}.sol scripts/${conventionNumber}_${deployContract.name}.s.sol test/${contract.name}.t.sol`}
-    />
-
-    <p class="mt-6 text-base-300">
-      Check out example at our
-      <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples" target="_blank" rel="noreferrer"
-        >repo</a
-      >
-    </p>
+    <div class="pt-3 pb-4 justify-center">
+      <h2 class="m-4 font-semibold">
+        Create a new project using <a class="bg-primary underline" href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noreferrer">foundry</a>. Then add new solidity files with following:
+      </h2>
+      <CopyBlock
+        boxClass="p-2 rounded-box font-black text-primary max-w-xl mx-auto"
+        class="mb-5"
+        background="bg-primary-content"
+        copiedBackground="bg-success"
+        copiedColor="text-success-content"
+        text={`touch src/${contract.name}.sol scripts/${conventionNumber}_${deployContract.name}.s.sol test/${contract.name}.t.sol`}
+      />
+      <p class="mt-6 text-base-300">
+        Check out example at our
+        <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples" target="_blank" rel="noreferrer"
+          >repo</a
+        >
+      </p>
+    </div>
+    
     
   {/snippet}
 
