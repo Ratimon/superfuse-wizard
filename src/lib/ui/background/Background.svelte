@@ -1,7 +1,5 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    // let colorName: string;
-    // export {colorName as color};
 
     type Props = {
         children: Snippet;

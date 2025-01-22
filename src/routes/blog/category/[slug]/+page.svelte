@@ -1,18 +1,30 @@
 <script lang="ts">
-	import type { AuthorPresenter, CategoryPresenter, PostPresenter } from '../../Blog.presenter'
+	import type { AuthorPresenter, CategoryPresenter, PostPresenter } from '../../Blog.presenter';
+
 	import { authors, categories} from '../../Blog.data';
     import CardArticle from '$lib/ui/blog/CardArticle.svelte';
     import CardCategory from '$lib/ui/blog/CardCategory.svelte';
 
-	export let data
+	// export let data
+    let { data } = $props();
 
-    let categoryToDisplay: CategoryPresenter;
-	$: categoryToDisplay = categories.find((category) => category.slug == data.slug)!;
+    let categoryToDisplay: CategoryPresenter = $state({
+        slug: categories.find((category) => category.slug == data.slug)!.slug,
+        title: '',
+        description: '',
+        posts: []
+    });
+
+    $effect(() => {
+        categoryToDisplay = categories.find((category) => category.slug == data.slug)!;
+    });
 
     let allPosts : PostPresenter[];
-	$: allPosts = data.posts.map( post => {
-		const cachedCategories : CategoryPresenter[] = post.categories.map( categoryString => {
-			return categories.find((category) => category.slug === categoryString)!;
+
+    $effect(() => {
+        allPosts = data.posts.map( post => {
+            const cachedCategories : CategoryPresenter[] = post.categories.map( categoryString => {
+                return categories.find((category) => category.slug === categoryString)!;
 		} );
 		const cachedAuthor : AuthorPresenter = authors.find((author) => author.slug == post.author)!;
 
@@ -21,19 +33,34 @@
             categories: cachedCategories,
 			author: cachedAuthor
         };
-	});
+	    });
+    });
 
 	let postsByCategory : PostPresenter[];
-	$: postsByCategory = allPosts.filter((post) => post.categories.includes( categoryToDisplay ) )
 
-    let postsRecentByCategory : PostPresenter[];
-    $: postsRecentByCategory = postsByCategory.sort(
-      (a, b) =>
-        new Date(b.date).valueOf() - new Date(a.date).valueOf()
-    );
 
-    let otherCategories : CategoryPresenter[];
-    $: otherCategories = categories.filter((category) => category.slug !== data.slug)!;
+	$effect(() => {
+		// postsByCategory = allPosts.filter((post) => post.categories.includes( categoryToDisplay ) )
+        postsByCategory = allPosts.filter((post) => 
+            post.categories.some((category) => category.title === categoryToDisplay.title)
+        )
+
+	});
+
+    // const postsByCategory = $derived(allPosts.filter((post) => post.categories.includes( categoryToDisplay ) ));
+
+    let postsRecentByCategory : PostPresenter[] = $state([]);
+    $effect(() => {
+        postsRecentByCategory = postsByCategory.sort(
+            (a, b) =>
+                new Date(b.date).valueOf() - new Date(a.date).valueOf()
+        );
+    });
+
+    let otherCategories : CategoryPresenter[] = $state([]);
+    $effect(() => {
+        otherCategories = categories.filter((category) => category.slug !== data.slug)!;
+    });
 
 </script>
 

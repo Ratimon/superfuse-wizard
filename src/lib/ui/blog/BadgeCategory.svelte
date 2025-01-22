@@ -1,7 +1,16 @@
 <script lang="ts">
 	import type { CategoryPresenter } from '../../../routes/blog/Blog.presenter'
-    export let category: CategoryPresenter;
-    export let extraStyle: string;
+
+    type Props = {
+        category: CategoryPresenter;
+        extraStyle: string;
+    }
+
+    let {
+        category,
+        extraStyle=''
+    }: Props = $props();
+
 </script>
 
 <a

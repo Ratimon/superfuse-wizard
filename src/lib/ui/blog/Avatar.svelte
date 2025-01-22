@@ -1,6 +1,11 @@
 <script lang="ts">
   import type { PostPresenter} from '../../../routes/blog/Blog.presenter';
-  export let post: PostPresenter;
+
+	type Props = {
+    post: PostPresenter;
+  }
+
+  let { post }: Props = $props();
 
 </script>
 

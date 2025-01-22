@@ -13,7 +13,7 @@ export type AuthorPresenter = {
 	name: string;
 	job: string;
 	description: string;
-	avatarSrc:  string;
+	avatarSrc?:  string;
 	socials?: {
 	  name: string;
 	  icon: string;

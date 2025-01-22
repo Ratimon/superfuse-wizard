@@ -5,23 +5,44 @@
 	import {categories, authors} from '../Blog.data'
 
 	//refactor to store
-	export let data;
+	let { data } = $props();
 
-    let postToDisplay: PostPresenter;
-	$: postToDisplay = {
-		...data.meta,
+    let postToDisplay: PostPresenter = $state({
+		title: data.meta.title,
+		slug: data.meta.slug,
+		description: data.meta.description,
+		date: data.meta.date,
 		categories: data.meta.categories.map( (categoryString: string) => {
 			return categories.find((category) => category.slug === categoryString)!;
 		}),
-		author: authors.find((author) => author.slug == data.meta.author)!
-	}
+		author: authors.find((author) => author.slug == data.meta.author)!,
+		published: data.meta.published,
+		imgSrc: data.meta.imgSrc,
+		imgAlt: data.meta.imgAlt
+	});
 
-	let categoriesToLabel : CategoryPresenter[];
-	$: categoriesToLabel = postToDisplay.categories;
+
+	$effect(() => {
+		postToDisplay = {
+			...data.meta,
+			categories: data.meta.categories.map( (categoryString: string) => {
+			return categories.find((category) => category.slug === categoryString)!;
+		}),
+			author: authors.find((author) => author.slug == data.meta.author)!
+		}
+	});
 
 
-	let allPosts : PostPresenter[];
-	$: allPosts = data.posts.map( post => {
+	let categoriesToLabel : CategoryPresenter[] = $state([]);
+
+	$effect(() => {
+		categoriesToLabel = postToDisplay.categories;
+	});
+
+
+	let allPosts : PostPresenter[] = $state([]);
+	$effect(() => {
+		allPosts = data.posts.map( post => {
 		const cachedCategories : CategoryPresenter[] = post.categories.map( categoryString => {
 			return categories.find((category) => category.slug === categoryString)!;
 		} );
@@ -29,13 +50,15 @@
 
 		return {
             ...post,
-            categories: cachedCategories,
-			author: cachedAuthor
-        };
+            	categories: cachedCategories,
+				author: cachedAuthor
+			};
+		});
 	});
 
-	let postsRelated : PostPresenter[];
-	$: postsRelated = allPosts.filter(
+	let postsRelated : PostPresenter[] = $state([]);
+	$effect(() => {
+		postsRelated = allPosts.filter(
       (a) =>
         a.slug !== data.slug &&
         a.categories.some((c) =>
@@ -44,9 +67,10 @@
     )
     .sort(
       (a, b) =>
-        new Date(b.date).valueOf() - new Date(a.date).valueOf()
-    )
-    .slice(0, 3);
+            new Date(b.date).valueOf() - new Date(a.date).valueOf()
+        )
+        .slice(0, 3);
+	});
 
 </script>
 
@@ -89,7 +113,7 @@
 					{#each categoriesToLabel as category}
 						<BadgeCategory
 							category={category}
-							extraStyle={"!badge-lg"};
+							extraStyle={"!badge-lg"}
 						/>
 					{/each}
 
@@ -151,7 +175,7 @@
 
 			<section class="mx-32 w-full max-md:pt-4 md:pr-20 space-y-12 md:space-y-20">
 				<div class="prose">
-					<svelte:component this={data.content} />
+					<data.content></data.content>
 				</div>
 			</section>
 

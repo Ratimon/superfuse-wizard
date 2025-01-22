@@ -7,12 +7,14 @@
 	import CardArticle from '$lib/ui/blog/CardArticle.svelte';
 	import CardCategory from '$lib/ui/blog/CardCategory.svelte';
 
+	// to do L
 	// import Testimonials3 from "$lib/ui/testinomials/Testimonials3.svelte";
+	
+	let { data } = $props();
+	let allPosts : PostPresenter[]= $state([]);
 
-	export let data;
-
-	let allPosts : PostPresenter[];
-	$: allPosts = data.posts.map( post => {
+	$effect(() => {
+		allPosts = data.posts.map( post => {
 
 		const cachedCategories : CategoryPresenter[] = post.categories.map( categoryString => {
 			return categories.find((category) => category.slug === categoryString)!;
@@ -23,16 +25,22 @@
 		return {
             ...post,
             categories: cachedCategories,
-			author: cachedAuthor
-        };
+				author: cachedAuthor
+			};
+		});
 	});
 
-	let postsSortedByLatest : PostPresenter[];
-	$: postsSortedByLatest = allPosts.sort(
-        (a, b) =>
-          new Date(b.date).valueOf() - new Date(a.date).valueOf()
-      )
-      .slice(0, 6);
+	let postsSortedByLatest : PostPresenter[] = $state([]);
+
+	$effect(() => {
+		postsSortedByLatest = allPosts.sort(
+			(a, b) =>
+				new Date(b.date).valueOf() - new Date(a.date).valueOf()
+		)
+      	.slice(0, 6);
+	});
+
+
 </script>
 
 <section class="text-center max-w-xl mx-auto mt-12 mb-24 md:mb-32">

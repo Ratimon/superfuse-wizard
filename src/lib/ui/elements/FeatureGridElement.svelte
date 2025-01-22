@@ -1,10 +1,20 @@
 <script lang="ts">
-
+    import type { Snippet } from 'svelte';
     import Icon from '@iconify/svelte';
 
-    export let title: string = '';
-    export let path: string = '';
-    export let iconName: string= '';
+    type Props = {
+        children: Snippet;
+        title: string;
+        path: string;
+        iconName: string;
+    }
+
+    let {
+        children,
+        title='',
+        path='',
+        iconName=''
+    }: Props = $props();
 
 </script>
 
@@ -20,7 +30,7 @@
             {title}
         </div>
         <div class="mt-2 text-lg leading-8">
-            <slot />
+            {@render children?.()}
         </div>
     </div>
 

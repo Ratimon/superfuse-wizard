@@ -3,34 +3,49 @@
 	import { authors, categories} from '../../Blog.data'
     import CardArticle from '$lib/ui/blog/CardArticle.svelte';
 
-	export let data
+	let { data } = $props();
 
-    let authorToDisplay: AuthorPresenter;
-	$: authorToDisplay = authors.find((author) => author.slug == data.slug)!;
+    let authorToDisplay: AuthorPresenter = $state({
+        slug: '',
+        name: '',
+        job: '',
+        description: '',
+        avatarSrc: ''
+    });
 
-    let allPosts : PostPresenter[];
-	$: allPosts = data.posts.map( post => {
-		const cachedCategories : CategoryPresenter[] = post.categories.map( categoryString => {
+	$effect(() => {
+		authorToDisplay = authors.find((author) => author.slug == data.slug)!;
+	});
+
+    let allPosts : PostPresenter[] = $state([]);
+	$effect(() => {
+		allPosts = data.posts.map( post => {
+			const cachedCategories : CategoryPresenter[] = post.categories.map( categoryString => {
 			return categories.find((category) => category.slug === categoryString)!;
 		} );
 		const cachedAuthor : AuthorPresenter = authors.find((author) => author.slug == post.author)!;
 
-		return {
-            ...post,
-            categories: cachedCategories,
-			author: cachedAuthor
-        };
+            return {
+                ...post,
+                categories: cachedCategories,
+                author: cachedAuthor
+            };
+		});
 	});
 
-	let postsByAuthor : PostPresenter[];
-	$: postsByAuthor = allPosts.filter((post) => post.author.slug === data.slug)
+	let postsByAuthor : PostPresenter[] = $state([]);
+	$effect(() => {
+		postsByAuthor = allPosts.filter((post) => post.author.slug === data.slug)
+	});
 
-    let postsRecentByAuthor : PostPresenter[];
+    let postsRecentByAuthor : PostPresenter[] = $state([]);
 
-    $: postsRecentByAuthor = postsByAuthor.sort(
-      (a, b) =>
-        new Date(b.date).valueOf() - new Date(a.date).valueOf()
-    );
+    $effect(() => {
+        postsRecentByAuthor = postsByAuthor.sort(
+            (a, b) =>
+                new Date(b.date).valueOf() - new Date(a.date).valueOf()
+        );
+    });
 
 </script>
 

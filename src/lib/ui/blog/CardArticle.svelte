@@ -3,13 +3,23 @@
     import Avatar from '$lib/ui/blog/Avatar.svelte';
     import BadgeCategory from '$lib/ui/blog/BadgeCategory.svelte';
     import Background from '$lib/ui/background/Background.svelte';
-  
-    export let post: PostPresenter;
-    let categories: CategoryPresenter[];
-    $: categories = post.categories;
-    
-    export let showCategory: boolean = true;
 
+    type Props = {
+        post: PostPresenter;
+        showCategory: boolean;
+    }
+
+    let {
+        post,
+        showCategory = true
+    }: Props = $props();
+  
+    let categories: CategoryPresenter[] = $state([]);
+
+    $effect(() => {
+        categories = post.categories;
+    });
+    
 </script>
 
 <Background color="bg-base-200">
@@ -38,7 +48,7 @@
                 <div class="flex flex-wrap gap-2">
                     {#if categories}
                         {#each categories as category}
-                            <BadgeCategory category={category} extraStyle={''}; />
+                            <BadgeCategory category={category} extraStyle={``} />
                         {/each}
                     {/if}
                 </div>

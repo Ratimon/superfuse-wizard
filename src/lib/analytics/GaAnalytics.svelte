@@ -1,9 +1,7 @@
 <script lang="ts">
-
 	import { page } from '$app/state';
 	import { analyticsStore } from '$lib/analytics/analytics.Store';
 
-    // export let MEASUREMENT_ID: string;
 	type Props = {
         MEASUREMENT_ID: string;
     }
@@ -11,7 +9,6 @@
     let { MEASUREMENT_ID }: Props = $props();
 
 	const TRACKING_LINK = $derived(`https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`);
-
 
 	$effect(() => {
 		// @ts-ignore
