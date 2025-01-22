@@ -7,7 +7,7 @@
 	import CardArticle from '$lib/ui/blog/CardArticle.svelte';
 	import CardCategory from '$lib/ui/blog/CardCategory.svelte';
 
-	// to do L
+	// to do: add testimonials
 	// import Testimonials3 from "$lib/ui/testinomials/Testimonials3.svelte";
 	
 	let { data } = $props();
