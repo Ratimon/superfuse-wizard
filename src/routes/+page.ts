@@ -16,7 +16,7 @@ export function load() {
 
     const headLinks : Link[] = [
         {pathname: '#testimonial', title: 'Testimonials', navType: 'scroll'},
-        {pathname: '/blog/3-metric-hub', title: 'Metric Hub', navType: 'tab'},
+        {pathname: '/blog/2-metric-hub', title: 'Metric Hub', navType: 'tab'},
         {pathname: '#contact', title: 'Contact Us', navType: 'scroll'},
     ];
 

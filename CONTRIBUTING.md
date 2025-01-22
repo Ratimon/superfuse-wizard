@@ -35,6 +35,7 @@ For reference only
 - (Convert to svg)[https://pixelied.com/convert/png-converter/png-to-svg]
 - (Crop png)[https://www.iloveimg.com/crop-image/crop-png]
 - (Make it PWA compatible)[https://github.com/wighawag/pwag]
+- (webp)[https://squoosh.app]
 
 3. Adding first header and footer:
 

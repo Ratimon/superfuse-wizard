@@ -35,7 +35,7 @@
 
     const fallbackDropDownLinks : Link[] = [
     {pathname: '/blog/category/announcements', title: 'Announcements', navType: 'tab'},
-    {pathname: '/blog/category/tutorials', title: 'Tutorials', navType: 'tab'},
+    {pathname: '/blog/category/reports', title: 'Report Hub', navType: 'tab'},
     ];
 
 	// only 'tab'
