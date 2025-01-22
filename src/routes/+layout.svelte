@@ -41,8 +41,7 @@
 	// only 'tab'
 	const fallbackFootLinks : Link[] = [
     {pathname: '/', title: 'Home', navType: 'tab'},
-    {pathname: '/blog/1-introduce-forge', title: 'Introduce Forge', navType: 'tab'},
-	{pathname: '/blog/2-introduce-wizard', title: 'Introduce Wizard', navType: 'tab'},
+    {pathname: '/blog/1-introduce-superfuse', title: 'Introduce Superfuse', navType: 'tab'},
     ];
 
     // $: metaTags = extend(true, {}, data.baseMetaTags, data.pageMetaTags);
