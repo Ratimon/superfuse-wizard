@@ -15,7 +15,7 @@
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
   import Background from '$lib/ui/background/Background.svelte';
-  import TestimonialsAvatars from "$lib/ui/testimonials/TestimonialsAvatars.svelte";
+  import Advertisement1 from "$lib/ui/advertisement/Advertisement1.svelte";
   import ScrollStep from '$lib/ui/templates/ScrollStep.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
   import Hero from '$lib/ui/templates/Hero.svelte';
@@ -40,11 +40,11 @@
   const installLinks = '#0-install';
 
   let repositories: GithubRepo[] = [
-      {title: 'solady', owner : 'Vectorized', name: 'solady' },
-      {title: 'OZ contract', owner : 'OpenZeppelin', name: 'openzeppelin-contracts' },
-      {title: 'OZ Wizard', owner : 'OpenZeppelin', name: 'contracts-wizard' },
-      {title: 'Redprint Wizard', owner : 'Ratimon', name: 'redprint-wizard' },
-      {title: 'superfuse-forge', owner : 'Ratimon', name: 'redprint-forge' },
+    {title: 'solady', owner : 'Vectorized', name: 'solady' },
+    {title: 'OZ contract', owner : 'OpenZeppelin', name: 'openzeppelin-contracts' },
+    {title: 'OZ Wizard', owner : 'OpenZeppelin', name: 'contracts-wizard' },
+    {title: 'Redprint Wizard', owner : 'Ratimon', name: 'redprint-wizard' },
+    {title: 'superfuse-forge', owner : 'Ratimon', name: 'redprint-forge' },
   ]
 
   let initialContractTab: string | undefined = $state('L2NativeSuperchainERC20');
@@ -103,25 +103,12 @@
 
 <Hero repositories={repositories} />
 
-<div class="container flex flex-col gap-4 p-8 mx-8">
-
-    <div class="flex flex-col md:flex-row gap-x-6 justify-center items-center">
-
-      <h2 class="font-semibold text-xl lg:text-2xl text-base-300 tracking-tight md:-mb-4">
-        <div class="bg-gradient-to-r from-red-600 via-yellow-500 to-orange-400 text-transparent bg-clip-text" >Redprint Wizard</div>: an interactive code generator for OPStack Developers.
-      </h2>
-      
-      <a
-        class='btn btn-secondary btn-wide'
-        href="https://redprint.ninja/"
-      >
-        Build your own OPStack contracts!!
-      </a>
-
-      <TestimonialsAvatars />
-    </div>
-
-</div>
+<Advertisement1
+  landingTitle="Redprint Wizard"
+  landingSubtitle="an interactive code generator for OPStack Developers."
+  landingAction="Build your own OPStack contracts!!"
+  link="https://redprint.ninja/"
+/>
 
 <Background color="bg-base-100 pt-3 pb-4">
   <section id={stepLinks[0].pathname}>
@@ -350,13 +337,6 @@
 
 
 <style lang="postcss">
-
-  .container {
-      background-color: var(--gray-1);
-      border: 1px solid var(--gray-2);
-      border-radius: 10px;
-      min-width: 32rem;
-  }
 
   .tab {
     color: var(--gray-5);

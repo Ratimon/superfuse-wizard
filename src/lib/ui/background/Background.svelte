@@ -11,8 +11,8 @@
         color: colorName = 'bg-base-200'
     }: Props = $props();
     
-  </script>
+</script>
   
-  <div class={`${colorName}`}>
-      {@render children?.()}
-  </div>
+<div class={`${colorName}`}>
+    {@render children?.()}
+</div>
