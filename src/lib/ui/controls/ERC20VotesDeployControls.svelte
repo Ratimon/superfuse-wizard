@@ -65,6 +65,39 @@
 
   <h1>OpSec Management</h1>
 
+  <div class="checkbox-group justify-start">
+    <span class="flex justify-between pr-2">
+      RPC endpoint
+      <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
+        Please config your own RPC endpoint in the .env file.
+      </HelpTooltip>
+    </span>
+
+    <label class:checked={opts.chain === 'optimism'}>
+      <input type="radio" bind:group={opts.chain} value='optimism'>
+      Optimism
+      <HelpTooltip align="right" placement="right" link="https://docs.optimism.io/chain/networks">
+        Checkout Optimism's official documentation for more information regarding RPC endpoints.
+      </HelpTooltip>
+    </label>
+
+    <label class:checked={opts.chain === 'base'}>
+      <input type="radio" bind:group={opts.chain} value='base'>
+      Base
+      <HelpTooltip align="right" placement="right" link="https://docs.base.org/docs/network-information/">
+        Checkout Base's official documentation for more information regarding RPC endpoints.
+      </HelpTooltip>
+    </label>
+
+    <label class:checked={opts.chain === 'localhost'}>
+      <input type="radio" bind:group={opts.chain} value='localhost'>
+      localhost
+      <HelpTooltip align="right" placement="right" link="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example">
+        The default RPC endpoint is 'http://localhost:8545'
+      </HelpTooltip>
+    </label>
+  </div>
+
   <label class="labeled-input">
     <span class="flex justify-between pr-2">
         Deployer Address

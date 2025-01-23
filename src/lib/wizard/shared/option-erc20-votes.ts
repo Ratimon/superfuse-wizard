@@ -3,7 +3,7 @@ import { defaults as infoDefaults } from "./set-info";
 
 import type { ClockMode} from '../smart-contracts/set-clock-mode';
 
-export const chainOptions = [false, 'optimism', 'base'] as const;
+export const chainOptions = [false,'localhost', 'optimism', 'base'] as const;
 export type Chain = typeof chainOptions[number];
 
 // export const opSecOptions = [false, 'key', 'mnemonic'] as const;

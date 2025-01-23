@@ -59,6 +59,7 @@
   const opts = $derived(allOpts[contractTab]);
 
   let conventionNumber = $state(`000`);
+  // let rpcEndpoint = $state(`http://localhost:8545`);
   let deployCommand = $state(`forge script script/000_DeployL2NativeSuperchainERC20Script.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
   let walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
   
@@ -67,7 +68,7 @@
     if (opts) {
       try {
         conventionNumber = opts.conventionNumber;
-        deployCommand = `forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender ${opts.deployerAddress} --rpc-url <RPC_URL> --broadcast`;
+        deployCommand = `forge script script/${conventionNumber}_${deployContract.name}.s.sol --trezor --sender ${opts.deployerAddress} --rpc-url $RPC_${opts.chain} --broadcast`;
 
         if (opts.opSec === 'mnemonic') {
           walletCommand = `--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`
@@ -124,7 +125,6 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={contract}>
 
   {#snippet guide()}
-
     <div class="pt-3 pb-4 justify-center">
       <h2
           id={installLinks}
@@ -142,7 +142,7 @@
       />
 
       <p class="mt-6 text-base-300">
-       Quick start your project by following the demo at our
+       Quick start 'superfuse-forge' by following the demo at our
         <a class="underline" href="https://github.com/Ratimon/superfuse-forge?tab=readme-ov-file#quickstart" target="_blank" rel="noreferrer"
           >Guilde</a
         >
@@ -162,14 +162,12 @@
         text={`touch src/${contract.name}.sol scripts/${conventionNumber}_${deployContract.name}.s.sol test/${contract.name}.t.sol`}
       />
       <p class="mt-6 text-base-300">
-        Check out example at our
+        Dont forget to config `.env` and `remappings.txt` files. Check out project example at our
         <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples" target="_blank" rel="noreferrer"
           >repo</a
         >
       </p>
     </div>
-    
-    
   {/snippet}
 
   {#snippet menu()}
@@ -213,7 +211,6 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={deployContract}>
 
     {#snippet guide()}
-
       <div class="pt-3 pb-4 justify-center">
         <h2 class="m-4 font-semibold">In your terminal, copy below code and run deployment scripts to your prefered network:</h2>
         <CopyBlock
@@ -224,6 +221,13 @@
           copiedColor="text-success-content"
           text={deployCommand}
         />
+        <p class="mt-6 text-base-300">
+          Dont forget to set your RPC endpoint in the
+          <a class="underline" href="https://github.com/Ratimon/superfuse-contracts-examples/blob/main/.env.example" target="_blank" rel="noreferrer"
+            >.env</a
+          >
+          file.
+        </p>
       </div>
 
       <div class="pt-3 pb-4 justify-center">
@@ -237,7 +241,6 @@
           text={walletCommand}
         />
       </div>
-      
     {/snippet}
 
     {#snippet menu()}
@@ -281,7 +284,6 @@
 <WizardSingle conventionNumber={conventionNumber} initialContractTab={initialContractTab} contractTab={contractTab} opts={opts} contractInstance={testContract}>
 
     {#snippet guide()}
-
       <div class="pt-3 pb-4 justify-center">
         <h2
           class="m-4 font-semibold"
@@ -304,8 +306,6 @@
           >repo</a
         >
       </p>
-
-
     {/snippet}
 
     {#snippet menu()}
