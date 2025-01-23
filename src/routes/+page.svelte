@@ -59,10 +59,8 @@
   const opts = $derived(allOpts[contractTab]);
 
   let conventionNumber = $state(`000`);
-  // let rpcEndpoint = $state(`http://localhost:8545`);
   let deployCommand = $state(`forge script script/000_DeployL2NativeSuperchainERC20Script.s.sol --trezor --sender <DEPLOYER_ADDRESS> --rpc-url <RPC_URL> --broadcast`)
   let walletCommand = $state(`--mnemonic-derivation-paths \"m/44'/60'/0'/0/0\"`)
-  
 
   $effect(() => {
     if (opts) {
