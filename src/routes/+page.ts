@@ -15,9 +15,9 @@ export function load() {
     }) satisfies MetaTagsProps;
 
     const headLinks : Link[] = [
-        {pathname: '#testimonial', title: 'Testimonials', navType: 'scroll'},
+        // {pathname: '#testimonial', title: 'Testimonials', navType: 'scroll'},
         {pathname: '/blog/2-metric-hub', title: 'Metric Hub', navType: 'tab'},
-        {pathname: '#contact', title: 'Contact Us', navType: 'scroll'},
+        {pathname: '/about', title: 'Contact Us', navType: 'tab'},
     ];
 
     const dropDownLinks : Link[] = [
@@ -29,8 +29,12 @@ export function load() {
     const actionLink : Link = {pathname: '/blog', title: 'Resources/Blog', navType: 'tab' };
 
     const footLinks : Link[] = [
-        {pathname: '#testimonial', title: 'Testimonial', navType: 'scroll'},
-        {pathname: '#contact', title: 'Contact Us', navType: 'scroll'},
+        // {pathname: '#testimonial', title: 'Testimonial', navType: 'scroll'},
+        {pathname: '#1-contract', title: 'Build', navType: 'scroll' },
+        {pathname: '#2-deploy', title: 'Deploy', navType: 'scroll'},
+        {pathname: '#3-test', title: 'Test', navType: 'scroll'},
+        {pathname: '/blog/2-metric-hub', title: 'Metric Hub', navType: 'tab'},
+        {pathname: '/about', title: 'Contact Us', navType: 'tab'},
         {pathname: '/', title: 'Home', navType: 'tab'},
     ];
 
