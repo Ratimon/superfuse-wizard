@@ -15,7 +15,7 @@
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
   import Background from '$lib/ui/background/Background.svelte';
-  import TestimonialsAvatars from "$lib/ui/testinomials/TestimonialsAvatars.svelte";
+  import TestimonialsAvatars from "$lib/ui/testimonials/TestimonialsAvatars.svelte";
   import ScrollStep from '$lib/ui/templates/ScrollStep.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';
   import Hero from '$lib/ui/templates/Hero.svelte';

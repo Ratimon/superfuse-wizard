@@ -8,7 +8,7 @@
 	import CardCategory from '$lib/ui/blog/CardCategory.svelte';
 
 	// to do: add testimonials
-	// import Testimonials3 from "$lib/ui/testinomials/Testimonials3.svelte";
+	// import Testimonials3 from "$lib/ui/testimonials/Testimonials3.svelte";
 	
 	let { data } = $props();
 	let allPosts : PostPresenter[]= $state([]);
