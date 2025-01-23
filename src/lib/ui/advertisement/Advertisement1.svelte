@@ -6,22 +6,17 @@
         landingSubtitle: string;
         landingAction: string;
         link: string;
+        userNumber: number;
     }
 
     let {
         landingTitle= '',
         landingSubtitle= '',
         landingAction= '',
-        link= ''
+        link= '',
+        userNumber= 5
     }: Props = $props();
 
-    // let {
-    //     landingTitle= 'Redprint Wizard',
-    //     landingSubtitle= 'an interactive code generator for OPStack Developers.',
-    //     landingAction= 'Build your own OPStack contracts!!',
-    //     link= 'https://redprint.ninja/'
-    // }: Props = $props();
-    
 </script>
   
 <div class="container flex flex-col gap-4 p-8 mx-8">
@@ -38,7 +33,7 @@
         {landingAction}
       </a>
 
-      <TestimonialsAvatars />
+      <TestimonialsAvatars userNumber={userNumber} />
     </div>
 </div>
 

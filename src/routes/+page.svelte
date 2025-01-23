@@ -108,6 +108,7 @@
   landingSubtitle="an interactive code generator for OPStack Developers."
   landingAction="Build your own OPStack contracts!!"
   link="https://redprint.ninja/"
+  userNumber={50}
 />
 
 <Background color="bg-base-100 pt-3 pb-4">

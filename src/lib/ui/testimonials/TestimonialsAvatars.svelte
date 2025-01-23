@@ -1,4 +1,14 @@
 <script lang="ts">
+
+    type Props = {
+        userNumber: number;
+    }
+
+    let {
+        userNumber= 5
+    }: Props = $props();
+
+    
     const avatars: {
         alt: string;
         src: string;
@@ -65,7 +75,7 @@
       </div>
 
       <div class="text-xs text-xs-content/80">
-        <span class="font-semibold">50</span> Developers
+        <span class="font-semibold">{userNumber}</span> Developers
         <p>use Redprint</p>
       </div>
     </div>
