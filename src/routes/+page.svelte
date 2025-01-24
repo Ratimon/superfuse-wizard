@@ -142,7 +142,7 @@
       <p class="mt-6 text-base-300">
        Quick start 'superfuse-forge' by following the demo at our
         <a class="underline" href="https://github.com/Ratimon/superfuse-forge?tab=readme-ov-file#quickstart" target="_blank" rel="noreferrer"
-          >Guilde</a
+          >Guide</a
         >
       </p>
     </div>

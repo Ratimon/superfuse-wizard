@@ -64,3 +64,4 @@ We embrace a culture of regenerative approach of building open-source software a
 - [solady](https://github.com/Vectorized/solady) by **Vectorized**
 - [Redprint Wizard](https://github.com/Ratimon/redprint-wizard) by **Ratimon**
 - [redprint-forge](https://github.com/Ratimon/redprint-forge) by **Ratimon**
+- [superfuse-contracts-examples](https://github.com/Ratimon/superfuse-contracts-examples) by **Ratimon**
