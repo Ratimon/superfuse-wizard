@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://superfuse.wizard/sitemap.xml
