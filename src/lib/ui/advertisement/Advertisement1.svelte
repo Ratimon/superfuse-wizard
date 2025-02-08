@@ -1,21 +1,21 @@
 <script lang="ts">
-    import TestimonialsAvatars from "$lib/ui/testimonials/TestimonialsAvatars.svelte";
+  import TestimonialsAvatars from "$lib/ui/testimonials/TestimonialsAvatars.svelte";
 
-    type Props = {
-        landingTitle: string;
-        landingSubtitle: string;
-        landingAction: string;
-        link: string;
-        userNumber: number;
-    }
+  type Props = {
+      landingTitle: string;
+      landingSubtitle: string;
+      landingAction: string;
+      link: string;
+      userNumber: number;
+  }
 
-    let {
-        landingTitle= '',
-        landingSubtitle= '',
-        landingAction= '',
-        link= '',
-        userNumber= 5
-    }: Props = $props();
+  let {
+      landingTitle= '',
+      landingSubtitle= '',
+      landingAction= '',
+      link= '',
+      userNumber= 5
+  }: Props = $props();
 
 </script>
   
