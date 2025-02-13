@@ -20,6 +20,6 @@ cd my-project;
 ``` 
 
 ```bash
-nvm use v20.13.1
+nvm use v22.14.0
 pnpm dev
 ``` 
