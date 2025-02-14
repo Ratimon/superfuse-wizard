@@ -124,11 +124,11 @@ export function requireAccessControl(c: ContractBuilder, fn: BaseFunction, acces
 const parents = {
   Ownable: {
     name: 'Ownable',
-    path: '@solady-v0.0.292/auth/Ownable.sol',
+    path: '@solady-v0.1.8/auth/Ownable.sol',
   },
   EnumerableRoles: {
     name: 'EnumerableRoles',
-    path: '@solady-v0.0.292/auth/EnumerableRoles.sol',
+    path: '@solady-v0.1.8/auth/EnumerableRoles.sol',
   },
   // AccessManaged: {
   //   name: 'AccessManaged',

@@ -301,7 +301,7 @@ function addMintable(c: TestBuilder, access: Access, targetContractName: string,
 
     const ERC20 = {
         name: 'ERC20',
-        path: '@solady-v0.0.292/tokens/ERC20.sol',
+        path: '@solady-v0.1.8/tokens/ERC20.sol',
     };
     c.addImportOnly(ERC20);
 
@@ -391,7 +391,7 @@ function addMintable(c: TestBuilder, access: Access, targetContractName: string,
 
         const Ownable = {
             name: 'Ownable',
-            path: '@solady-v0.0.292/auth/Ownable.sol',
+            path: '@solady-v0.1.8/auth/Ownable.sol',
         };
         c.addImportOnly(Ownable);
 
@@ -410,7 +410,7 @@ function addMintable(c: TestBuilder, access: Access, targetContractName: string,
 
         const EnumerableRoles = {
             name: 'EnumerableRoles',
-            path: '@solady-v0.0.292/auth/EnumerableRoles.sol',
+            path: '@solady-v0.1.8/auth/EnumerableRoles.sol',
         };
         c.addImportOnly(EnumerableRoles);
 

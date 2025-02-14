@@ -30,7 +30,7 @@ To tackle this, we are pleased to introduce:
 
 2. [Superfuse Wizard](https://superfuse.ninja/): a code generator/ interactive developer playground to develop a part of smart contract/deploy script/ test suites out of components from  crosschain specification. Select kind of contract that you want (currently support for ERC7802, SuperchainERC20, and ERC20Votes).
 
-It can be seen below that there are several options to choose in own desired specifications. In our example, it is **L2NativeSuperchainERC20** (implementing ERC7802) based on OPLab's [offcial example](https://github.com/ethereum-optimism/superchainerc20-starter/blob/main/packages/contracts/src/L2NativeSuperchainERC20.sol) and the [`solady 's Ownable`](https://github.com/Vectorized/solady/blob/v0.0.292/src/auth/Ownable.sol) is picked over the [`solady 's EnumerableRoles`](https://github.com/Vectorized/solady/blob/v0.0.292/src/auth/EnumerableRoles.sol).
+It can be seen below that there are several options to choose in own desired specifications. In our example, it is **L2NativeSuperchainERC20** (implementing ERC7802) based on OPLab's [offcial example](https://github.com/ethereum-optimism/superchainerc20-starter/blob/main/packages/contracts/src/L2NativeSuperchainERC20.sol) and the [`solady 's Ownable`](https://github.com/Vectorized/solady/blob/v0.1.8/src/auth/Ownable.sol) is picked over the [`solady 's EnumerableRoles`](https://github.com/Vectorized/solady/blob/v0.1.8/src/auth/EnumerableRoles.sol).
 
 <img data-pagefind-meta="image[src]" width="1600" height="900" alt="Superfuse Contract UI" decoding="async" loading="eager" class="mt-4 border rounded bg-cover bg-center bg-no-repeat transform will-change-auto" src="1-introduce-superfuse/wizard_contract.webp" />
 

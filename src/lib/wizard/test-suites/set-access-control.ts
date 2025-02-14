@@ -111,7 +111,7 @@ const functions = defineFunctions({
 const parents = {
   Ownable: {
     name: 'Ownable',
-    path: '@solady-v0.0.292/auth/Ownable.sol',
+    path: '@solady-v0.1.8/auth/Ownable.sol',
   },
   // Ownable: {
   //   name: 'Ownable',
