@@ -1,7 +1,7 @@
 {
 	"name": "superfuse-wizard",
 	"description": "Interactive smart contract generator based on Superchain 's interoperability standard.",
-	"version": "0.0.4",
+	"version": "1.0.0",
 	"homepage": "https://http://superfuse.ninja/",
 	"keywords": [
 		"blockchain",
