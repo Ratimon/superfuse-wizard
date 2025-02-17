@@ -3,6 +3,7 @@ import preprocess from 'svelte-preprocess';
 // import adapter from '@sveltejs/adapter-static';
 import adapter from 'amplify-adapter';
 
+import { sveltePreprocess } from 'svelte-preprocess'
 
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex, escapeSvelte } from 'mdsvex'
@@ -32,7 +33,7 @@ const config = {
 	preprocess: [
 		vitePreprocess(),
 		mdsvex(mdsvexOptions),
-		preprocess({
+		sveltePreprocess({
 			// postcss make use of tailwind
 			// we ensure it get processed, see postcss.config.cjs
 			postcss: true,
