@@ -2,8 +2,6 @@
 
 - [Installation](#installation)
 - [What is it for](#what-is-it-for)
-- [Architecture](#architecture)
-- [Contributing](#contributing)
 - [Acknowledgement](#acknowledgement)
 
 >[!NOTE]
@@ -32,3 +30,23 @@ Alternatively, you can fork a project and installed dependencies with `pnpm inst
 git clone git@github.com:Ratimon/superfuse-wizard.git
 cd superfuse-wizard;
 pnpm dev
+```
+
+#what-is-it-for
+
+Superfuse Wizard is a code generator/ interactive developer playground to develop parts of smart contract/deploy script/ test suites out of components from cross-chain specification. Select kind of contract that you want (eg. ERC7802, SuperchainERC20, and ERC20Votes).
+
+
+#acknowledgement
+
+We embrace a culture of regenerative approach of building open-source software and we acknowledge, use, and get inspiration from these upstream software repositories :
+- [OZ 's contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) by **OpenZeppelin**
+- [OZ 's Wizard](https://github.com/OpenZeppelin/contracts-wizard/) by **OpenZeppelin**
+- [OPStack monorepo](https://github.com/ethereum-optimism/optimism) by **OP Labs**
+- [superchainerc20-starter template](https://github.com/ethereum-optimism/superchainerc20-starter) by **OP Labs**
+- [foundry's forge](https://github.com/foundry-rs/foundry/tree/master/crates/forge) by **Paradigm**
+- [forge-deploy](https://github.com/wighawag/forge-deploy) by **Ronan Sandford**
+- [solady](https://github.com/Vectorized/solady) by **Vectorized**
+- [Redprint Wizard](https://github.com/Ratimon/redprint-wizard) by **Ratimon**
+- [redprint-forge](https://github.com/Ratimon/redprint-forge) by **Ratimon**
+- [superfuse-contracts-examples](https://github.com/Ratimon/superfuse-contracts-examples) by **Ratimon**
