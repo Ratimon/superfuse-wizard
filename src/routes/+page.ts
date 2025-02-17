@@ -3,6 +3,8 @@ import {appName, appDescription} from 'web-config';
 
 import type { MetaTagsProps } from 'svelte-meta-tags';
 
+export const ssr = false;
+
 export function load() {
     const pageMetaTags = Object.freeze({
         title: appName,
