@@ -29,7 +29,6 @@ export function load() {
     const actionLink : Link = {pathname: '/blog', title: 'Resources/Blog', navType: 'tab' };
 
     const footLinks : Link[] = [
-        // {pathname: '#testimonial', title: 'Testimonial', navType: 'scroll'},
         {pathname: '#1-contract', title: 'Build', navType: 'scroll' },
         {pathname: '#2-deploy', title: 'Deploy', navType: 'scroll'},
         {pathname: '#3-test', title: 'Test', navType: 'scroll'},

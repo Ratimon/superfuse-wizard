@@ -40,7 +40,7 @@
 		</div>
 
         <p class="!text-xl flex justify-center space-x-2 my-8">
-            We are also building superfuse-forge, a developer-friendly framework/library in solidity to modify & deploy OPStack ’s contracts in a modular style
+            We are also building superfuse-forge, a developer-friendly framework/library in solidity to build smart contracts with interoperability on Superchain.
 		</p>
 
 		<div class="pt-3 pb-4">
