@@ -21,6 +21,13 @@
 			We are the team behind Superfuse Wizard, an open-source code generator to build on Superchain.
 		</p>
 
+		<p class="mt-6 text-base-300">
+			Report Bug at 
+			<a class="underline" href="https://github.com/Ratimon/superfuse-wizard/issues" target="_blank" rel="noreferrer"
+				>github</a
+			>
+		</p>
+
 		<div class="pt-3 pb-4">
 			<h1 class="m-4 font-semibold">Use it:</h1>
 			<CopyBlock
