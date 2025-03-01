@@ -1,11 +1,10 @@
 <script lang="ts">
     type Props = {
         userNumber: number;
-        
     }
 
     let {
-        userNumber= 5
+        userNumber = 5
     }: Props = $props();
 
     const avatars: {

@@ -1,13 +1,13 @@
 ---
 title: Impacts & Metric Hub
 description: A page contatining all sources of truth, relevant to impacts of Superfuse Wizard to public goods
-date: '2024-1-20'
+date: '2024-1-18'
 categories:
   - reports
 author:
   - 'Rati'
 published: true
-imgSrc: /blog/2-metric-hub/header.webp
+imgSrc: /blog/0-metric-hub/header.webp
 imgAlt: Metric Hub
 ---
 

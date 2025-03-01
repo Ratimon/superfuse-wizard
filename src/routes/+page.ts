@@ -18,7 +18,7 @@ export function load() {
 
     const headLinks : Link[] = [
         // {pathname: '#testimonial', title: 'Testimonials', navType: 'scroll'},
-        {pathname: '/blog/2-metric-hub', title: 'Metric Hub', navType: 'tab'},
+        {pathname: '/blog/0-metric-hub', title: 'Metric Hub', navType: 'tab'},
         {pathname: '/about', title: 'Contact Us', navType: 'tab'},
     ];
 
@@ -34,7 +34,7 @@ export function load() {
         {pathname: '#1-contract', title: 'Build', navType: 'scroll' },
         {pathname: '#2-deploy', title: 'Deploy', navType: 'scroll'},
         {pathname: '#3-test', title: 'Test', navType: 'scroll'},
-        {pathname: '/blog/2-metric-hub', title: 'Metric Hub', navType: 'tab'},
+        {pathname: '/blog/0-metric-hub', title: 'Metric Hub', navType: 'tab'},
         {pathname: '/about', title: 'Contact Us', navType: 'tab'},
         {pathname: '/', title: 'Home', navType: 'tab'},
     ];
