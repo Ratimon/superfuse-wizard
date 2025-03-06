@@ -1,7 +1,7 @@
 <script lang="ts">
     import type {GithubRepo } from '$lib/model/GithubRepo';
   
-    import Background from '$lib/ui/background/Background.svelte';
+    import Background from '$lib/ui/layouts/Background.svelte';
 
     import TimelineCheckPrimaryIcon from '$lib/ui/icons/TimelineCheckPrimaryIcon.svelte';
     import TimelineCheckIcon from '$lib/ui/icons/TimelineCheckIcon.svelte';

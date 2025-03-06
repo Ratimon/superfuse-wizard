@@ -14,7 +14,7 @@
   import type { KindedOptions, Kind, OptionsErrorMessages } from '$lib/wizard/shared';
   import {  sanitizeKind, OptionsError } from '$lib/wizard/shared';
 
-  import Background from '$lib/ui/background/Background.svelte';
+  import Background from '$lib/ui/layouts/Background.svelte';
   import Advertisement1 from "$lib/ui/advertisement/Advertisement1.svelte";
   import ScrollStep from '$lib/ui/templates/ScrollStep.svelte';
   import OverflowMenu from '$lib/ui/layouts/OverflowMenu.svelte';

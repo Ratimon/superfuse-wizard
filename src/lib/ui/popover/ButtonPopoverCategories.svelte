@@ -3,7 +3,7 @@
 
     import { Popover, PopoverContent, PopoverTrigger } from '$lib/ui/popover'
 
-    import Background from '$lib/ui/background/Background.svelte';
+    import Background from '$lib/ui/layouts/Background.svelte';
     import Nav from '$lib/ui/header/Nav.svelte';
 
     type Props = {

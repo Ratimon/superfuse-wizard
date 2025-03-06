@@ -40,7 +40,7 @@
 
 </script>
 
-<!-- to do : tes this refactored part when scrolled cpmponent is added -->
+<!-- to do : test this refactored part when scrolled component is added -->
 <a
 	href={href}
 	onclick={preventDefault(handleAnchorClick)}

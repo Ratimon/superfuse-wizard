@@ -4,7 +4,7 @@
 
   import {url} from '$lib/utils/path';
 
-  import Background from '$lib/ui/background/Background.svelte';
+  import Background from '$lib/ui/layouts/Background.svelte';
   import ScrollLink from '$lib/ui/header/ScrollLink.svelte';
   import PageLink from '$lib/ui/header/PageLink.svelte';
 

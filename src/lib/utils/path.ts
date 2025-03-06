@@ -1,6 +1,6 @@
 import {base} from '$app/paths';
 import {params, globalQueryParams} from '$lib/config';
-import {getParamsFromURL, queryStringifyNoArray} from './url';
+import {getParamsFromURL, queryStringifyNoArray} from '$lib/utils/url';
 
 export function route(p: string, hash?: string) {
 	if (!p.endsWith('/')) {

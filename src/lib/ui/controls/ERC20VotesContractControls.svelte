@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Background from '$lib/ui/background/Background.svelte';
+    import Background from '$lib/ui/layouts/Background.svelte';
   
     import HelpTooltip from '$lib/ui/controls/HelpTooltip.svelte';
     import ToggleRadio from '$lib/ui/inputs/ToggleRadio.svelte';

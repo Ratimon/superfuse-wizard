@@ -3,7 +3,7 @@
 
   import Icon from '@iconify/svelte';
   
-  import Background from '$lib/ui/background/Background.svelte';
+  import Background from '$lib/ui/layouts/Background.svelte';
   import ButtonPopoverCategories from  '$lib/ui/popover/ButtonPopoverCategories.svelte';
 
   import ButtonGradient from '$lib/ui/buttons/ButtonGradient.svelte';

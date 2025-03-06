@@ -112,17 +112,4 @@
 
   </Tooltip>
 
-
-  <!-- <slot overflow={false}></slot>
-
-  <Tooltip let:trigger interactive theme="light border" arrow={false}>
-    <button use:trigger bind:this={button} class="overflow-btn" style="order: 1;">
-      <MenuDownIcon />
-    </button>
-
-    <div slot="caption" bind:this={menu} class="flex flex-col overflow-menu">
-      <slot overflow={true}></slot>
-    </div>
-    
-  </Tooltip> -->
 </div>
