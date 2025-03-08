@@ -19,7 +19,6 @@
     arrow: boolean;
     };
 	
-
 	let {
     children,
     caption,
@@ -31,7 +30,7 @@
     theme = 'light-yellow border',
     maxWidth = '22em',
     arrow = false,
-    ...others 
+    ...rest 
   }: Props = $props();
 
   let target: Element | undefined;
@@ -42,7 +41,7 @@
 
   onMount(() => {
     if (target) {
-      instance = tippy(target, {  interactive, placement, theme, maxWidth,  ...others, content });
+      instance = tippy(target, {  interactive, placement, theme, maxWidth,  ...rest, content });
 
       content?.style.removeProperty('display');
     }
