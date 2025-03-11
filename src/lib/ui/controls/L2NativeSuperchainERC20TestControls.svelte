@@ -33,7 +33,7 @@
     ...contractDefaults,
     ...deployDefaults,
     ...testDefaults,
-    contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+    contractInfo: {  securityContact: 'Consult full code at https://github.com/Vectorized/solady', license: 'MIT'  },
     deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
   };
@@ -44,7 +44,7 @@
       ...contractDefaults,
       ...deployDefaults,
       ...testDefaults,
-      contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+      contractInfo: {  securityContact: 'Consult full code at https://github.com/Vectorized/solady', license: 'MIT'  },
       deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
       testInfo: {  securityContact: 'Consult full internal test script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     }

@@ -31,7 +31,7 @@
     ...contractDefaults,
     //   premint: '', // default to empty premint in UI instead of 0
     ...deployDefaults,
-    contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+    contractInfo: {  securityContact: 'Consult full code at https://github.com/Vectorized/solady', license: 'MIT'  },
     deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
   };
 
@@ -41,7 +41,7 @@
       ...contractDefaults,
       //   premint: '', // default to empty premint in UI instead of 0
       ...deployDefaults,
-      contractInfo: {  securityContact: 'Consult full code at https://github.com/OpenZeppelin/openzeppelin-contracts', license: 'MIT'  },
+      contractInfo: {  securityContact: 'Consult full code at https://github.com/Vectorized/solady', license: 'MIT'  },
       deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     }
   });
