@@ -34,7 +34,7 @@
     ...contractDefaults,
     //   premint: '', // default to empty premint in UI instead of 0
     ...deployDefaults,
-    contractInfo: {  securityContact: 'Consult full code at https://github.com/Vectorized/solady', license: 'MIT'  },
+    contractInfo: {  securityContact: 'Consult full code at https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/SuperchainERC20.sol', license: 'MIT'  },
     deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
   };
 
@@ -44,7 +44,7 @@
       ...contractDefaults,
       //   premint: '', // default to empty premint in UI instead of 0
       ...deployDefaults,
-      contractInfo: {  securityContact: 'https://github.com/Vectorized/solady', license: 'MIT'  },
+      contractInfo: {  securityContact: 'https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/SuperchainERC20.sol', license: 'MIT'  },
       deployInfo: {  securityContact: 'Consult full internal deploy script at https://github.com/Ratimon/superfuse-forge', license: 'MIT'  },
     }
   });
