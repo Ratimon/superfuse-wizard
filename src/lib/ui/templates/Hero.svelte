@@ -139,23 +139,7 @@
 
             </div>
   
-  
         </div>
-
-
-  
-        <!-- <div class="flex flex-row gap-x-12 justify-center">
-          <TestimonialsAvatars />
-            <ScrollLink
-              class='btn btn-secondary btn-wide'
-              href="#testimonial"
-            >
-            Check out full testimonials!!
-            </ScrollLink>
-        </div>
-   -->
-  
-      </div>
   
     </section>
   
