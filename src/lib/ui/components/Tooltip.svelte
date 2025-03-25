@@ -17,7 +17,7 @@
     theme: string;
     maxWidth: string;
     arrow: boolean;
-    };
+  };
 	
 	let {
     children,

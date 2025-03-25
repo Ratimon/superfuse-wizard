@@ -4,8 +4,11 @@ Please make a pull request to [Dev Branch](https://github.com/Ratimon/superfuse-
 
 ### TODO
 
+- Refactor Icon
+- Add new crosschain spec
 - Port to Dailsy UI 5
 - Abstrat Icon Component
+
 
 ### Developer's Quick Guide
 

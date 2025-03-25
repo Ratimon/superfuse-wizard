@@ -14,7 +14,6 @@
 	import {page} from '$app/state';
     import extend from 'just-extend';
 
-
 	import Background from '$lib/ui/layouts/Background.svelte';
 	import Header from '$lib/ui/templates/Header.svelte';
 	import Footer from '$lib/ui/templates/Footer.svelte';
