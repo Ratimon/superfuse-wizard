@@ -57,7 +57,7 @@ export const categories: CategoryPresenter[] = [
 	},
 	];
 	export const socialSlugs: { [key: string]: SocialSlug } = {
-		twitter: "Twitter",
+		x: "X",
 		linkedIn: "LinkedIn",
 		github: "Github",
 		blog: "Blog",
@@ -70,9 +70,9 @@ export const categories: CategoryPresenter[] = [
 			iconName: string;
 		};
 		} = {
-		twitter: {
-			name: socialSlugs.twitter,
-			iconName: "Twitter",
+		x: {
+			name: socialSlugs.x,
+			iconName: "X",
 		},
 		linkedin: {
 			name: socialSlugs.linkedIn,
@@ -84,7 +84,7 @@ export const categories: CategoryPresenter[] = [
 		},
 		blog: {
 			name: socialSlugs.blog,
-			iconName: "Blog",
+			iconName: "Newspaper",
 		},
 		};
 		
@@ -109,9 +109,9 @@ export const categories: CategoryPresenter[] = [
 		// A list of social links to display in the author's bio.
 		socials: [
 		{
-			name: socialIcons.twitter.name,
-			icon: socialIcons.twitter.iconName,
-			url: "https://twitter.com/RATi_MOn",
+			name: socialIcons.x.name,
+			icon: socialIcons.x.iconName,
+			url: "https://x.com/RATi_MOn",
 		},
 		{
 			name: socialIcons.linkedin.name,

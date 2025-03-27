@@ -42,7 +42,6 @@
 		"url": "https://github.com/Ratimon/superfuse-wizard"
 	},
 	"devDependencies": {
-		"@iconify/svelte": "^4.1.0",
 		"@openzeppelin/contracts": "^5.0.2",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.9.0",

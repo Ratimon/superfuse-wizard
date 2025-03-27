@@ -1,7 +1,9 @@
 <script lang="ts">
   import type {Link } from '$lib/model/Link';
 
-  import Icon from '@iconify/svelte';
+
+  import {icons} from '$data/icon';
+  import AbstractIcon from '$lib/ui/icons/AbstractIcon.svelte';
   
   import Background from '$lib/ui/layouts/Background.svelte';
   import ButtonPopoverCategories from  '$lib/ui/popover/ButtonPopoverCategories.svelte';
@@ -101,7 +103,7 @@
           onclick={preventDefault(setOpen)}
         >
           <span class="sr-only">Open main menu</span>
-          <Icon icon="clarity:menu-line" />
+          <AbstractIcon name={icons.Menu.name} width="24" height="24" />
         </button>
       </div>
   
@@ -128,7 +130,7 @@
               onclick={preventDefault(setClose)}
             >
               <span class="sr-only">Close menu</span>
-              <Icon icon="clarity:menu-line" />
+              <AbstractIcon name={icons.Menu.name} width="24" height="24" />
             </button>
           </div>
   

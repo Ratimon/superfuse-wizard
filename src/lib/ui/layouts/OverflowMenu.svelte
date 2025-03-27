@@ -5,9 +5,10 @@
 
   // import { onMount, afterUpdate } from 'svelte';
   import { onMount } from 'svelte';
+  import {icons} from '$data/icon';
 
   import Tooltip from '$lib/ui/components/Tooltip.svelte';
-  import MenuDownIcon from '$lib/ui/icons/MenuDownIcon.svelte';
+  import AbstractIcon from '$lib/ui/icons/AbstractIcon.svelte';
 
   type Props = {
     children: Snippet;
@@ -97,10 +98,8 @@
 
   <Tooltip text="" disabled={false} placement={"right"} interactive theme="light border" maxWidth="22em" arrow={false}>
     <button bind:this={button} class="overflow-btn" style="order: 1;">
-      <MenuDownIcon />
+      <AbstractIcon name={icons.MenuDown.name} width="24" height="24" />
     </button>
-
-
 
     {#snippet caption()}
 

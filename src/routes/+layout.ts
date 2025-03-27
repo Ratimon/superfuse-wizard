@@ -28,10 +28,9 @@ export const load = ( { url} : {url:any} ) => {
           },
         ],
       },
-      // to do
-      twitter: {
+      x: {
         handle: 'RATi_MOn',
-        site: 'https://twitter.com/RATi_MOn',
+        site: 'https://x.com/RATi_MOn',
         title: appName,
         description: appDescription,
         image: '/icon.png',

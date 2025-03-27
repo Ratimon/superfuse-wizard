@@ -4,9 +4,8 @@
   import fileSaver from 'file-saver';
   import { v4 as uuid } from 'uuid';
 
-  import CopyIcon from '$lib/ui/icons/CopyIcon.svelte';
-  import CheckIcon from '$lib/ui/icons/CheckIcon.svelte';
-  import FileIcon from '$lib/ui/icons/FileIcon.svelte';
+  import {icons} from '$data/icon';
+  import AbstractIcon from '$lib/ui/icons/AbstractIcon.svelte';
 
   import { injectHyperlinks } from '$lib/ui/utils/inject-hyperlinks';
   import {copyToClipboard} from '$lib/ui/utils/clipboard';
@@ -126,16 +125,16 @@
         <button class="action-button min-w-[165px]" onclick={copyHandler}>
           <div class="flex justify-between">
             {#if isScriptCopied}
-              <CheckIcon />Copied
+              <AbstractIcon name={icons.Check.name} width="24" height="24" />Copied
             {:else}
-              <CopyIcon />Copy .sol Code
+              <AbstractIcon name={icons.Copy.name} width="24" height="24" />Copy .sol Code
             {/if}
           </div>
         </button>
   
         <button class="action-button min-w-[165px]" onclick={downloadNpmHandler}>
           <div class="flex justify-between">
-            <FileIcon /> Download As .sol
+            <AbstractIcon name={icons.Download.name} width="24" height="24" /> Download As .sol
           </div>
         </button>
       </div>

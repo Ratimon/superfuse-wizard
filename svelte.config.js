@@ -48,6 +48,7 @@ const config = {
 		alias: {
 			// alias for web-config
 			'web-config': './src/web-config.json',
+			'$data': './src/data',
 		},
 		// to do: should we ignore ?
 		prerender: {

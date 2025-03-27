@@ -3,8 +3,8 @@
   
     import Background from '$lib/ui/layouts/Background.svelte';
 
-    import TimelineCheckPrimaryIcon from '$lib/ui/icons/TimelineCheckPrimaryIcon.svelte';
-    import TimelineCheckIcon from '$lib/ui/icons/TimelineCheckIcon.svelte';
+    import {icons} from '$data/icon';
+    import AbstractIcon from '$lib/ui/icons/AbstractIcon.svelte';
   
     import Stargazers from '$lib/ui/components/Stargazers.svelte';
     import ScrollLink from '$lib/ui/header/ScrollLink.svelte';
@@ -66,7 +66,7 @@
                     Install superfuse-forge
                 </ScrollLink>
                 <div class="timeline-middle">
-                <TimelineCheckIcon />
+                    <AbstractIcon name={icons.TimelineCheck.name} width="24" height="24" />
                 </div>
                 
                 <hr />
@@ -75,7 +75,7 @@
             <li>
                 <hr />
                 <div class="timeline-middle">
-                <TimelineCheckPrimaryIcon />
+                    <AbstractIcon name={icons.TimelineCheckPrimary.name} width="24" height="24" />
                 </div>
                 <ScrollLink
                     href="#1-contract"
@@ -97,7 +97,7 @@
                     2: Run Generated Deployment Script
                 </ScrollLink>
                 <div class="timeline-middle">
-                <TimelineCheckIcon />
+                    <AbstractIcon name={icons.TimelineCheck.name} width="24" height="24" />
                 </div>
                 <hr />
             </li>
@@ -105,7 +105,7 @@
             <li>
                 <hr />
                 <div class="timeline-middle">
-                <TimelineCheckIcon />
+                    <AbstractIcon name={icons.TimelineCheck.name} width="24" height="24" />
                 </div>
                 <ScrollLink
                     href="#3-test"

@@ -4,7 +4,6 @@ Please make a pull request to [Dev Branch](https://github.com/Ratimon/superfuse-
 
 ### TODO
 
-- Refactor Icon
 - Add new crosschain spec
 - Port to Dailsy UI 5
 - Abstrat Icon Component
@@ -47,8 +46,9 @@ For reference only
 
 3. Adding first header and footer:
 
+
 ```bash
-pnpm add -D @iconify/svelte tailwind-merge bits-ui clsx
+pnpm add -D tailwind-merge bits-ui clsx
 ```
 
 4. Adding meta tags:
