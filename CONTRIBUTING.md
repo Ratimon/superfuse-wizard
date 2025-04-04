@@ -6,8 +6,8 @@ Please make a pull request to [Dev Branch](https://github.com/Ratimon/superfuse-
 
 - Add new crosschain spec
 - Port to Dailsy UI 5
-- Abstrat Icon Component
-
+- Add expandable toggle
+- Add Abstract Button
 
 ### Developer's Quick Guide
 

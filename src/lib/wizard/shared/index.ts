@@ -1,6 +1,6 @@
 export type {
     KindedOptions, GenericOptions,
-    KindedERC20Options, GenericERC20Options,
+    KindedERC7802Options, GenericERC7802Options,
 } from './build-generic';
 
 

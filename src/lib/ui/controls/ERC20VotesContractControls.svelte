@@ -6,7 +6,7 @@
     // import UpgradeabilitySection from '$lib/ui/controls/UpgradeabilitySection.svelte';
 
     import type {  OptionsErrorMessages } from '$lib/wizard/shared';
-    import type { KindedERC20Options } from '$lib/wizard/shared';
+    import type { KindedERC7802Options } from '$lib/wizard/shared';
   
     import { erc20Votes } from '$lib/wizard/smart-contracts';
     import { deployERC20Votes } from '$lib/wizard/deploy-scripts';
@@ -18,7 +18,7 @@
     const deployDefaults = deployERC20Votes.defaults;
 
     type Props = {
-      opts: Required<KindedERC20Options['ERC20Votes']>;
+      opts: Required<KindedERC7802Options['ERC20Votes']>;
     };
 
     let {

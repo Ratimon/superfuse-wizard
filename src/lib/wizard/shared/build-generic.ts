@@ -10,8 +10,8 @@ export interface KindedOptions {
 export type GenericOptions = KindedOptions[keyof KindedOptions];
 
 
-export interface KindedERC20Options {
+export interface KindedERC7802Options {
     L2NativeSuperchainERC20: { kind: 'L2NativeSuperchainERC20' } & SharedL2NativeSuperchainERC20Options;
     ERC20Votes: { kind: 'ERC20Votes' } & SharedERC20VotesOptions;
 }
-export type GenericERC20Options = KindedERC20Options[keyof KindedERC20Options];
+export type GenericERC7802Options = KindedERC7802Options[keyof KindedERC7802Options];

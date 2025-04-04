@@ -7,7 +7,7 @@
   // import UpgradeabilitySection from '$lib/ui/controls/UpgradeabilitySection.svelte';
 
   import type {  OptionsErrorMessages } from '$lib/wizard/shared';
-  import type { KindedERC20Options } from '$lib/wizard/shared';
+  import type { KindedERC7802Options } from '$lib/wizard/shared';
 
   import { l2NativeSuperchainERC20 } from '$lib/wizard/smart-contracts';
   import { deployL2NativeSuperchainERC20 } from '$lib/wizard/deploy-scripts';
@@ -20,7 +20,7 @@
 
 
   type Props = {
-    opts: Required<KindedERC20Options['L2NativeSuperchainERC20']>;
+    opts: Required<KindedERC7802Options['L2NativeSuperchainERC20']>;
     errors: undefined | OptionsErrorMessages;
   };
 

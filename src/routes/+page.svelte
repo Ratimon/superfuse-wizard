@@ -113,7 +113,7 @@
 <Background color="bg-base-100 pt-3 pb-4">
   <section id={stepLinks[0].pathname}>
     <div class="divider divider-primary ">
-      <p class="btn btn-accent text-2xl">Step 1 : Contract Wizard</p>
+      <p class="btn btn-accent text-2xl">Step 1 : Contract Wizard - ERC7802</p>
     </div>
   </section>
 </Background>
