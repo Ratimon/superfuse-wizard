@@ -1,5 +1,9 @@
 <script lang="ts">
-	import type { AuthorPresenter, CategoryPresenter, PostPresenter } from '../Blog.presenter'
+	import type { AuthorPresenter, CategoryPresenter, PostPresenter } from '../Blog.presenter';
+
+	import {icons} from '$data/icon';
+	import AbstractIcon from '$lib/ui/icons/AbstractIcon.svelte';
+
     import Avatar from '$lib/ui/blog/Avatar.svelte';
     import BadgeCategory from '$lib/ui/blog/BadgeCategory.svelte';
 	import {categories, authors} from '../Blog.data'
@@ -84,25 +88,15 @@
 
 <article>
 
-	<div>
+	<div class="m-8">
 		<a
 			href="/blog"
 			class="link !no-underline text-base-content/80 hover:text-base-content inline-flex items-center gap-1"
 			title="Back to Blog"
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 20 20"
-				fill="currentColor"
-				class="w-5 h-5"
-			>
-				<path
-					d="M15 10a.75.75 0 01-.75.75H7.612l2.158 1.96a.75.75 0 11-1.04 1.08l-3.5-3.25a.75.75 0 010-1.08l3.5-3.25a.75.75 0 111.04 1.08L7.612 9.25h6.638A.75.75 0 0115 10z"
-				/>
-	  		</svg>
-	 		 Back to Blog
+			<AbstractIcon name={icons.ArrowBack.name} width="20" height="20" />
+			Back to Blog
 		</a>
-
 	</div>
 
 	<article>
@@ -110,14 +104,12 @@
 
 			<div class="flex items-center gap-4 mb-6">
 				{#if categoriesToLabel}
-
 					{#each categoriesToLabel as category}
 						<BadgeCategory
 							category={category}
 							extraStyle={"!badge-lg"}
 						/>
 					{/each}
-
 				{/if}
 
 				<span class="text-base-content/80" itemProp="datePublished">

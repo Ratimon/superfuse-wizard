@@ -8,6 +8,7 @@ Please make a pull request to [Dev Branch](https://github.com/Ratimon/superfuse-
 - Port to Dailsy UI 5
 - Add expandable toggle
 - Add Abstract Button
+- SEO by changing p tag to h1
 
 ### Developer's Quick Guide
 

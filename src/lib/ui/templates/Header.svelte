@@ -1,7 +1,6 @@
 <script lang="ts">
   import type {Link } from '$lib/model/Link';
 
-
   import {icons} from '$data/icon';
   import AbstractIcon from '$lib/ui/icons/AbstractIcon.svelte';
   
@@ -85,7 +84,6 @@
           <ButtonPopoverCategories {dropDownLinks} {menuTitle} />
         {/if}
 
-        
       </div>
   
       <!-- CTA / Launch / Lead on big screens  -->

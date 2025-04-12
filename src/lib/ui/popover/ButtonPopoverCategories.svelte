@@ -16,7 +16,6 @@
         dropDownLinks = []
     }: Props = $props();
 
-
 </script>
 
 <Popover>
@@ -35,18 +34,18 @@
     </PopoverTrigger>
 
     <PopoverContent >
-    <Background color="bg-base-100">
-        <div class="overflow-hidden rounded-box shadow-lg ring-1 ring-base-content ring-opacity-5">
-            
-                <div class="relative grid gap-2 p-2 overflow-hidden">
-                    <Nav
-                        pages={dropDownLinks}
-                        class=""
-                        tabClass="block text-left p-3 -m-1 cursor-pointer hover:bg-base-200 rounded-box duration-200"
-                    />
-                </div>
-            
-        </div>
-    </Background>
+        <Background color="bg-base-100">
+            <div class="overflow-hidden rounded-box shadow-lg ring-1 ring-base-content ring-opacity-5">
+                
+                    <div class="relative grid gap-2 p-2 overflow-hidden">
+                        <Nav
+                            pages={dropDownLinks}
+                            class=""
+                            tabClass="block text-left p-3 -m-1 cursor-pointer hover:bg-base-200 rounded-box duration-200"
+                        />
+                    </div>
+                
+            </div>
+        </Background>
     </PopoverContent>
 </Popover>
